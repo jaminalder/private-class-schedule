@@ -5,6 +5,9 @@
 # Home page
 #GET     /
 
+GET    /api/todo  controllers.Application.todos
+POST   /api/todo  controllers.Application.addTodo
+
 # Map static resources from the /public folder to the /assets URL path
 #GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /*file               controllers.Assets.at(path="/public/angular-frontend/app", file)
