@@ -14,19 +14,21 @@ class ApplicationSpec extends Specification {
   
   "Application" should {
     
+/*
     "send 404 on a bad request" in {
       running(FakeApplication()) {
         route(FakeRequest(GET, "/boum")) must beNone        
       }
     }
-    
-    "render the index page" in {
+*/
+
+    "render the todo poc page" in {
       running(FakeApplication()) {
-        val home = route(FakeRequest(GET, "/")).get
+        val home = route(FakeRequest(GET, "/poc/todo/index.html")).get
         
         status(home) must equalTo(OK)
         contentType(home) must beSome.which(_ == "text/html")
-        contentAsString(home) must contain ("Your new application is ready.")
+        contentAsString(home) must contain ("todo")
       }
     }
   }

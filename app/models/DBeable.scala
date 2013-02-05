@@ -5,15 +5,6 @@ import play.api.db.DB
 import play.api.Application
 import slick.driver.ExtendedProfile
 
-
-
-/**
- * Created with IntelliJ IDEA.
- * User: gonto
- * Date: 11/24/12
- * Time: 1:10 AM
- * To change this template use File | Settings | File Templates.
- */
 trait DBeable {
 
   val SLICK_DRIVER = "slick.db.driver"

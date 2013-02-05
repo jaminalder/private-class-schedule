@@ -7,15 +7,9 @@ import play.api.test.Helpers._
 import models.{User, AppDB}
 import slick.session.Session
 
-
-/**
- * Created with IntelliJ IDEA.
- * User: gonto
- * Date: 11/24/12
- * Time: 12:15 AM
- * To change this template use File | Settings | File Templates.
- */
 class UserSpec extends Specification {
+
+  /*
 
   "User" should {
 
@@ -31,4 +25,6 @@ class UserSpec extends Specification {
       }
     }
   }
+
+  */
 }
