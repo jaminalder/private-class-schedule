@@ -3,14 +3,14 @@ angular.module('todo', ['ngResource'])
 
 function TodoCtrl($scope, $resource) {
 
-    var ToDo = $resource('/api/todo/');
+    var ToDo = $resource('/api/todo/:todoId', {todoId:'@id'});
 
     $scope.todos = ToDo.query();
 
     $scope.addTodo = function() {
-        var newTodo = new ToDo({text:$scope.todoText, done:false});
-        $scope.todos.push(newTodo);
+        var newTodo = new ToDo({id:undefined, text:$scope.todoText, done:false});
         newTodo.$save();
+        $scope.todos.push(newTodo);
         $scope.todoText = '';
     };
 
@@ -30,7 +30,13 @@ function TodoCtrl($scope, $resource) {
         var oldTodos = $scope.todos;
         $scope.todos = [];
         angular.forEach(oldTodos, function(todo) {
-            if (!todo.done) $scope.todos.push(todo);
+            if (!todo.done) {
+                console.log("keep: " + JSON.stringify(todo));
+                $scope.todos.push(todo);
+            } else {
+                todo.$delete();
+                console.log("deleted: " + JSON.stringify(todo));
+            }
         });
     };
 }

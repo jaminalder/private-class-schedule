@@ -25,18 +25,27 @@ object Application extends Controller {
   }
 
   def addTodo = Action(parse.json) { request =>
-    println("###### new todo json" + request.body)
+    println("###### new todo json: " + request.body)
     val newTodo = request.body.as[ToDo]
-    println("###### new todo object" + newTodo)
-    val newTodoWithId = ToDo(Some(UUID.randomUUID().toString()), newTodo.text, newTodo.done)
-    println("###### new todo object" + newTodoWithId)
+    println("###### new todo object: " + newTodo)
 
     AppDB.database.withSession {
       implicit session: Session =>
-        AppDB.dal.ToDos.add(newTodoWithId)
+        val storedTodo = AppDB.dal.ToDos.persist(newTodo)
+        println("###### new todo stored: " + storedTodo)
+        Ok(Json.toJson(storedTodo))
     }
 
-    Ok
+  }
+
+  def updateTodo(id:String) = addTodo
+
+  def deleteTodo(id:String) = Action {
+    AppDB.database.withSession {
+      implicit session: Session =>
+        AppDB.dal.ToDos.delete(id)
+        Ok
+    }
   }
 
   implicit val toDoFormat = Json.format[ToDo]
