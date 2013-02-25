@@ -19,7 +19,7 @@ object Application extends Controller {
       implicit session: Session =>
         val allTodos: List[ToDo] = AppDB.dal.ToDos.getAll
         println("todos in db: " + allTodos)
-        val jsonTodos = allTodos.map(t => Json.toJson(t))
+        val jsonTodos: List[JsValue] = allTodos.map(t => Json.toJson(t))
         Ok(Json.toJson(jsonTodos))
     }
   }

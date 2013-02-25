@@ -5,10 +5,10 @@
 # Home page
 #GET     /
 
-GET     /api/todo  controllers.Application.todos
-POST    /api/todo  controllers.Application.addTodo
-POST    /api/todo/:id  controllers.Application.updateTodo(id)
-DELETE  /api/todo/:id  controllers.Application.deleteTodo(id)
+GET     /api/todo/all         controllers.Application.todos
+POST    /api/todo/save        controllers.Application.addTodo
+POST    /api/todo/save/:id    controllers.Application.updateTodo(id)
+POST    /api/todo/delete/:id  controllers.Application.deleteTodo(id)
 
 # Map static resources from the /public folder to the /assets URL path
 #GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,15 +1,19 @@
 angular.module('todo', ['ngResource'])
 
-
 function TodoCtrl($scope, $resource) {
 
-    var ToDo = $resource('/api/todo/:todoId', {todoId:'@id'});
+    var ToDo = $resource('/api/todo/:action/:todoId', {todoId:'@id'}, {
+        all: {method:'GET', params:{'action':'all'}, isArray:true},
+        save: {method:'POST', params:{'action':'save'}},
+        delete: {method:'POST', params:{'action':'delete'}}
+    });
 
-    $scope.todos = ToDo.query();
+    $scope.todos = ToDo.all();
 
     $scope.addTodo = function() {
         var newTodo = new ToDo({id:undefined, text:$scope.todoText, done:false});
         newTodo.$save();
+        console.log("new todo: " + JSON.stringify(newTodo));
         $scope.todos.push(newTodo);
         $scope.todoText = '';
     };
