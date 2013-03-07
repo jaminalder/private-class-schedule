@@ -1,4 +1,4 @@
-import models.{User, DBeable, AppDB}
+import models.{DBeable, AppDB}
 import play.api.db.DB
 import play.api.GlobalSettings
 
@@ -7,13 +7,6 @@ import play.api.Application
 import slick.session.Session
 
 
-/**
- * Created with IntelliJ IDEA.
- * User: gonto
- * Date: 11/23/12
- * Time: 9:37 PM
- * To change this template use File | Settings | File Templates.
- */
 object Global extends GlobalSettings with DBeable{
 
 

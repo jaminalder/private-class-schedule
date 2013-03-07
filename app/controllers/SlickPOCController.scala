@@ -8,12 +8,8 @@ import models.{AppDB, ToDo}
 import java.util.UUID
 import slick.session.Session
 
-object Application extends Controller {
+object SlickPOCController extends Controller {
   
-  def index = Action {
-    Ok(views.html.index("Your new application is not ready."))
-  }
-
   def todos = Action {
     AppDB.database.withSession {
       implicit session: Session =>
