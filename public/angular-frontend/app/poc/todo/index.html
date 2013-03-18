@@ -4,18 +4,22 @@
     <script src="../../lib/angular/angular.js"></script>
     <script src="../../lib/angular/angular-resource.js"></script>
     <script src="todo.js"></script>
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="todo.css">
 </head>
 <body>
 <div class="container">
     <h2>Todo</h2>
 
+    <div ng-include src="'subtitle.html'"></div>
+
     <div ng-controller="TodoCtrl">
+        <input type="text" ng-model="search" class="search-query" placeholder="Search">
+        </br>
         <span>{{remaining()}} of {{todos.length}} remaining</span>
         [ <a href="" ng-click="archive()">archive</a> ]
         <ul class="unstyled">
-            <li ng-repeat="todo in todos">
+            <li ng-repeat="todo in todos | filter:search">
                 <input type="checkbox" ng-model="todo.done" ng-click="updateTodo(todo)">
                 <span class="done-{{todo.done}}">{{todo.text}}</span>
             </li>
