@@ -1,10 +1,8 @@
-package controllers
+package poc
 
 import play.api._
 import libs.json._
 import play.api.mvc._
-import models.{ToDoMongoAccess, AppDB, ToDo}
-import slick.session.Session
 
 object MongoPOCController extends Controller {
 

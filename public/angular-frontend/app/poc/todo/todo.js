@@ -2,7 +2,7 @@ angular.module('todo', ['ngResource'])
 
 function TodoCtrl($scope, $resource) {
 
-    var ToDo = $resource('/api/mongo/todo/:action/:todoId', {todoId:'@id'}, {
+    var ToDo = $resource('/api/poc/todo/:action/:todoId', {todoId:'@id'}, {
         all: {method:'GET', params:{'action':'all'}, isArray:true},
         save: {method:'POST', params:{'action':'save'}},
         delete: {method:'POST', params:{'action':'delete'}}

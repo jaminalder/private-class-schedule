@@ -5,16 +5,10 @@
 # Home page
 #GET     /
 
-GET     /api/todo/all         controllers.SlickPOCController.todos
-POST    /api/todo/save        controllers.SlickPOCController.addTodo
-POST    /api/todo/save/:id    controllers.SlickPOCController.updateTodo(id)
-POST    /api/todo/delete/:id  controllers.SlickPOCController.deleteTodo(id)
-
-GET     /api/mongo/todo/all         controllers.MongoPOCController.todos
-POST    /api/mongo/todo/save        controllers.MongoPOCController.addTodo
-POST    /api/mongo/todo/save/:id    controllers.MongoPOCController.updateTodo(id)
-POST    /api/mongo/todo/delete/:id  controllers.MongoPOCController.deleteTodo(id)
-
+GET     /api/poc/todo/all         poc.MongoPOCController.todos
+POST    /api/poc/todo/save        poc.MongoPOCController.addTodo
+POST    /api/poc/todo/save/:id    poc.MongoPOCController.updateTodo(id)
+POST    /api/poc/todo/delete/:id  poc.MongoPOCController.deleteTodo(id)
 
 # Map static resources from the /public folder to the /assets URL path
 #GET     /assets/*file               controllers.Assets.at(path="/public", file)

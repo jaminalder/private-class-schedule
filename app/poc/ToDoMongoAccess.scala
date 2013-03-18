@@ -1,4 +1,4 @@
-package models
+package poc
 
 import java.util.UUID
 import com.mongodb.casbah.Imports._
