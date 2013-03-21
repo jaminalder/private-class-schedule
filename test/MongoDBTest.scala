@@ -3,9 +3,7 @@ import org.specs2.mutable._
 
 import play.api.test._
 import play.api.test.Helpers._
-import models.{AppDB}
 import poc.{ToDoMongoAccess, ToDo}
-import slick.session.Session
 import java.util.UUID
 
 class MongoDBTest extends Specification {
