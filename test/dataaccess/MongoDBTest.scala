@@ -10,15 +10,15 @@ import libs.json._
 import domain.person.{Address, Person}
 import domain.person.Person
 import domain.person.Address
+import test.WithApplication
 
 class MongoDBTest extends Specification {
 
-  val mongoURI: MongoClientURI = MongoClientURI("mongodb://127.0.0.1:27017")
-  val mongoDB: MongoDB = MongoClient(mongoURI)("testdb")
-  val mongoColl = mongoDB("testcoll")
-
   "MongoDB" should {
-    "store and fetch data" in {
+    "store and fetch data" in new WithApplication {
+      val mongoURI: MongoClientURI = MongoClientURI(Play.configuration.getString("mongo.uri").getOrElse("mongodb://127.0.0.1:27017"))
+      val mongoDB: MongoDB = MongoClient(mongoURI)("pcs")
+      val mongoColl = mongoDB("testcoll")
 
       mongoColl.drop()
 
@@ -35,7 +35,11 @@ class MongoDBTest extends Specification {
   implicit val dummyObjectFormat = Json.format[DummyObject]
 
   "A dummy case class object" should {
-    "be convertable from and to json and MongoDBObject" in {
+    "be convertable from and to json and MongoDBObject" in new WithApplication {
+
+      val mongoURI: MongoClientURI = MongoClientURI(Play.configuration.getString("mongo.uri").getOrElse("mongodb://127.0.0.1:27017"))
+      val mongoDB: MongoDB = MongoClient(mongoURI)("pcs")
+      val mongoColl = mongoDB("testcoll")
 
       val dummy = DummyObject("fooValue", "barValue")
       val dummyJson: JsValue = Json.toJson(dummy)
@@ -59,7 +63,12 @@ class MongoDBTest extends Specification {
 
     implicit def dummyToDBObject(dummy:DummyObject):DBObject = JSON.parse(Json.toJson(dummy).toString()).asInstanceOf[DBObject]
 
-    "be converted implicitly and stored into mongodb" in {
+    "be converted implicitly and stored into mongodb" in new WithApplication {
+
+      val mongoURI: MongoClientURI = MongoClientURI(Play.configuration.getString("mongo.uri").getOrElse("mongodb://127.0.0.1:27017"))
+      val mongoDB: MongoDB = MongoClient(mongoURI)("pcs")
+      val mongoColl = mongoDB("testcoll")
+
       mongoColl.drop()
       mongoColl += DummyObject("ffff", "bbbbb")
       val storedObject: mongoColl.T = mongoColl.findOne().get
