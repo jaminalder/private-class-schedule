@@ -10,6 +10,8 @@ POST    /api/poc/todo/save        poc.MongoPOCController.addTodo
 POST    /api/poc/todo/save/:id    poc.MongoPOCController.updateTodo(id)
 POST    /api/poc/todo/delete/:id  poc.MongoPOCController.deleteTodo(id)
 
+GET    /api/student/allForTeacher/:teacherID          service.student.StudentService.allForTeacher(teacherID)
+
 # Map static resources from the /public folder to the /assets URL path
 #GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /*file               controllers.Assets.at(path="/public/angular-frontend", file)
