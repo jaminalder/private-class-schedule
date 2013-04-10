@@ -10,7 +10,7 @@ import conversion.json.PersonJsonConverter._
 import domain.person.Person
 import play.api.libs.json.{Json, JsArray, JsValue}
 
-object StudentServiceTest extends Specification {
+class StudentServiceTest extends Specification {
   sequential
 
   "StudentService" should {
@@ -21,7 +21,7 @@ object StudentServiceTest extends Specification {
       PersonDAO.persist(PersonTestData.teacher)
 
       // add two students through the service
-      val requestHolder = WS.url("http://localhost:19001/api/student/add")
+      val requestHolder = WS.url("http://localhost:19001/api/student/save")
       val response1: Response = await(requestHolder.post(PersonTestData.randomStudentOfTeacher.person.toJson))
       response1.status must equalTo(OK)
       val response2: Response = await(requestHolder.post(PersonTestData.randomStudentOfTeacher.person.toJson))

@@ -15,10 +15,10 @@ import poc.ToDoMongoAccess
 object StudentService extends Controller {
 
   /**
-   * Adds a new student.
+   * Adds a new or updates an existing student.
    * Input: one person in json format
    */
-  def add = Action(parse.json) {
+  def save = Action(parse.json) {
     request =>
       println("add student input: " + request.body)
       val newStudent: Person = request.body.as[Person]

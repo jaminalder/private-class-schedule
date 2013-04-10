@@ -1,0 +1,67 @@
+<h2>New Student</h2>
+
+<div ng-controller="StudentCtrl">
+
+    <p>{{user._id}}</p>
+    <ul>
+        <li ng-repeat="student in students">{{student.firstName}}</li>
+    </ul>
+
+    <form ng-submit="addStudent()" class="form-horizontal">
+
+        <div class="control-group">
+            <label class="control-label" for="inputLastName">Last Name</label>
+
+            <div class="controls">
+                <input type="text" id="inputLastName" ng-model="studentForm.lastName">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputFirstName">First Name</label>
+
+            <div class="controls">
+                <input type="text" id="inputFirstName" ng-model="studentForm.firstName">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputEMail">eMail</label>
+
+            <div class="controls">
+                <input type="text" id="inputEMail" ng-model="studentForm.eMail">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputStreet">Street</label>
+            <div class="controls">
+                <input type="text" id="inputStreet" ng-model="studentForm.address.street">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputStreetNum">Street Number</label>
+            <div class="controls">
+                <input type="text" id="inputStreetNum" ng-model="studentForm.address.streetNum">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputCity">City</label>
+            <div class="controls">
+                <input type="text" id="inputCity" ng-model="studentForm.address.city">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputZip">Zip</label>
+            <div class="controls">
+                <input type="text" id="inputZip" ng-model="studentForm.address.zip">
+            </div>
+        </div>
+
+        <input class="btn-primary" type="submit" value="add">
+    </form>
+
+</div>

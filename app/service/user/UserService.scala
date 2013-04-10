@@ -6,6 +6,7 @@ import domain.role.{Role, Teacher, Student}
 import dataaccess.person.PersonDAO
 import conversion.json.PersonJsonConverter._
 import domain.person.Person
+import play.api.Logger
 
 /**
  * JSON Service.
@@ -25,9 +26,12 @@ object UserService extends Controller {
    * @return the successfully logged in user as a person json object
    */
   def login(eMail: String, password: String) = Action {
+    Logger.info("### login action with " + eMail)
+    Logger.info("persons in db:")
+    PersonDAO.collection.find.foreach(dbobject => Logger.info(dbobject.toString))
     val storedRole: Role = PersonDAO.getByEMail(eMail).get
     val jsonPerson = Json.toJson(storedRole.person)
-    Ok(jsonPerson)
+    Ok(jsonPerson).withSession("loggedInUserID" -> storedRole.person._id)
   }
 
   /**
