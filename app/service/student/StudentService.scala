@@ -6,7 +6,6 @@ import domain.role.{Teacher, Student}
 import dataaccess.person.PersonDAO
 import conversion.json.PersonJsonConverter._
 import domain.person.Person
-import poc.ToDoMongoAccess
 
 /**
  * JSON Service.
@@ -18,7 +17,7 @@ object StudentService extends Controller {
    * Adds a new or updates an existing student.
    * Input: one person in json format
    */
-  def save = Action(parse.json) {
+  def saveStudent = Action(parse.json) {
     request =>
       println("add student input: " + request.body)
       val newStudent: Person = request.body.as[Person]
@@ -32,7 +31,7 @@ object StudentService extends Controller {
    * @param teacherID the UUID of the teacher
    * @return a list of person objects in json format
    */
-  def allForTeacher(teacherID: String) = Action {
+  def allStudentsOfTeacher(teacherID: String) = Action {
     val storedTeacher = PersonDAO.getByID(teacherID).get.asInstanceOf[Teacher]
 
     val students: List[Student] = PersonDAO.getStudentsOfTeacher(storedTeacher)

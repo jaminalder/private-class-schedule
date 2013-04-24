@@ -21,7 +21,7 @@ class StudentServiceTest extends Specification {
       PersonDAO.persist(PersonTestData.teacher)
 
       // add two students through the service
-      val requestHolder = WS.url("http://localhost:19001/api/student/save")
+      val requestHolder = WS.url("http://localhost:19001/api/student/saveStudent")
       val response1: Response = await(requestHolder.post(PersonTestData.randomStudentOfTeacher.person.toJson))
       response1.status must equalTo(OK)
       val response2: Response = await(requestHolder.post(PersonTestData.randomStudentOfTeacher.person.toJson))
@@ -32,7 +32,7 @@ class StudentServiceTest extends Specification {
     "yield all students of a teacher" in new WithServer {
 
       // now call the other service to get the before added students
-      val requestHolder: WSRequestHolder = WS.url("http://localhost:19001/api/student/allForTeacher/" + PersonTestData.teacher.person._id)
+      val requestHolder: WSRequestHolder = WS.url("http://localhost:19001/api/student/allStudentsOfTeacher/" + PersonTestData.teacher.person._id)
       val response: Response = await(requestHolder.get)
       response.status must equalTo(OK)
       response.json.asInstanceOf[JsArray].value.size mustEqual 2
