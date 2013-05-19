@@ -26,6 +26,18 @@ object StudentService extends Controller {
   }
 
   /**
+   * Deletes a student from the database.
+   * Input: one person in json format
+   */
+  def deleteStudent = Action(parse.json) {
+    request =>
+      println("delete student input: " + request.body)
+      val studentToDelete: Person = request.body.as[Person]
+      PersonDAO.delete(Student(studentToDelete))
+      Ok
+  }
+
+  /**
    * Yields all students where of a teacher.
    * Where teacherID is owner of student.
    * @param teacherID the UUID of the teacher

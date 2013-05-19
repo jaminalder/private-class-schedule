@@ -1,35 +1,35 @@
-<h4>{{studentDetailTitle}}</h4>
+<h4 id="studentFormTitle">{{studentDetailTitle}}</h4>
 
 <form name="form" novalidate>
 
     <div class="controls">
-        <input class="span4" type="text" id="inputFirstName" ng-model="studentForm.firstName" placeholder="Vorname"
+        <input class="span4" type="text" ng-model="studentForm.firstName" placeholder="Vorname"
                required>
     </div>
     <div class="controls">
-        <input class="span4" type="text" id="inputLastName" ng-model="studentForm.lastName" placeholder="Nachname"
+        <input class="span4" type="text" ng-model="studentForm.lastName" placeholder="Nachname"
                required>
     </div>
 
     <div class="controls">
-        <input class="span4" type="email" id="inputEMail" ng-model="studentForm.eMail" placeholder="E-Mail">
+        <input class="span4" type="email" ng-model="studentForm.eMail" placeholder="E-Mail">
     </div>
 
     <div class="controls controls-row">
-        <input class="span3" type="text" id="inputStreet" ng-model="studentForm.address.street" placeholder="Strasse">
-        <input class="span1" type="text" id="inputStreetNum" ng-model="studentForm.address.streetNum" placeholder="Nr.">
+        <input class="span3" type="text" ng-model="studentForm.address.street" placeholder="Strasse">
+        <input class="span1" type="text" ng-model="studentForm.address.streetNum" placeholder="Nr.">
     </div>
 
     <div class="controls controls-row">
-        <input class="span1" type="text" id="inputZip" ng-model="studentForm.address.zip" placeholder="PLZ">
-        <input class="span3" type="text" id="inputCity" ng-model="studentForm.address.city" placeholder="Ort">
+        <input class="span1" type="text" ng-model="studentForm.address.zip" placeholder="PLZ">
+        <input class="span3" type="text" ng-model="studentForm.address.city" placeholder="Ort">
     </div>
 
     <p>
-        <input ng-click="saveStudent()" class="btn btn-primary span2" type="submit" value="Speichern"
+        <input id="saveStudentButton" ng-click="saveStudent()" class="btn btn-primary span2" type="submit" value="Speichern"
                ng-disabled="form.$invalid || isUnchanged(studentForm)">
 
-        <input ng-click="resetStudentForm()" class="btn span2" value="Abbrechen"
+        <input id="resetStudentFormButton" ng-click="resetStudentForm()" class="btn span2" value="Abbrechen"
                ng-disabled="isUnchanged(studentForm)">
     </p>
 </form>

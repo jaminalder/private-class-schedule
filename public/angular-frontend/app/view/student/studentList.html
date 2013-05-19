@@ -1,15 +1,15 @@
-<h4>Schülerliste</h4>
+<h4 id="studentListTitle">Schülerliste</h4>
 
 <form class="form-horizontal">
     <div class="control-group">
         <input type="text" ng-model="search" class="search-query input-medium" placeholder="Suche">
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <a ng-click="newStudent()" class="btn btn-small btn-primary"><i class="icon-plus icon-white"></i> Neuer Schüler</a>
+        <a id="newStudentButton" ng-click="newStudent()" class="btn btn-small btn-primary"><i class="icon-plus icon-white"></i> Neuer Schüler</a>
     </div>
 </form>
 
 
-<table class="table table-striped">
+<table id="studentTable" class="table table-striped">
 
     <thead>
     <tr>
@@ -20,10 +20,10 @@
 
     <tbody>
     <tr ng-repeat="student in students | filter:search">
-        <td>{{student.firstName}} {{student.lastName}}</td>
-        <td>
-            <a ng-click="editStudent(student)"><i class="icon-pencil"></i></a>
-            <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+        <td class="studentListName">{{student.firstName}} {{student.lastName}}</td>
+        <td class="studentListActions">
+            <a class="editStudentLink" ng-click="editStudent(student, $index)"><i class="icon-pencil"></i></a>
+            <a class="deleteStudentLink" ng-click="deleteStudent(student, $index)"><i class="icon-remove"></i></a>
         </td>
     </tr>
     </tbody>

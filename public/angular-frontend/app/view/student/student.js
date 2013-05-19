@@ -62,14 +62,17 @@ function StudentCtrl($scope, $resource, UUIDService) {
 
     $scope.saveStudent = function () {
         var student = angular.copy($scope.studentForm);
+
         student.$save();
-        $scope.students.push(student);
+        $scope.students[$scope.activeStudentIndex] = student;
+
         $scope.resetStudentForm();
         $scope.hideStudentDetail();
     };
 
-    $scope.editStudent = function(studentToEdit) {
+    $scope.editStudent = function(studentToEdit, index) {
         $scope.activeStudent = studentToEdit;
+        $scope.activeStudentIndex = index;
         $scope.resetStudentForm();
         $scope.showStudentDetail('Schüler editieren');
     }
@@ -77,13 +80,15 @@ function StudentCtrl($scope, $resource, UUIDService) {
     $scope.newStudent = function() {
         $scope.getEmptyStudent(function (emptyStudent) {
             $scope.activeStudent = emptyStudent;
+            $scope.activeStudentIndex = $scope.students.length;
             $scope.resetStudentForm();
             $scope.showStudentDetail('Neuer Schüler');
         });
     }
 
-    $scope.deleteStudent = function(studentToDelete) {
-        //todo: implement
+    $scope.deleteStudent = function(studentToDelete, index) {
+        studentToDelete.$delete();
+        $scope.students.splice(index, 1);
     }
 
     $scope.isUnchanged = function (studentForm) {
