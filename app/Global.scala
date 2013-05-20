@@ -1,3 +1,4 @@
+import com.mongodb.casbah.commons.conversions.scala.RegisterJodaTimeConversionHelpers
 import dataaccess.person.PersonDAO
 import domain.base.ID
 import domain.person.{Address, Person}
@@ -14,6 +15,9 @@ object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
     Logger.info("### Application startup... ###")
+
+    RegisterJodaTimeConversionHelpers()
+
     //PersonDAO.collection.drop
     if(PersonDAO.getByEMail(dummyUserEMail).isEmpty) {
       PersonDAO.persist(dummyUser)
