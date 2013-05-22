@@ -24,7 +24,7 @@ class MongoDBTest extends Specification {
 
       mongoColl.drop()
 
-      val newObj = MongoDBObject("foo" -> "bar", "x" -> "y", "pie" -> 3.14, "spam" -> "eggs")
+      val newObj: DBObject = MongoDBObject("foo" -> "bar", "x" -> "y", "pie" -> 3.14, "spam" -> "eggs")
       println("mongo object before save: " + newObj)
       mongoColl += newObj
       val storedObject: mongoColl.T = mongoColl.findOne().get

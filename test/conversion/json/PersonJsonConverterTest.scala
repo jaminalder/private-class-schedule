@@ -3,16 +3,15 @@ package conversion.json
 import org.specs2.mutable._
 import play.api.libs.json.Json
 import conversion.json.PersonJsonConverter._
-import domain.role.{Teacher, Role}
 import domain.person.{Address, Person}
-import domain.base.ID
+import crosscutting.basetype.Id
 
 class PersonJsonConverterTest extends Specification {
 
-  val person = Person(_id=ID.generate, lastName="Meier", firstName="Hans", eMail="hans.meier@gmail.com",
-    address=Address(street="street", streetNum = "3", city = "Bern", zip = "8000"), ownerID=ID.rootID)
+  val person = Person(id=Id.generate, lastName="Meier", firstName="Hans", eMail="hans.meier@gmail.com",
+    address=Address(street="street", streetNum = "3", city = "Bern", zip = "8000"), ownerID=Id.rootID)
 
-  val jsonStringPerson = """{"_id":"""" + person._id + """","lastName":"Meier","firstName":"Hans","eMail":"hans.meier@gmail.com","address":{"street":"street","streetNum":"3","city":"Bern","zip":"8000"}, "ownerID":"42"}"""
+  val jsonStringPerson = """{"id":{"_id":"""" + person.id._id + """"},"lastName":"Meier","firstName":"Hans","eMail":"hans.meier@gmail.com","address":{"street":"street","streetNum":"3","city":"Bern","zip":"8000"}, "ownerID":{"_id":"42"}}"""
 
   "A Person" should {
 

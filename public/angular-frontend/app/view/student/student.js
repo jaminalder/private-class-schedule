@@ -17,7 +17,7 @@ function StudentCtrl($scope, $resource, UUIDService) {
     User.get(function (userResult) {
         console.log('user result: ' + JSON.stringify(userResult));
         $scope.user = userResult;
-        $scope.students = Student.allStudentsOfTeacher({'ownerID': userResult._id});
+        $scope.students = Student.allStudentsOfTeacher({'ownerID': userResult.id._id});
     });
 
     $scope.showStudentDetail = function(title){
@@ -36,8 +36,8 @@ function StudentCtrl($scope, $resource, UUIDService) {
         var constructEmptyStudent = function (id) {
             var emptyStudent = new Student();
 
-            emptyStudent._id = id;
-            emptyStudent.ownerID = $scope.user._id;
+            emptyStudent.id = id;
+            emptyStudent.ownerID = $scope.user.id;
 
             //set the optional fields to "" to ensure a proper conversion to person on the server
             //not sure, if this is really a good idea

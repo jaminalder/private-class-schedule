@@ -1,8 +1,8 @@
 package service.id
 
 import play.api.mvc._
-import domain.base.ID
 import play.api.libs.json.Json
+import crosscutting.basetype.Id
 
 /**
  * JSON Service.
@@ -11,10 +11,10 @@ import play.api.libs.json.Json
 object IDService extends Controller {
 
   /**
-   * Yields a new random UUID.
+   * Yields a new generate UUID.
    */
   def generate = Action {
-    Ok(Json.obj("_id" -> ID.generate))
+    Ok(Json.toJson(Id.generate))
   }
 
 }

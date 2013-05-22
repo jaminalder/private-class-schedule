@@ -7,6 +7,7 @@ import dataaccess.person.PersonDAO
 import conversion.json.PersonJsonConverter._
 import domain.person.Person
 import play.api.Logger
+import crosscutting.basetype.Id
 
 /**
  * JSON Service.
@@ -31,7 +32,7 @@ object UserService extends Controller {
     PersonDAO.collection.find.foreach(dbobject => Logger.info(dbobject.toString))
     val storedRole: Role = PersonDAO.getByEMail(eMail).get
     val jsonPerson = Json.toJson(storedRole.person)
-    Ok(jsonPerson).withSession("loggedInUserID" -> storedRole.person._id)
+    Ok(jsonPerson).withSession("loggedInUserID" -> storedRole.person.id._id)
   }
 
   /**
@@ -48,7 +49,7 @@ object UserService extends Controller {
   }
 
   def deleteUser(id:String) = Action {
-    PersonDAO.deleteByID(id);
+    PersonDAO.deleteByID(Id(id));
     Ok
   }
 

@@ -5,6 +5,7 @@ import com.mongodb.casbah.Imports._
 import domain.role.{Student, Teacher, Role}
 import RoleMongoConverter._
 import scala.None
+import crosscutting.basetype.Id
 
 /**
  * Handles the data access of person and role objects.
@@ -13,19 +14,19 @@ object PersonDAO extends DataAccessObject {
   val collectionName: String = "person"
 
   def persist(role:Role) {
-    collection.update(MongoDBObject("_id" -> role.person._id), role, upsert = true)
+    collection.update(MongoDBObject("_id" -> role.person.id._id), role, upsert = true)
   }
 
   def delete(role:Role) {
-    deleteByID(role.person._id)
+    deleteByID(role.person.id)
   }
 
-  def deleteByID(id:String) {
-    collection.remove(MongoDBObject("_id" -> id))
+  def deleteByID(id:Id) {
+    collection.remove(MongoDBObject("_id" -> id._id))
   }
 
-  def getByID(id: String): Option[Role] = {
-    collection.findOneByID(id).map(toRole)
+  def getByID(id: Id): Option[Role] = {
+    collection.findOneByID(id._id).map(toRole)
   }
 
   def getByEMail(eMail: String): Option[Role] = {
@@ -33,7 +34,7 @@ object PersonDAO extends DataAccessObject {
   }
 
   def getStudentsOfTeacher(teacher: Teacher):List[Student] = {
-    val studentIterator = collection.find(MongoDBObject("ownerID" -> teacher.person._id, "role" -> "Student"))
+    val studentIterator = collection.find(MongoDBObject("ownerID" -> teacher.person.id._id, "role" -> "Student"))
     studentIterator.map(toRole).toList.asInstanceOf[List[Student]]
   }
 }

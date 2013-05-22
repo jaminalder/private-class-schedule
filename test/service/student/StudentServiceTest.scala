@@ -4,11 +4,28 @@ import org.specs2.mutable._
 import play.api.test.WithServer
 import play.api.libs.ws.{Response, WS}
 import play.api.test.Helpers._
-import dataaccess.person.{PersonTestData, PersonDAO}
+import dataaccess.person.{PersonDAO}
 import play.api.libs.ws.WS.WSRequestHolder
 import conversion.json.PersonJsonConverter._
-import domain.person.Person
+import domain.person.{Address, Person}
 import play.api.libs.json.{Json, JsArray, JsValue}
+import domain.role.{Student, Teacher}
+import crosscutting.basetype.Id
+
+object PersonTestData {
+
+  val teacher = Teacher(Person(id=Id.generate, lastName="Meier", firstName="Hans", eMail="hans.meier@gmail.com",
+    address=Address(street="street", streetNum = "3", city = "Bern", zip = "8000"), ownerID=Id.rootID))
+
+  def randomStudentOfTeacher:Student = {
+    val id = Id.generate
+    val namePart = id._id.substring(3,6)
+    Student(Person(id,"last"+namePart, "first"+namePart, namePart+"@server.com",
+      Address(namePart+"street", namePart, namePart+"city", namePart), PersonTestData.teacher.person.id))
+  }
+
+}
+
 
 class StudentServiceTest extends Specification {
   sequential
@@ -32,7 +49,7 @@ class StudentServiceTest extends Specification {
     "yield all students of a teacher" in new WithServer {
 
       // now call the other service to get the before added students
-      val requestHolder: WSRequestHolder = WS.url("http://localhost:19001/api/student/allStudentsOfTeacher/" + PersonTestData.teacher.person._id)
+      val requestHolder: WSRequestHolder = WS.url("http://localhost:19001/api/student/allStudentsOfTeacher/" + PersonTestData.teacher.person.id._id)
       val response: Response = await(requestHolder.get)
       response.status must equalTo(OK)
       response.json.asInstanceOf[JsArray].value.size mustEqual 2

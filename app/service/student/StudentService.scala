@@ -6,6 +6,7 @@ import domain.role.{Teacher, Student}
 import dataaccess.person.PersonDAO
 import conversion.json.PersonJsonConverter._
 import domain.person.Person
+import crosscutting.basetype.Id
 
 /**
  * JSON Service.
@@ -19,6 +20,7 @@ object StudentService extends Controller {
    */
   def saveStudent = Action(parse.json) {
     request =>
+      val rb: JsValue = request.body
       println("add student input: " + request.body)
       val newStudent: Person = request.body.as[Person]
       PersonDAO.persist(Student(newStudent))
@@ -44,7 +46,7 @@ object StudentService extends Controller {
    * @return a list of person objects in json format
    */
   def allStudentsOfTeacher(teacherID: String) = Action {
-    val storedTeacher = PersonDAO.getByID(teacherID).get.asInstanceOf[Teacher]
+    val storedTeacher = PersonDAO.getByID(Id(teacherID)).get.asInstanceOf[Teacher]
 
     val students: List[Student] = PersonDAO.getStudentsOfTeacher(storedTeacher)
     println("students of teacher: " + students)

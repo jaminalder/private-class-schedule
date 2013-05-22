@@ -1,6 +1,6 @@
 import com.mongodb.casbah.commons.conversions.scala.RegisterJodaTimeConversionHelpers
+import crosscutting.basetype.Id
 import dataaccess.person.PersonDAO
-import domain.base.ID
 import domain.person.{Address, Person}
 import domain.role.Teacher
 import play.api._
@@ -9,8 +9,8 @@ object Global extends GlobalSettings {
 
   val dummyUserEMail: String = "dummy.user@email.com"
   val dummyUser = {
-    Teacher(Person(_id = ID.generate, lastName = "User", firstName = "Dummy", eMail = dummyUserEMail,
-      address = Address(street = "street", streetNum = "3", city = "Bern", zip = "8000"), ownerID = ID.rootID))
+    Teacher(Person(id = Id.generate, lastName = "User", firstName = "Dummy", eMail = dummyUserEMail,
+      address = Address(street = "street", streetNum = "3", city = "Bern", zip = "8000"), ownerID = Id.rootID))
   }
 
   override def onStart(app: Application) {

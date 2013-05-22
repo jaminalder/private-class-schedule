@@ -1,10 +1,10 @@
 package domain.person
 
-import domain.base.ID
+import crosscutting.basetype.Id
 
-case class Person(_id: String = ID.generate,
+case class Person(id: Id,
                   lastName: String,
                   firstName: String,
                   eMail: String,
                   address: Address,
-                  ownerID: String) extends ID
+                  ownerID: Id)
