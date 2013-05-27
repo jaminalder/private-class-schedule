@@ -4,13 +4,13 @@ import org.specs2.mutable._
 import play.api.test.WithServer
 import play.api.libs.ws.{Response, WS}
 import play.api.test.Helpers._
-import dataaccess.person.{PersonDAO}
 import play.api.libs.ws.WS.WSRequestHolder
-import conversion.json.PersonJsonConverter._
-import domain.person.{Address, Person}
-import play.api.libs.json.{Json, JsArray, JsValue}
-import domain.role.{Student, Teacher}
+import play.api.libs.json.{Json, JsArray}
 import crosscutting.basetype.Id
+import crosscutting.transferobject.person.{Student, Person, Address, Teacher}
+import domain.person.TeacherDomainComponent
+import crosscutting.transferobject.base.ImplicitJsonFormats._
+
 
 object PersonTestData {
 
@@ -30,18 +30,18 @@ object PersonTestData {
 class StudentServiceTest extends Specification {
   sequential
 
-  "StudentService" should {
+  "StudentDomainComponent" should {
 
     "add students of a teacher" in new WithServer {
       // clean up all existing persons and add a single teacher
-      PersonDAO.collection.drop
-      PersonDAO.persist(PersonTestData.teacher)
+      TeacherDomainComponent.dao.collection.drop
+      TeacherDomainComponent.saveTeacher(PersonTestData.teacher)
 
       // add two students through the service
       val requestHolder = WS.url("http://localhost:19001/api/student/saveStudent")
-      val response1: Response = await(requestHolder.post(PersonTestData.randomStudentOfTeacher.person.toJson))
+      val response1: Response = await(requestHolder.post(Json.toJson(PersonTestData.randomStudentOfTeacher.person)))
       response1.status must equalTo(OK)
-      val response2: Response = await(requestHolder.post(PersonTestData.randomStudentOfTeacher.person.toJson))
+      val response2: Response = await(requestHolder.post(Json.toJson(PersonTestData.randomStudentOfTeacher.person)))
       response2.status must equalTo(OK)
     }
 
@@ -53,8 +53,8 @@ class StudentServiceTest extends Specification {
       val response: Response = await(requestHolder.get)
       response.status must equalTo(OK)
       response.json.asInstanceOf[JsArray].value.size mustEqual 2
-      val student1: Person = toPerson(response.json(0))
-      val student2: Person = toPerson(response.json(1))
+      val student1: Person = response.json(0).as[Person]
+      val student2: Person = response.json(1).as[Person]
       student1.lastName.startsWith("last") must  beTrue
       student2.lastName.startsWith("last") must  beTrue
       student1.lastName mustNotEqual student2.lastName

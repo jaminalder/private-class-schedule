@@ -6,13 +6,14 @@ import play.api.test.WithApplication
 import crosscutting.basetype.Id
 import org.joda.time.DateTime
 import crosscutting.datetime.DateTimeFormats._
+import crosscutting.transferobject.lesson.Lesson
 
 class LessonDataAccessObjectTest extends Specification {
 
   "The LessonDataAccessObject" should {
     "store and retrieve a Lesson from the db" in new WithApplication {
 
-      import WiringComponent.{Lesson, dao}
+      val dao = LessonDataAccessObject
 
       val lessonId = Id.generate
       val start = DateTime.parse("03.05.2013 1330", simpleDateTimeFormat)
@@ -31,9 +32,5 @@ class LessonDataAccessObjectTest extends Specification {
     }
   }
 
-  object WiringComponent extends LessonDomainComponent with LessonDataAccessComponent with LessonDataConverterComponent {
-    val dao = LessonDataAccessObject
-    val dataObjectConverter = LessonDataObjectConverter
-  }
 
 }

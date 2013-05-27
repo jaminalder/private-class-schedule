@@ -2,9 +2,9 @@ package conversion.json
 
 import org.specs2.mutable._
 import play.api.libs.json.Json
-import conversion.json.PersonJsonConverter._
-import domain.person.{Address, Person}
 import crosscutting.basetype.Id
+import crosscutting.transferobject.base.ImplicitJsonFormats._
+import crosscutting.transferobject.person.{Address, Person}
 
 class PersonJsonConverterTest extends Specification {
 
@@ -16,12 +16,11 @@ class PersonJsonConverterTest extends Specification {
   "A Person" should {
 
     "be convertible to json" in {
-      (person.toJson \ "lastName").as[String] mustEqual "Meier"
+      (Json.toJson(person) \ "lastName").as[String] mustEqual "Meier"
     }
 
     "be constructable from json" in {
-      toPerson(Json.parse(jsonStringPerson)) mustEqual person
-      toPerson(jsonStringPerson) mustEqual person
+      Json.parse(jsonStringPerson).as[Person] mustEqual person
     }
   }
 

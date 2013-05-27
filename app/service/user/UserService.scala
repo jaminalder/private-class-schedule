@@ -1,13 +1,12 @@
 package service.user
 
 import play.api.mvc._
-import play.api.libs.json.{Json, JsValue}
-import domain.role.{Role, Teacher, Student}
-import dataaccess.person.PersonDAO
-import conversion.json.PersonJsonConverter._
-import domain.person.Person
+import play.api.libs.json.Json
 import play.api.Logger
 import crosscutting.basetype.Id
+import domain.person.TeacherDomainComponent
+import crosscutting.transferobject.person.{Person, Teacher}
+import crosscutting.transferobject.base.ImplicitJsonFormats._
 
 /**
  * JSON Service.
@@ -29,8 +28,8 @@ object UserService extends Controller {
   def login(eMail: String, password: String) = Action {
     Logger.info("### login action with " + eMail)
     Logger.info("persons in db:")
-    PersonDAO.collection.find.foreach(dbobject => Logger.info(dbobject.toString))
-    val storedRole: Role = PersonDAO.getByEMail(eMail).get
+    TeacherDomainComponent.dao.collection.find.foreach(dbobject => Logger.info(dbobject.toString))
+    val storedRole: Teacher = TeacherDomainComponent.getTeacherByEmail(eMail).get
     val jsonPerson = Json.toJson(storedRole.person)
     Ok(jsonPerson).withSession("loggedInUserID" -> storedRole.person.id._id)
   }
@@ -44,12 +43,12 @@ object UserService extends Controller {
     request =>
       val newUser: Person = request.body.as[Person]
       val newTeacherUser = Teacher(newUser)
-      PersonDAO.persist(newTeacherUser)
+      TeacherDomainComponent.saveTeacher(newTeacherUser)
       Ok(Json.toJson(newUser))
   }
 
   def deleteUser(id:String) = Action {
-    PersonDAO.deleteByID(Id(id));
+    TeacherDomainComponent.deleteTeacherById(Id(id));
     Ok
   }
 

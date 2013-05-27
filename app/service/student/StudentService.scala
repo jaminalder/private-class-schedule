@@ -2,11 +2,10 @@ package service.student
 
 import play.api.mvc._
 import play.api.libs.json.{Json, JsValue}
-import domain.role.{Teacher, Student}
-import dataaccess.person.PersonDAO
-import conversion.json.PersonJsonConverter._
-import domain.person.Person
 import crosscutting.basetype.Id
+import crosscutting.transferobject.person.{Teacher, Student, Person}
+import domain.person.{TeacherDomainComponent, StudentDomainComponent}
+import crosscutting.transferobject.base.ImplicitJsonFormats._
 
 /**
  * JSON Service.
@@ -20,10 +19,9 @@ object StudentService extends Controller {
    */
   def saveStudent = Action(parse.json) {
     request =>
-      val rb: JsValue = request.body
       println("add student input: " + request.body)
       val newStudent: Person = request.body.as[Person]
-      PersonDAO.persist(Student(newStudent))
+      StudentDomainComponent.saveStudent(Student(newStudent))
       Ok
   }
 
@@ -35,7 +33,7 @@ object StudentService extends Controller {
     request =>
       println("delete student input: " + request.body)
       val studentToDelete: Person = request.body.as[Person]
-      PersonDAO.delete(Student(studentToDelete))
+      StudentDomainComponent.deleteStudentById(studentToDelete.id)
       Ok
   }
 
@@ -46,9 +44,8 @@ object StudentService extends Controller {
    * @return a list of person objects in json format
    */
   def allStudentsOfTeacher(teacherID: String) = Action {
-    val storedTeacher = PersonDAO.getByID(Id(teacherID)).get.asInstanceOf[Teacher]
-
-    val students: List[Student] = PersonDAO.getStudentsOfTeacher(storedTeacher)
+    val storedTeacher: Teacher = TeacherDomainComponent.getTeacherById(Id(teacherID)).get
+    val students: List[Student] = StudentDomainComponent.getStudentsOfTeacher(storedTeacher.id)
     println("students of teacher: " + students)
     val jsonStudents: List[JsValue] = students.map(t => Json.toJson(t.person))
     Ok(Json.toJson(jsonStudents))

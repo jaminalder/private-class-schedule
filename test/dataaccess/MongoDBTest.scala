@@ -4,12 +4,8 @@ import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.MongoClientURI
 import com.mongodb.util.JSON
 import org.specs2.mutable._
-import person.RoleMongoConverter._
 import play.api._
 import libs.json._
-import domain.person.{Address, Person}
-import domain.person.Person
-import domain.person.Address
 import test.WithApplication
 import com.github.nscala_time.time.Imports._
 import org.joda.time

@@ -1,8 +1,7 @@
 import com.mongodb.casbah.commons.conversions.scala.RegisterJodaTimeConversionHelpers
 import crosscutting.basetype.Id
-import dataaccess.person.PersonDAO
-import domain.person.{Address, Person}
-import domain.role.Teacher
+import crosscutting.transferobject.person.{Address, Person, Teacher}
+import domain.person.TeacherDomainComponent
 import play.api._
 
 object Global extends GlobalSettings {
@@ -19,11 +18,11 @@ object Global extends GlobalSettings {
     RegisterJodaTimeConversionHelpers()
 
     //PersonDAO.collection.drop
-    if(PersonDAO.getByEMail(dummyUserEMail).isEmpty) {
-      PersonDAO.persist(dummyUser)
+    if(TeacherDomainComponent.getTeacherByEmail(dummyUserEMail).isEmpty) {
+      TeacherDomainComponent.saveTeacher(dummyUser)
     }
     println("### all persons in db:")
-    PersonDAO.collection.find.foreach(println)
+    TeacherDomainComponent.dao.collection.find.foreach(println)
     Logger.info("### Application startup finished ###")
   }
 

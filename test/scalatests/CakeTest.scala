@@ -3,6 +3,8 @@ package scalatests
 import org.specs2.mutable._
 import scala.collection.mutable.Map
 
+/*
+
 class CakeTest extends Specification {
 
   "domain objects" should {
@@ -14,8 +16,6 @@ class CakeTest extends Specification {
       domainObject.save
       TestDomain.getById(1) must beSome[TestDomain]
       TestDomain.getById(1).get mustEqual domainObject
-
-
 
     }
   }
@@ -105,6 +105,6 @@ trait TestConverterComponent extends ConverterComponent {
   }
 }
 
-
+*/
 
 

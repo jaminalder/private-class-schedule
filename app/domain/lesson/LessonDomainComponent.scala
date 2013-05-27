@@ -1,20 +1,20 @@
 package domain.lesson
 
-import org.joda.time.DateTime
-import domain.base.StorableDomainComponent
+import dataaccess.base.DataAccessObject
+import crosscutting.transferobject.lesson.Lesson
 import crosscutting.basetype.Id
-import dataaccess.lesson.LessonDataAccessComponent
-import play.api.libs.json.{Format, Json}
+import dataaccess.lesson.LessonDataAccessObject
 
-trait LessonDomainComponent extends StorableDomainComponent{
-  self:LessonDataAccessComponent =>
 
-  override type StorableDomainObjectType = Lesson
+trait LessonDomainComponent {
 
-  case class Lesson(id:Id, start:DateTime, end:DateTime, teacherId:Id, studentIds:List[Id]) extends StorableDomainObject
+  val dao: DataAccessObject[Lesson]
 
-  object Lesson extends StorableDomainCompanionObject with Function5[Id, DateTime, DateTime, Id, List[Id], Lesson] {
-    //implicit val lessonFormat = Json.format[Lesson]
-  }
+  def getLessonById(id: Id): Option[Lesson] = dao.getById(id)
+  def saveLesson(lesson: Lesson) = dao.persist(lesson)
 
+}
+
+object LessonDomainComponent extends LessonDomainComponent{
+  val dao = LessonDataAccessObject
 }

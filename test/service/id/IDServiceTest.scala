@@ -4,11 +4,6 @@ import org.specs2.mutable._
 import play.api.test.WithServer
 import play.api.libs.ws.{Response, WS}
 import play.api.test.Helpers._
-import dataaccess.person.{PersonTestData, PersonDAO}
-import play.api.libs.ws.WS.WSRequestHolder
-import conversion.json.PersonJsonConverter._
-import domain.person.Person
-import play.api.libs.json.JsArray
 
 class IDServiceTest extends Specification {
 

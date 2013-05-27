@@ -1,13 +1,17 @@
 package dataaccess.person
 
+import dataaccess.base.DBObjectConverter
+import crosscutting.transferobject.person._
 import com.mongodb.casbah.Imports._
-import domain.person.{Address, Person}
-import domain.role.Role
 import crosscutting.basetype.Id
 
-object RoleMongoConverter {
+sealed abstract class RoleDBObjectConverter[ConcreteRole <: Role] extends DBObjectConverter[ConcreteRole] {
 
-  implicit def roleToDBObject(role: Role): DBObject = {
+  def roleName: String
+
+  def createConcreteRole(person: Person): ConcreteRole
+
+  override def transferObjectToDBObject(role: ConcreteRole): DBObject = {
 
     val address = role.person.address
     val addressDataObject = MongoDBObject(
@@ -24,14 +28,19 @@ object RoleMongoConverter {
       "firstName" -> person.firstName,
       "eMail" -> person.eMail,
       "address" -> addressDataObject,
-      "role" -> role.name,
+      "role" -> roleName,
       "ownerID" -> person.ownerID._id
     )
 
     personDataObject
   }
 
-  def toRole(dataObject:DBObject): Role = {
+  override def dBObjectToTransferObject(dataObject: DBObject): ConcreteRole = {
+
+    val storedRoleName = dataObject.as[String]("role")
+    if (!roleName.equals(storedRoleName)) {
+      throw new IllegalArgumentException("trying to make a: " + roleName + " from a " + storedRoleName)
+    }
 
     val addressDBObject = dataObject.as[DBObject]("address")
     val address = Address(
@@ -50,9 +59,21 @@ object RoleMongoConverter {
       Id(dataObject.as[String]("ownerID"))
     )
 
-    val roleName = dataObject.as[String]("role")
+    createConcreteRole(person)
 
-    Role.byName(person, roleName)
   }
 
 }
+
+object TeacherDBObjectConverter extends RoleDBObjectConverter[Teacher] {
+  def roleName: String = "Teacher"
+
+  def createConcreteRole(person: Person): Teacher = Teacher(person)
+}
+
+object StudentDBObjectConverter extends RoleDBObjectConverter[Student] {
+  def roleName: String = "Student"
+
+  def createConcreteRole(person: Person): Student = Student(person)
+}
+
