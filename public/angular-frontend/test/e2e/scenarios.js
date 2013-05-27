@@ -33,12 +33,12 @@ describe('my app', function () {
         });
 
         it('should add a new student with firstname and lastname only.', function () {
-            addStudentFirsLastName('First1', 'Last1');
+            addStudentFirstLastName('First1', 'Last1');
             verifyStudentNameInList('First1', 'Last1', ':last');
         });
 
         it('should add another student. this should be appended to the list', function () {
-            addStudentFirsLastName('First2', 'Last2');
+            addStudentFirstLastName('First2', 'Last2');
             verifyStudentNameInList('First2', 'Last2', ':last');
         });
 
@@ -63,7 +63,7 @@ describe('my app', function () {
             element('#studentTable .deleteStudentLink :last').click();
         });
 
-        var addStudentFirsLastName = function (firstname, lastname) {
+        var addStudentFirstLastName = function (firstname, lastname) {
             element('#newStudentButton').click();
             input('studentForm.firstName').enter(firstname);
             input('studentForm.lastName').enter(lastname);
@@ -74,6 +74,21 @@ describe('my app', function () {
             expect(element('#studentTable .studentListName' + positionInList).text()).
                 toMatch(firstname + ' ' + lastname)
         }
+
+
+    });
+
+    describe('calendar', function () {
+
+        beforeEach(function () {
+            browser().navigateTo('#/calendar');
+        });
+
+
+        it('should render calendar when user navigates to /calendar', function () {
+            expect(element('#calendarTitle').text()).
+                toMatch('Kalender');
+        });
 
 
     });
