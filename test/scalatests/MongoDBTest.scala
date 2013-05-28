@@ -1,4 +1,4 @@
-package dataaccess
+package scalatests
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.MongoClientURI

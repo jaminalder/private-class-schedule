@@ -16,6 +16,11 @@ trait StudentDomainComponent {
 
   def getStudentsOfTeacher(teacherId: Id) = dao.getStudentsOfTeacher(teacherId)
 
+  def deleteStudentsOfTeacher(teacherId: Id) = {
+    val studentsOfTeacher: List[Student] = getStudentsOfTeacher(teacherId)
+    studentsOfTeacher.foreach(student => dao.deleteByID(student.id))
+  }
+
 }
 
 object StudentDomainComponent extends StudentDomainComponent {
