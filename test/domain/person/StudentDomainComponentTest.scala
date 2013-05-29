@@ -22,18 +22,18 @@ class StudentDomainComponentTest extends Specification {
     }
 
     "Find all Students of a Teacher" in new WithApplication {
-      val studentsOfTeacher = StudentDomainComponent.getStudentsOfTeacher(PersonTestData.teacher.id)
+      val studentsOfTeacher = StudentDomainComponent.getStudentsOfTeacher(PersonTestData.teacher)
       studentsOfTeacher.size mustEqual 20
     }
 
     "delete all students of a teacher" in new WithApplication {
-      StudentDomainComponent.deleteStudentsOfTeacher(PersonTestData.teacher.id)
-      val studentsOfTeacher = StudentDomainComponent.getStudentsOfTeacher(PersonTestData.teacher.id)
+      StudentDomainComponent.deleteStudentsOfTeacher(PersonTestData.teacher)
+      val studentsOfTeacher = StudentDomainComponent.getStudentsOfTeacher(PersonTestData.teacher)
       studentsOfTeacher.size mustEqual 0
     }
 
     "cleanup the stored teacher" in new WithApplication {
-      TeacherDomainComponent.deleteTeacherById(PersonTestData.teacher.id)
+      TeacherDomainComponent.deleteTeacher(PersonTestData.teacher)
       TeacherDomainComponent.getTeacherById(PersonTestData.teacher.id) must beNone
     }
   }

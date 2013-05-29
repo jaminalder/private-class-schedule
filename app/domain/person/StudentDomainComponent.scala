@@ -2,7 +2,7 @@ package domain.person
 
 import dataaccess.person.StudentDataAccessObject
 import crosscutting.basetype.Id
-import crosscutting.transferobject.person.Student
+import crosscutting.transferobject.person.{Teacher, Student}
 
 trait StudentDomainComponent {
 
@@ -12,12 +12,12 @@ trait StudentDomainComponent {
 
   def saveStudent(student: Student) = dao.persist(student)
 
-  def deleteStudentById(id: Id) = dao.deleteByID(id)
+  def deleteStudent(student: Student) = dao.deleteByID(student.id)
 
-  def getStudentsOfTeacher(teacherId: Id) = dao.getStudentsOfTeacher(teacherId)
+  def getStudentsOfTeacher(teacher: Teacher) = dao.getStudentsOfTeacher(teacher.id)
 
-  def deleteStudentsOfTeacher(teacherId: Id) = {
-    val studentsOfTeacher: List[Student] = getStudentsOfTeacher(teacherId)
+  def deleteStudentsOfTeacher(teacher: Teacher) = {
+    val studentsOfTeacher: List[Student] = getStudentsOfTeacher(teacher)
     studentsOfTeacher.foreach(student => dao.deleteByID(student.id))
   }
 

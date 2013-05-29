@@ -27,30 +27,8 @@ class TeacherDomainComponentTest extends Specification {
     }
 
     "be deletable by id" in new WithApplication {
-      TeacherDomainComponent.deleteTeacherById(PersonTestData.teacher.id)
+      TeacherDomainComponent.deleteTeacher(PersonTestData.teacher)
     }
-/*
-    "Store some Students for a Teacher" in new WithApplication {
-
-      for (i <- 1 to 20) studentDAO.persist(PersonTestData.randomStudentOfTeacher)
-    }
-
-    "Find all Students of a Teacher" in new WithApplication {
-      val storedTeacher = teacherDAO.getById(PersonTestData.teacher.person.id).get
-      val studentsOfTeacher = studentDAO.getStudentsOfTeacher(storedTeacher.id)
-      studentsOfTeacher.size mustEqual 20
-    }
-
-    "Delete some persons" in new WithApplication {
-      val storedTeacher: Teacher = teacherDAO.getById(PersonTestData.teacher.person.id).get
-      val studentsOfTeacher: List[Student] = studentDAO.getStudentsOfTeacher(storedTeacher.id)
-      studentsOfTeacher.foreach(student => studentDAO.deleteByID(student.id))
-      teacherDAO.deleteByID(storedTeacher.id)
-      teacherDAO.getById(PersonTestData.teacher.person.id) must beNone
-      studentDAO.getStudentsOfTeacher(storedTeacher.id).size mustEqual 0
-    }
-*/
   }
-
 
 }

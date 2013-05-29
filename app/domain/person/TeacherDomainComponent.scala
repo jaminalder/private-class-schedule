@@ -14,7 +14,7 @@ trait TeacherDomainComponent {
 
   def getTeacherByEmail(eMail: String) = dao.getByEMail(eMail)
 
-  def deleteTeacherById(id: Id) = dao.deleteByID(id)
+  def deleteTeacher(teacher: Teacher) = dao.deleteByID(teacher.id)
 
 }
 
