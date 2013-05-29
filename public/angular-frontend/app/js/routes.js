@@ -5,5 +5,6 @@ angular.module('pcs.routes', []).
     $routeProvider.when('/student', {templateUrl: 'view/student/studentListAndFormPage.html', controller:StudentCtrl});
     $routeProvider.when('/calendar', {templateUrl: 'view/calendar/calendar.html', controller:CalendarCtrl});
     $routeProvider.when('/calendarStudentList', {templateUrl: 'view/calendar/calendarStudentList.html', controller:(CalendarCtrl, StudentCtrl)});
+    $routeProvider.when('/lesson', {templateUrl: 'view/lesson/lesson.html', controller:LessonCtrl});
     $routeProvider.otherwise({redirectTo: '/student'});
   }]);
