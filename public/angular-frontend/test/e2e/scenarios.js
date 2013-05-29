@@ -90,11 +90,6 @@ describe('my app', function () {
                 toMatch('Kalender');
         });
 
-        it('click next and calender header should change to next month, function () {
-
-        });
-
-
     });
 
 
