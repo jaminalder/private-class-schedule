@@ -33,7 +33,7 @@ object StudentService extends Controller {
     request =>
       println("delete student input: " + request.body)
       val studentToDelete: Person = request.body.as[Person]
-      StudentDomainComponent.deleteStudentById(studentToDelete.id)
+      StudentDomainComponent.deleteStudent(Student(studentToDelete))
       Ok
   }
 
@@ -45,7 +45,7 @@ object StudentService extends Controller {
    */
   def allStudentsOfTeacher(teacherID: String) = Action {
     val storedTeacher: Teacher = TeacherDomainComponent.getTeacherById(Id(teacherID)).get
-    val students: List[Student] = StudentDomainComponent.getStudentsOfTeacher(storedTeacher.id)
+    val students: List[Student] = StudentDomainComponent.getStudentsOfTeacher(storedTeacher)
     println("students of teacher: " + students)
     val jsonStudents: List[JsValue] = students.map(t => Json.toJson(t.person))
     Ok(Json.toJson(jsonStudents))

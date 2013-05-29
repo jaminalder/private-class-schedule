@@ -48,7 +48,8 @@ object UserService extends Controller {
   }
 
   def deleteUser(id:String) = Action {
-    TeacherDomainComponent.deleteTeacherById(Id(id));
+    val teacherOption = TeacherDomainComponent.getTeacherById(Id(id))
+    teacherOption.map(TeacherDomainComponent.deleteTeacher);
     Ok
   }
 
