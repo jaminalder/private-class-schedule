@@ -73,7 +73,7 @@ function LessonCtrl($scope, $filter, $resource, UUIDService) {
 
             emptyLesson.id = id;
             emptyLesson.teacherId = $scope.user.id;
-            emptyLesson.studentIds = [""] ;
+//            emptyLesson.studentIds = [""] ;
 
             //set the optional fields to "" to ensure a proper conversion to person on the server
             //not sure, if this is really a good idea

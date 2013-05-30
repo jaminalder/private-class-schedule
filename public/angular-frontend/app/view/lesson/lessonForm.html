@@ -3,15 +3,12 @@
 <form name="form" novalidate>
 
     <div class="controls">
-        <input class="span4" type="text" ng-model="lessonForm.start" date="MM/dd/yyyy" placeholder="Start"
+        <input class="span4" type="text" ng-model="lessonForm.start" date="MM/dd/yyyy h:mm" placeholder="Start"
                required>
     </div>
     <div class="controls">
-        <input class="span4" type="text" ng-model="lessonForm.end" date="MM/dd/yyyy" placeholder="Ende"
+        <input class="span4" type="text" ng-model="lessonForm.end" date="MM/dd/yyyy h:mm" placeholder="Ende"
                required>
-    </div>
-    <div class="span4" type="text">
-        {{myDate}}      {{startDate}}     {{endDate}}
     </div>
     <p>
         <input id="saveLessonButton" ng-click="saveLesson()" class="btn btn-primary span2" type="submit" value="Speichern"

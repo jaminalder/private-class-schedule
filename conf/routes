@@ -19,6 +19,7 @@ POST   /api/student/deleteStudent                      service.student.StudentSe
 GET    /api/student/allStudentsOfTeacher/:teacherID    service.student.StudentService.allStudentsOfTeacher(teacherID)
 
 POST   /api/lesson/saveLesson                          service.lesson.LessonService.saveLesson
+POST   /api/lesson/deleteLesson                        service.lesson.LessonService.deleteLesson
 GET    /api/lesson/allLessonsOfTeacher/:teacherID      service.lesson.LessonService.allLessonsOfTeacher(teacherID)
 
 # Map static resources from the /public folder to the /assets URL path

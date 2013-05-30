@@ -6,9 +6,6 @@
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <a id="newLessonButton" ng-click="newLesson()" class="btn btn-small btn-primary"><i class="icon-plus icon-white"></i> Neue Lektion</a>
     </div>
-    <div class="span4" type="text">
-        {{myDate}}      {{startDate}}     {{endDate}}
-    </div>
 </form>
 
 
@@ -23,7 +20,7 @@
 
     <tbody>
     <tr ng-repeat="lesson in lessons | filter:search">
-        <td class="lessonListName">{{lesson.start | date:'dd/MM/yyyy'}} {{lesson.end | date:'dd/MM/yyyy'}}</td>
+        <td class="lessonListName">{{lesson.start | date:'dd.MM.yyyy h:mm'}} {{lesson.end | date:'dd.MM.yyyy h:mm'}}</td>
         <td class="lessonListActions">
             <a class="editLessonLink" ng-click="editLesson(lesson, $index)"><i class="icon-pencil"></i></a>
             <a class="deleteLessonLink" ng-click="deleteLesson(lesson, $index)"><i class="icon-remove"></i></a>

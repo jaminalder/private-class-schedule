@@ -15,7 +15,7 @@ trait LessonDomainComponent {
 
   def saveLesson(lesson: Lesson) = dao.persist(lesson)
 
-//  def deleteLesson(lesson: Lesson) = dao.deleteByID(lesson.id)
+  def deleteLesson(lesson: Lesson) = dao.deleteByID(lesson.id)
 
   def getLessonsOfTeacher(teacher: Teacher) = dao.getLessonsOfTeacher(teacher.id)
 

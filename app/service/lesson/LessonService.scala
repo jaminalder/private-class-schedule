@@ -31,13 +31,13 @@ object LessonService extends Controller {
    * Deletes a lesson from the database.
    * Input: one lesson in json format
    */
-/*  def deleteLesson = Action(parse.json) {
+  def deleteLesson = Action(parse.json) {
     request =>
       println("delete lesson input: " + request.body)
       val lessonToDelete: Lesson = request.body.as[Lesson]
-      LessonDomainComponent.deleteLesson(Lesson(lessonToDelete))
+      LessonDomainComponent.deleteLesson(lessonToDelete)
       Ok
-  }      */
+  }
 
   /**
    * Yields all lessons of a teacher.
