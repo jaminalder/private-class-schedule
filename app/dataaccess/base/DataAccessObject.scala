@@ -6,6 +6,7 @@ import play.api.Play.current
 import com.mongodb.casbah.Imports._
 import crosscutting.basetype.Id
 import crosscutting.transferobject.base.PersistableTransferObject
+import com.mongodb
 
 trait DataAccessObject[TO <: PersistableTransferObject] {
   val mongoURI: MongoClientURI = MongoClientURI(Play.configuration.getString("mongo.uri").getOrElse("mongodb://127.0.0.1:27017"))
@@ -17,10 +18,9 @@ trait DataAccessObject[TO <: PersistableTransferObject] {
 
   def converter: DBObjectConverter[TO]
 
-  def persist(to:TO) = collection.update(
-    MongoDBObject("_id" -> to.id._id),
-    converter.transferObjectToDBObject(to),
-    upsert = true)
+  def persist(to:TO): Unit = persist(to.id._id, converter.transferObjectToDBObject(to))
+
+  def persist(id:String, dbObject:DBObject): Unit = collection.update(MongoDBObject("_id" -> id), dbObject, upsert = true)
 
   def getById(id:Id) = collection.findOneByID(id._id).map(converter.dBObjectToTransferObject)
 

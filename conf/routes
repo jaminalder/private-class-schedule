@@ -10,9 +10,12 @@ POST    /api/poc/todo/save        poc.MongoPOCController.addTodo
 POST    /api/poc/todo/save/:id    poc.MongoPOCController.updateTodo(id)
 POST    /api/poc/todo/delete/:id  poc.MongoPOCController.deleteTodo(id)
 
-GET    /api/id/generate                         service.id.IDService.generate
+GET    /api/id/generate                                service.id.IDService.generate
 
-GET    /api/user/login/:eMail/:password         service.user.UserService.login(eMail, password)
+GET    /api/user/login/:eMail/:password                service.user.UserService.login(eMail, password)
+POST   /api/authentication/registerUserAsTeacher       service.authentication.AuthenticationService.registerUserAsTeacher
+POST   /api/authentication/loginUserAsTeacher          service.authentication.AuthenticationService.loginUserAsTeacher
+GET    /api/authentication/getLoggedInUserAsTeacher    service.authentication.AuthenticationService.getLoggedInUserAsTeacher
 
 POST   /api/student/saveStudent                        service.student.StudentService.saveStudent
 POST   /api/student/deleteStudent                      service.student.StudentService.deleteStudent
