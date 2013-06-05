@@ -14,8 +14,8 @@ object LessonTestData {
   val start = DateTime.parse("03.05.2013 1330", simpleDateTimeFormat)
   val end = DateTime.parse("03.05.2013 1430", simpleDateTimeFormat)
   val teacherId = Id.generate
-  val studentIds = List(Id.generate, Id.generate)
-  val lesson = Lesson(lessonId, start, end, teacherId, studentIds)
+//  val studentIds = List(Id.generate, Id.generate)
+  val lesson = Lesson(lessonId, start, end, teacherId /* ,  studentIds */ )
 }
 
 class LessonDomainComponentTest extends Specification {
