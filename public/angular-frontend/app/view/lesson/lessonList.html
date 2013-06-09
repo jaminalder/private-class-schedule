@@ -20,7 +20,7 @@
 
     <tbody>
     <tr ng-repeat="lesson in lessons | filter:search">
-        <td class="lessonListName">{{lesson.start | date:'dd.MM.yyyy h:mm'}} {{lesson.end | date:'dd.MM.yyyy h:mm'}}</td>
+        <td class="lessonListName">{{lesson.start | date:'dd.MM.yyyy HH:mm UTC'}} {{lesson.end | date:'dd.MM.yyyy HH:mm UTC'}}</td>
         <td class="lessonListActions">
             <a class="editLessonLink" ng-click="editLesson(lesson, $index)"><i class="icon-pencil"></i></a>
             <a class="deleteLessonLink" ng-click="deleteLesson(lesson, $index)"><i class="icon-remove"></i></a>

@@ -1,18 +1,16 @@
 'use strict';
 
-angular.module('student', ['ngResource', 'uuid']);
+var student = angular.module('student', ['ngResource', 'uuid', 'studentServices', 'userServices']);
 
-function StudentCtrl($scope, $resource, UUIDService) {
+student.controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'UserService',
+
+function($scope, $resource, UUIDService, StudentService, UserService) {
 
     // User should somehow be injected later...
-    var User = $resource('/api/user/login/dummy.user@email.com/dummyPassword');
+//    var User = $resource('/api/user/login/dummy.user@email.com/dummyPassword');
+    var User = UserService;
 
-    var Student = $resource('/api/student/:action/:ownerID', {}, {
-        allStudentsOfTeacher: {method: 'GET', params: {'action': 'allStudentsOfTeacher'}, isArray: true},
-        save: {method: 'POST', params: {'action': 'saveStudent'}},
-        delete: {method: 'POST', params: {'action': 'deleteStudent'}}
-    });
-
+    var Student = StudentService;
 
     User.get(function (userResult) {
         console.log('user result: ' + JSON.stringify(userResult));
@@ -95,4 +93,4 @@ function StudentCtrl($scope, $resource, UUIDService) {
         return angular.equals(studentForm, $scope.activeStudent);
     };
 
-};
+}]);

@@ -9,8 +9,8 @@ describe('my app', function () {
     });
 
 
-    it('should automatically redirect to /student when location hash/fragment is empty', function () {
-        expect(browser().location().url()).toBe("/student");
+    it('should automatically redirect to / = calendar when location hash/fragment is empty', function () {
+        expect(browser().location().url()).toBe("/");
     });
 
 

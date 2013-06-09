@@ -1,10 +1,26 @@
 'use strict';
 
-angular.module('pcs.routes', []).
+var pcsroutes = angular.module('pcsroutes', []).
   config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/student', {templateUrl: 'view/student/studentListAndFormPage.html', controller:StudentCtrl});
-    $routeProvider.when('/calendar', {templateUrl: 'view/calendar/calendar.html', controller:CalendarCtrl});
-    $routeProvider.when('/calendarStudentList', {templateUrl: 'view/calendar/calendarStudentList.html', controller:(CalendarCtrl, StudentCtrl)});
-    $routeProvider.when('/lesson', {templateUrl: 'view/lesson/lesson.html', controller:LessonCtrl});
-    $routeProvider.otherwise({redirectTo: '/student'});
+    $routeProvider.
+    when('/', {templateUrl: 'view/calendar/calendar.html', controller:CalendarCtrl}).
+    when('/student',
+        {controller:'StudentCtrl',
+            resolve: {
+                Student: function(StudentService) {
+                    return StudentService();
+                }
+            },
+        templateUrl: 'view/student/studentListAndFormPage.html'}).
+    when('/calendar', {templateUrl: 'view/calendar/calendar.html', controller:CalendarCtrl}).
+    when('/calendarStudentList', {templateUrl: 'view/calendar/calendarStudentList.html', controller:(CalendarCtrl, 'StudentCtrl')}).
+    when('/lesson',
+        {controller:'LessonCtrl',
+            resolve: {
+                Lesson: function(LessonService) {
+                    return LessonService();
+                }
+            },
+        templateUrl: 'view/lesson/lesson.html'}).
+    otherwise({redirectTo: '/'});
   }]);
