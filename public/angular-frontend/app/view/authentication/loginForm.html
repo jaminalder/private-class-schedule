@@ -1,0 +1,23 @@
+<h4 id="loginFormTitle">Login</h4>
+
+<form name="form" novalidate>
+
+    <p>{{message}}</p>
+
+    <div class="controls">
+        <input class="span4" type="email" ng-model="loginForm.eMail" placeholder="E-Mail">
+    </div>
+
+    <div class="controls">
+        <input class="span4" type="password" ng-model="loginForm.password" placeholder="Passwort">
+    </div>
+
+    <p>
+        <input id="loginButton" ng-click="loginUserAsTeacher()" class="btn btn-primary span2" type="submit" value="Login"
+               ng-disabled="form.$invalid || isUnchanged(loginForm)">
+
+        <input id="resetLoginFormButton" ng-click="resetLoginForm()" class="btn span2" value="Abbrechen"
+               ng-disabled="isUnchanged(registerForm)">
+    </p>
+</form>
+

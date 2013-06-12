@@ -26,7 +26,8 @@
                     </li>
                 </ul>
                 <ul class="nav pull-right">
-                    <li><a ng-href="#">Logged in as Hans Musterlehrer</a></li>
+                    <li><a ng-href="#">Benutzer: {{loggedInUser.firstName}} {{loggedInUser.firstName}}</a></li>
+                    <li><a ng-click="logoutUser()">abmelden</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

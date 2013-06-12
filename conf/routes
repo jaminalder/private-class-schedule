@@ -15,6 +15,7 @@ GET    /api/id/generate                                service.id.IDService.gene
 GET    /api/user/login/:eMail/:password                service.user.UserService.login(eMail, password)
 POST   /api/authentication/registerUserAsTeacher       service.authentication.AuthenticationService.registerUserAsTeacher
 POST   /api/authentication/loginUserAsTeacher          service.authentication.AuthenticationService.loginUserAsTeacher
+POST   /api/authentication/logoutUser                  service.authentication.AuthenticationService.logoutUser
 GET    /api/authentication/getLoggedInUserAsTeacher    service.authentication.AuthenticationService.getLoggedInUserAsTeacher
 
 POST   /api/student/saveStudent                        service.student.StudentService.saveStudent

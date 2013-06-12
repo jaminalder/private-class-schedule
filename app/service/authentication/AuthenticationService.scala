@@ -28,6 +28,10 @@ object AuthenticationService extends Controller with Secured{
       }
   }
 
+  def logoutUser = Action {
+    Ok.withNewSession
+  }
+
   def getLoggedInUserAsTeacher = IsAuthenticated {
     userId => request =>
       TeacherDomainComponent.getTeacherById(Id(userId)) match {

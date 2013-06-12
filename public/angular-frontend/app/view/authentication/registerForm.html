@@ -1,0 +1,32 @@
+<h4 id="registerFormTitle">Als neuer Benutzer registrieren</h4>
+
+<form name="form" novalidate>
+
+    <p>{{message}}</p>
+
+    <div class="controls">
+        <input class="span4" type="text" ng-model="registerForm.user.firstName" placeholder="Vorname"
+               required>
+    </div>
+    <div class="controls">
+        <input class="span4" type="text" ng-model="registerForm.user.lastName" placeholder="Nachname"
+               required>
+    </div>
+
+    <div class="controls">
+        <input class="span4" type="email" ng-model="registerForm.user.eMail" placeholder="E-Mail">
+    </div>
+
+    <div class="controls">
+        <input class="span4" type="password" ng-model="registerForm.password" placeholder="Passwort">
+    </div>
+
+    <p>
+        <input id="registerButton" ng-click="registerUserAsTeacher()" class="btn btn-primary span2" type="submit" value="Registrieren"
+               ng-disabled="form.$invalid || isUnchanged(registerForm)">
+
+        <input id="resetRegisterFormButton" ng-click="resetRegisterForm()" class="btn span2" value="Abbrechen"
+               ng-disabled="isUnchanged(registerForm)">
+    </p>
+</form>
+
