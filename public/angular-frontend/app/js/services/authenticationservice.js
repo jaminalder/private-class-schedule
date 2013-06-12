@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('authenticationServices', [])
+angular.module('pcs')
     .factory('AuthenticationService', function ($http, $rootScope) {
 
         var service = {

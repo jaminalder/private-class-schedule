@@ -1,6 +1,6 @@
 'use strict';
 
-var lessonServices = angular.module('lessonServices', ['ngResource']);
+var lessonServices = angular.module('pcs');
 
 lessonServices.factory('LessonService', ['$resource', function ($resource) {
     var LessonService = $resource('/api/lesson/:action/:teacherId', {}, {

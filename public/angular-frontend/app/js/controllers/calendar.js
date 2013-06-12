@@ -6,7 +6,7 @@
 
 'use strict';
 
-angular.module('calendar', ['ui.calendar']);
+angular.module('pcs');
 
 function CalendarCtrl($scope) {
     var date = new Date();

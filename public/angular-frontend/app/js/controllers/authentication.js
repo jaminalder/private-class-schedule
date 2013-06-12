@@ -1,6 +1,6 @@
 'use strict';
 
-var authModule = angular.module('authModule', ['ngResource', 'uuid', 'authenticationServices']);
+var authModule = angular.module('pcs');
 
 authModule.controller('RegisterController', ['$scope', '$resource', 'UUIDService', 'AuthenticationService',
 

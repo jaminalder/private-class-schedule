@@ -1,6 +1,6 @@
 'use strict';
 
-var pcsroutes = angular.module('pcsroutes', []).
+var pcsroutes = angular.module('pcs').
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/', {

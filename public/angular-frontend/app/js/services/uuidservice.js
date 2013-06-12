@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('uuid', ['ngResource'])
+angular.module('pcs')
     .factory('UUIDService', ['$resource', function ($resource) {
 
         var uuidService = {

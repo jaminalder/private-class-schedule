@@ -1,6 +1,6 @@
 'use strict';
 
-var student = angular.module('student', ['ngResource', 'uuid', 'studentServices', 'userServices']);
+var student = angular.module('pcs');
 
 student.controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'UserService',
 

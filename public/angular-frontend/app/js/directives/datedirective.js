@@ -1,6 +1,6 @@
 'use strict';
 
-var dateDirective = angular.module('dateDirective', []);
+var dateDirective = angular.module('pcs');
 
 dateDirective.directive('date', function (dateFilter) {
     return {

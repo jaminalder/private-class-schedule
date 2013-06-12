@@ -1,6 +1,6 @@
 'use strict';
 
-var lesson = angular.module('lesson', ['ngResource', 'uuid', 'lessonServices', 'userServices', 'dateDirective']);
+var lesson = angular.module('pcs');
 
 lesson.controller('LessonCtrl', ['$scope', '$resource', '$filter', 'UUIDService','LessonService', 'UserService',
 

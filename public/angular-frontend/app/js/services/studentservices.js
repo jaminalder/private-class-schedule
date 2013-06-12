@@ -1,6 +1,6 @@
 'use strict';
 
-var studentServices = angular.module('studentServices', ['ngResource']);
+var studentServices = angular.module('pcs');
 
 studentServices.factory('StudentService', ['$resource', function ($resource) {
     var StudentService = $resource('/api/student/:action/:ownerID', {}, {
