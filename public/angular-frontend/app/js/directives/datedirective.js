@@ -7,7 +7,7 @@ dateDirective.directive('date', function (dateFilter) {
         require:'ngModel',
         link:function (scope, elm, attrs, ctrl) {
 
-            var dateFormat = attrs['date'] || 'dd-MM-yyyy HH:mm UTC';
+            var dateFormat = attrs['date'] || 'dd-MM-yyyy HH:mm';
             var minDate = Date.parse(attrs['min']) || 0;
             var maxDate = Date.parse(attrs['max']) || 9007199254740992;
 
