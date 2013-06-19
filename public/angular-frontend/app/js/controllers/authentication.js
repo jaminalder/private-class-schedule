@@ -39,7 +39,7 @@ authModule.controller('RegisterController', ['$scope', '$resource', 'UUIDService
             var onError = function () {
                 $scope.message = 'User registration failed'
             };
-            AuthenticationService.registerUserAsTeacher(userToRegister, onSuccess, onError);
+            AuthenticationService.register(userToRegister, onSuccess, onError);
         };
     }]);
 
@@ -62,31 +62,37 @@ authModule.controller('LoginController', ['$scope', '$rootScope', '$resource', '
             var onError = function () {
                 $scope.message = 'User login failed'
             };
-            AuthenticationService.loginUserAsTeacher(userToLogin, onSuccess, onError);
+            AuthenticationService.login(userToLogin, onSuccess, onError);
         };
 
-        $scope.logoutUser = function () {
-            AuthenticationService.logoutUser();
-        }
+        $scope.isLoggedIn = function () {
+            return AuthenticationService.isLoggedIn();
+        };
 
-        $scope.isUserLoggedIn = function () {
-            if ($rootScope.loggedInUser === undefined) {
-                return false;
-                // no user is logged in on the client side, now verify it on the server side
-                /* todo get this working
-                 var onSuccess = function () {
-                 return true;
-                 }
-                 var onError = function () {
-                 return false;
-                 }
-                 AuthenticationService.getLoggedInUserAsTeacher(onSuccess, onError);
-                 */
-            } else {
-                // logged in on the client side
-                return true;
-            }
-        }
+        $scope.loggedInUserName = $rootScope.user.firstName + ' ' + $rootScope.user.lastName
 
+        $scope.logout = AuthenticationService.logout;
 
     }]);
+
+angular.module('pcs')
+    .controller('AppCtrl',
+        ['$rootScope', '$scope', '$location', 'AuthenticationService', function ($rootScope, $scope, $location, AuthenticationService) {
+
+            $scope.getUserRoleText = function (role) {
+                return _.invert(AuthenticationService.userRoles)[role];
+            };
+
+            $scope.logout = function () {
+                AuthenticationService.logout(function () {
+                    $location.path('/login');
+                }, function () {
+                    $rootScope.error = "Failed to logout";
+                });
+            };
+        }]);
+
+
+
+
+

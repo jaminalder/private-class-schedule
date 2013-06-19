@@ -1,6 +1,6 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -26,9 +26,11 @@
                     </li>
                 </ul>
                 <form class="navbar-form pull-right">
-                    <input class="span2" type="text" placeholder="Email">
-                    <input class="span2" type="password" placeholder="Password">
-                    <button type="submit" class="btn">Sign in</button>
+                    <!-- <input class="span2" type="email" ng-model="loginForm.eMail" placeholder="Email">
+                    <input class="span2" type="password" ng-model="loginForm.password" placeholder="Password">
+                    <button ng-click="loginUserAsTeacher()" type="submit" class="btn">Anmelden</button> -->
+                    <a ng-href="#/login" class="btn">Anmelden</a>
+                    <a ng-href="#/register" class="btn">Registrieren</a>
                 </form>
             </div><!--/.nav-collapse -->
         </div>

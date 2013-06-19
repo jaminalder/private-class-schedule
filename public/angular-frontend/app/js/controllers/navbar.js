@@ -1,13 +1,9 @@
 'use strict';
 
 
-angular.module('pcs').controller('NavbarController',
+angular.module('pcs').controller('NavbarController', ['$scope', '$rootScope', 'AuthenticationService',
 
-    function($scope, $rootScope) {
-
-        $scope.isUserLoggedIn = function(){
-            return $rootScope.loggedInUser !== undefined
-        }
-
-    });
+    function($scope, $rootScope, AuthenticationService) {
+        $scope.isLoggedIn = AuthenticationService.isLoggedIn
+    }]);
 
