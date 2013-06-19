@@ -14,7 +14,7 @@ angular.module('pcs')
             controller: 'StudentCtrl',
             templateUrl: 'view/student/studentListAndFormPage.html',
             access: access.anon
-        })
+        });
         $routeProvider.when('/calendar', {
             templateUrl: 'view/calendar/calendar.html',
             controller: CalendarCtrl,
@@ -24,6 +24,10 @@ angular.module('pcs')
             templateUrl: 'view/calendar/calendarStudentList.html',
             controller: (CalendarCtrl, 'StudentCtrl'),
             access: access.anon
+        });
+        $routeProvider.when('/calendarLessonList', {
+            templateUrl: 'view/calendar/calendarLessonList.html',
+            controller: (CalendarCtrl, 'LessonCtrl')
         });
         $routeProvider.when('/lesson', {
             controller: 'LessonCtrl',
@@ -78,17 +82,3 @@ angular.module('pcs')
         $httpProvider.responseInterceptors.push(interceptor);
 
     }]);
-
-angular.module('pcs')
-    .run(['$rootScope', '$location', 'AuthenticationService', function ($rootScope, $location, AuthenticationService) {
-        $rootScope.$on("$routeChangeStart", function (event, next, current) {
-            $rootScope.error = null;
-            if (!AuthenticationService.authorize(next.access)) {
-                if (AuthenticationService.isLoggedIn()) $location.path('/');
-                else                  $location.path('/login');
-            }
-        });
-
-        $rootScope.appInitialized = true;
-    }]);
-
