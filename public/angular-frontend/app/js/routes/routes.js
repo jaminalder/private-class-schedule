@@ -18,6 +18,10 @@ var pcsroutes = angular.module('pcs').
                 templateUrl: 'view/calendar/calendarStudentList.html',
                 controller: (CalendarCtrl, 'StudentCtrl')
             }).
+            when('/calendarLessonList', {
+                templateUrl: 'view/calendar/calendarLessonList.html',
+                controller: (CalendarCtrl, 'LessonCtrl')
+            }).
             when('/lesson', {
                 controller: 'LessonCtrl',
                 resolve: {

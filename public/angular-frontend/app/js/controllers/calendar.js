@@ -8,34 +8,59 @@
 
 angular.module('pcs');
 
-function CalendarCtrl($scope) {
+function CalendarCtrl($scope, $filter, UserService, LessonService) {
+    var User = UserService;
+    var Lesson = LessonService;
+    User.get(function (userResult) {
+        console.log('user result: ' + JSON.stringify(userResult));
+        $scope.user = userResult;
+        $scope.lessons = Lesson.allLessonsOfTeacher({'teacherId': userResult.id._id},function(lessonResult){
+            var i
+            for (i in $scope.lessons) {
+            var lessonStart =  lessonResult[i].start / 1000;
+            var lessonEnd = lessonResult[i].end / 1000;
+            $scope.lessonEvent = [
+                {title: 'Lesson ' + i ,start: lessonStart ,end: lessonEnd ,allDay: false, className: ['customFeed']}
+            ];
+            $scope.eventSources.push($scope.lessonEvent);   }
+        });
+    });
+
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+
     /* event source that pulls from google.com */
     $scope.eventSource = {
-        url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-        className: 'gcal-event', // an option!
+ //       url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+ //       className: 'gcal-event', // an option!
         currentTimezone: 'America/Chicago' // an option!
     };
+    $scope.lessonEvent = [];
     /* event source that contains custom events on the scope */
     $scope.events = [
-        {title: 'All Day Event',start: new Date(y, m, 1)},
+/*        {title: 'All Day Event',start: new Date(y, m, 1)},
         {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
         {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
         {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
         {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
         {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
+*/
     ];
     /* event source that calls a function on every view switch */
+    /* funktioniert, erwartet aber eine Zeit in Sekunden, nicht milliseconds */
+
     $scope.eventsF = function (start, end, callback) {
-        var s = new Date(start).getTime() / 1000;
-        var e = new Date(end).getTime() / 1000;
-        var m = new Date(start).getMonth();
-        var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+//        var s = new Date(start).getTime() / 1000;
+//        var e = new Date(end).getTime() / 1000;
+//        var m = new Date(start).getMonth();
+        // start 1371024000000, end 1371031200000
+        var events = [{title: 'Feed Me ' + m,start: 1371024000000 / 1000 ,end: 1371031200000 / 1000 ,allDay: false, className: ['customFeed']}];
+//        var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
         callback(events);
     };
+
     /* alert on eventClick */
     $scope.alertEventOnClick = function( date, allDay, jsEvent, view ){
         $scope.$apply(function(){
