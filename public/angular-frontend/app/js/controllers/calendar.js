@@ -11,18 +11,22 @@ angular.module('pcs');
 function CalendarCtrl($scope, $filter, UserService, LessonService) {
     var User = UserService;
     var Lesson = LessonService;
+    /* empty array lessonEvent will be used to get all lessons for the logged in teacher */
+    $scope.lessonEvents = [];
+
     User.get(function (userResult) {
         console.log('user result: ' + JSON.stringify(userResult));
         $scope.user = userResult;
         $scope.lessons = Lesson.allLessonsOfTeacher({'teacherId': userResult.id._id},function(lessonResult){
             var i
             for (i in $scope.lessons) {
+            var lessonId = lessonResult[i].id;
             var lessonStart =  lessonResult[i].start / 1000;
             var lessonEnd = lessonResult[i].end / 1000;
-            $scope.lessonEvent = [
-                {title: 'Lesson ' + i ,start: lessonStart ,end: lessonEnd ,allDay: false, className: ['customFeed']}
-            ];
-            $scope.eventSources.push($scope.lessonEvent);   }
+            $scope.lessonEvents.push(
+                {id: lessonId, title: 'Lesson ' + i ,start: lessonStart ,end: lessonEnd ,allDay: false, className: ['customFeed']});
+            }
+            $scope.eventSources.push($scope.lessonEvents);
         });
     });
 
@@ -37,7 +41,8 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
  //       className: 'gcal-event', // an option!
         currentTimezone: 'America/Chicago' // an option!
     };
-    $scope.lessonEvent = [];
+
+
     /* event source that contains custom events on the scope */
     $scope.events = [
 /*        {title: 'All Day Event',start: new Date(y, m, 1)},
@@ -52,12 +57,12 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
     /* funktioniert, erwartet aber eine Zeit in Sekunden, nicht milliseconds */
 
     $scope.eventsF = function (start, end, callback) {
-//        var s = new Date(start).getTime() / 1000;
-//        var e = new Date(end).getTime() / 1000;
-//        var m = new Date(start).getMonth();
+        var s = new Date(start).getTime() / 1000;
+        var e = new Date(end).getTime() / 1000;
+        var m = new Date(start).getMonth();
         // start 1371024000000, end 1371031200000
-        var events = [{title: 'Feed Me ' + m,start: 1371024000000 / 1000 ,end: 1371031200000 / 1000 ,allDay: false, className: ['customFeed']}];
-//        var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+//        var events = [{title: 'Feed Me ' + m,start: 1371024000000 / 1000 ,end: 1371031200000 / 1000 ,allDay: false, className: ['customFeed']}];
+        var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
         callback(events);
     };
 
