@@ -2,21 +2,13 @@
 
 var student = angular.module('pcs');
 
-student.controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'UserService',
+student.controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'AuthenticationService',
 
-function($scope, $resource, UUIDService, StudentService, UserService) {
+function($scope, $resource, UUIDService, StudentService, AuthenticationService) {
 
-    // User should somehow be injected later...
-//    var User = $resource('/api/user/login/dummy.user@email.com/dummyPassword');
-    var User = UserService;
+    var loggedInUser = AuthenticationService.loggedInUser();
 
-    var Student = StudentService;
-
-    User.get(function (userResult) {
-        console.log('user result: ' + JSON.stringify(userResult));
-        $scope.user = userResult;
-        $scope.students = Student.allStudentsOfTeacher({'ownerID': userResult.id._id});
-    });
+    $scope.students = StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
 
     $scope.showStudentDetail = function(title){
         $scope.studentDetailTitle = title;
@@ -32,7 +24,7 @@ function($scope, $resource, UUIDService, StudentService, UserService) {
     $scope.getEmptyStudent = function (callback) {
 
         var constructEmptyStudent = function (id) {
-            var emptyStudent = new Student();
+            var emptyStudent = new StudentService();
 
             emptyStudent.id = id;
             emptyStudent.ownerID = $scope.user.id;

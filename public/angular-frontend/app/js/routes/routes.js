@@ -3,31 +3,35 @@
 angular.module('pcs')
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
-        var access = routingConfig.accessLevels;
+        var access = {
+            public: 0,
+            teacher: 1
+        }
 
         $routeProvider.when('/', {
-            templateUrl: 'view/calendar/calendar.html',
+            templateUrl: '/app/view/calendar/calendar.html',
             controller: CalendarCtrl,
-            access: access.anon
+            access: access.public
         });
         $routeProvider.when('/student', {
             controller: 'StudentCtrl',
-            templateUrl: 'view/student/studentListAndFormPage.html',
-            access: access.anon
+            templateUrl: '/app/view/student/studentListAndFormPage.html',
+            access: access.teacher
         });
         $routeProvider.when('/calendar', {
-            templateUrl: 'view/calendar/calendar.html',
+            templateUrl: '/app/view/calendar/calendar.html',
             controller: CalendarCtrl,
-            access: access.anon
+            access: access.public
         });
         $routeProvider.when('/calendarStudentList', {
-            templateUrl: 'view/calendar/calendarStudentList.html',
+            templateUrl: '/app/view/calendar/calendarStudentList.html',
             controller: (CalendarCtrl, 'StudentCtrl'),
-            access: access.anon
+            access: access.public
         });
         $routeProvider.when('/calendarLessonList', {
-            templateUrl: 'view/calendar/calendarLessonList.html',
-            controller: (CalendarCtrl, 'LessonCtrl')
+            templateUrl: '/app/view/calendar/calendarLessonList.html',
+            controller: (CalendarCtrl, 'LessonCtrl'),
+            access: access.public
         });
         $routeProvider.when('/lesson', {
             controller: 'LessonCtrl',
@@ -36,22 +40,22 @@ angular.module('pcs')
                     return LessonService();
                 }
             },
-            templateUrl: 'view/lesson/lesson.html',
-            access: access.anon
+            templateUrl: '/app/view/lesson/lesson.html',
+            access: access.public
         });
         $routeProvider.when('/register', {
             controller: 'RegisterController',
-            templateUrl: 'view/authentication/registerForm.html',
-            access: access.anon
+            templateUrl: '/app/view/authentication/registerForm.html',
+            access: access.public
         });
         $routeProvider.when('/login', {
             controller: 'LoginController',
-            templateUrl: 'view/authentication/loginForm.html',
-            access: access.anon
+            templateUrl: '/app/view/authentication/loginForm.html',
+            access: access.public
         });
         $routeProvider.when('/404',
             {
-                templateUrl: 'app/view/errors/404.html',
+                templateUrl: '/app/view/errors/404.html',
                 access: access.public
             });
         $routeProvider.otherwise({redirectTo: '/404'});
@@ -81,4 +85,32 @@ angular.module('pcs')
 
         $httpProvider.responseInterceptors.push(interceptor);
 
+    }]);
+
+angular.module('pcs')
+    .run(['$rootScope', '$location', 'AuthenticationService', function ($rootScope, $location, AuthenticationService) {
+
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            $rootScope.error = null;
+            if (next.access !== undefined && !AuthenticationService.authorize(next.access)) {
+                console.log('routeChange not authorized to: ' + JSON.stringify(next));
+                if (AuthenticationService.isLoggedIn()){
+                    console.log('logged in user is not authorized. redirect to user home');
+                    $location.path('/');
+                } else {
+//                    $location.path('/login');
+
+                    AuthenticationService.loggedInUserFromServer(function(loggedInUser){
+                        console.log('found logged in user on server: ' + JSON.stringify(loggedInUser));
+                        $location.path('/student');
+                    }, function(){
+                        console.log('did not find logged in user on server. redirect to login');
+                        $location.path('/login');
+                    });
+
+                }
+            }
+        });
+
+        $rootScope.appInitialized = true;
     }]);

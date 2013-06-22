@@ -43,9 +43,9 @@ authModule.controller('RegisterController', ['$scope', '$resource', 'UUIDService
         };
     }]);
 
-authModule.controller('LoginController', ['$scope', '$rootScope', '$resource', 'UUIDService', 'AuthenticationService',
+authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '$resource', 'UUIDService', 'AuthenticationService',
 
-    function ($scope, $rootScope, $resource, UUIDService, AuthenticationService) {
+    function ($scope, $rootScope, $location, $resource, UUIDService, AuthenticationService) {
 
 
         $scope.resetLoginForm = function () {
@@ -57,10 +57,11 @@ authModule.controller('LoginController', ['$scope', '$rootScope', '$resource', '
         $scope.loginUserAsTeacher = function () {
             var userToLogin = angular.copy($scope.loginForm);
             var onSuccess = function (loggedInUser) {
-                $scope.message = 'User' + loggedInUser['firstName'] + ' ' + loggedInUser['lastName'] + ' successfully logged in'
+                $scope.message = 'User' + loggedInUser['firstName'] + ' ' + loggedInUser['lastName'] + ' successfully logged in';
+                $location.path('/student');
             };
             var onError = function () {
-                $scope.message = 'User login failed'
+                $scope.message = 'User login failed';
             };
             AuthenticationService.login(userToLogin, onSuccess, onError);
         };
