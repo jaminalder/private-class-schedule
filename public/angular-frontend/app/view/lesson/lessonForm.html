@@ -1,13 +1,23 @@
+<!-- to use the same input format for the date and time on Chrome, Firefox and Safari use yyyy/MM/dd HH:mm
+     all other formats end up being saved as american dates,
+     e.g. 06/03/2013 will be saved as 3rd of June 2013,
+     Europeans expect this to be 6th of March 2013
+     Firefox and Safari do currently not fully support HTML5 type="date", "datetime" or "datetime-local" yet
+     Chrome on the other hand recognizes it
+     Each browser behaves differently
+     To be able to use different browsers, use type="text" and a date entry with /
+-->
+
 <h4 id="lessonFormTitle">{{lessonDetailTitle}}</h4>
 
 <form name="form" novalidate>
 
     <div class="controls">
-        <input class="span4" type="datetime" ng-model="lessonForm.start" date="dd.MM.yyyy HH:mm" placeholder="Start"
+        <input class="span4" type="text" ng-model="lessonForm.start" date placeholder="Start yyyy/MM/dd HH:mm"
                required>
     </div>
     <div class="controls">
-        <input class="span4" type="datetime" ng-model="lessonForm.end" date="dd.MM.yyyy HH:mm" placeholder="Ende"
+        <input class="span4" type="text" ng-model="lessonForm.end" date placeholder="Ende yyyy/MM/dd HH:mm"
                required>
     </div>
     <p>

@@ -53,12 +53,17 @@ function($scope, $resource, $filter, UUIDService, LessonService, UserService) {
 //    (date[, format]   ('date', 'format:dd.MM.YYYY HH:mm')
 
     $scope.saveLesson = function () {
-       var startDate = $filter('date', 'format:dd.MM.YYYY HH:mm')(angular.copy($scope.lessonForm.start))   ;
-        var endDate =  $filter('date', 'format:dd.MM.YYYY HH:mm')(angular.copy($scope.lessonForm.end)  )  ;
-        var lesson =  $filter('date', 'format:dd.MM.YYYY HH:mm')(angular.copy($scope.lessonForm));
-//        lesson.start = startDate;
-//        lesson.end = endDate;
-
+     // testing of date output
+        var startDateString = new Date(angular.copy($scope.lessonForm.start))   ;
+        console.log('startDateString ' + typeof startDateString + ' : ' + startDateString);
+        var startDate = Date.parse(startDateString);
+        console.log('startDate ' + typeof startDate + ' : ' + startDate);
+     // end of date output testing
+        var lesson = $filter('date')(angular.copy($scope.lessonForm));
+     // output for lesson
+        console.log('lesson ' + typeof lesson  + ' + ' + typeof lesson.start + ' start: ' + lesson.start + ' end: ' + lesson.end);
+        console.log('lesson ' + typeof lesson  + ' + ' + typeof lesson.start + ' start: ' + $filter('date')(lesson.start) + ' end: ' + $filter('date')(lesson.end));
+     // end of output for lesson
         lesson.$save();
         $scope.lessons[$scope.activeLessonIndex] = lesson;
 
