@@ -140,13 +140,45 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
             height: 600,    /* height of calendar */
             editable: true,
             header: {
+                left:   'today,prevYear,prev,next,nextYear',
+                center: 'title',
+                right:  'agendaDay,agendaWeek,month'
+ /*             to create a separate line with buttons in the html view, the buttons on the header can be deactivated
                 left: 'deactivateButton',
                 center: 'title'     ,
-                right: 'deactivateButton'
-                /*            left: 'today prev,next' ,
-                 center: 'title',
-                 right: 'month agendaWeek agendaDay'     */
+                right: 'deactivateButton'    */
             },
+            buttonText: {
+                today:      'Heute',
+                prevYear:   '&lt;&lt;',
+                prev:       '&lt;',
+                next:       '&gt;',
+                nextYear:   '&gt;&gt;',
+                agendaDay:  'Tag',
+                agendaWeek: 'Woche',
+                month:      'Monat'
+            },
+            theme: false,
+            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
+                'August', 'September', 'Oktober', 'November', 'Dezember']    ,
+            monthNamesShort: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul',
+                'Aug', 'Sep', 'Okt', 'Nov', 'Dez']    ,
+            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch',
+                'Donnerstag', 'Freitag', 'Samstag'],
+            dayNamesShort: ['So', 'Mo', 'Di', 'Mi',
+                'Do', 'Fr', 'Sa'] ,
+            titleFormat: {
+                month: 'MMMM yyyy',                                 // September 2009
+                week: "d. [MMMM] [ yyyy]{ '&#8212;' d. MMMM yyyy}", // 7. - 13. September 2009
+                day: 'dddd, d. MMMM yyyy'                           // Dienstag, 8. September 2009
+            },
+            columnFormat: {
+                month: 'ddd',    // Mo
+                week: 'ddd, d.M.', // Mo, 7.9.
+                day: 'dddd, d.M.'  // Montag, 7.9.
+            } ,
+            allDayText: 'Ganzt.',
+            firstDay: 1,
             snapMinutes: 5, /* events can be moved in 5 minute steps, default slotMinutes */
             slotMinutes: 30 ,  /* calender display in 30 minutes intervall, default slotMinutes = 30 minutes */
             dayClick: $scope.alertEventOnClick,
