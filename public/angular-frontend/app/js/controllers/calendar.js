@@ -81,15 +81,27 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
         });
     };
     /* alert on Drop */
-    $scope.alertOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
+    $scope.eventChangeOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
         $scope.$apply(function(){
-            $scope.alertMessage = ('Event Droped to make dayDelta ' + dayDelta);
+//            $scope.alertMessage = ('Event Dropped to make dayDelta ' + dayDelta);
+            console.log('Event Dropped dayDelta ' + dayDelta);
+            console.log('Event Dropped minuteDelta ' + minuteDelta);
+            console.log('Event ID: ' + event.id + ' Event Start: ' + event.start + ' Event End ' + event.end);
+            var lesson = {id: event.id, start:Date.parse(event.start), end:Date.parse(event.end)};
+            console.log('Lesson ID: ' + lesson.id + ' Lesson Start: ' + lesson.start + ' Lesson End ' + lesson.end);
+//            lesson.$save();
+//            $scope.lessons[$scope.activeLessonIndex] = lesson;
         });
     };
     /* alert on Resize */
-    $scope.alertOnResize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
+    $scope.eventChangeOnResize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
         $scope.$apply(function(){
-            $scope.alertMessage = ('Event Resized to make dayDelta ' + minuteDelta);
+//            $scope.alertMessage = ('Event Resized to make dayDelta ' + dayDelta);
+            console.log('Event Resized to make dayDelta ' + dayDelta);
+            console.log('Event Resized to make minuteDelta ' + minuteDelta);
+            console.log('Event ID: ' + event.id + ' Event Start: ' + event.start + ' Event End ' + event.end);
+            var lesson = {id: event.id, start:Date.parse(event.start), end:Date.parse(event.end)};
+            console.log('Lesson ID: ' + lesson.id + ' Lesson Start: ' + lesson.start + ' Lesson End ' + lesson.end);
         });
     };
     /* add and removes an event source of choice */
@@ -181,6 +193,7 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
                 month:      'Monat'
             },
             theme: false,
+            defaultView: 'agendaWeek',
             monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
                 'August', 'September', 'Oktober', 'November', 'Dezember']    ,
             monthNamesShort: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul',
@@ -205,13 +218,13 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
             snapMinutes: 5, /* events can be moved in 5 minute steps, default slotMinutes */
             slotMinutes: 30 ,  /* calender display in 30 minutes intervall, default slotMinutes = 30 minutes */
             editable: true,
- //           selectable: true,
- //           selectHelper: true,
- //           select: $scope.selectEvent,
- //           dayClick: $scope.alertDayOnClick,
+            selectable: true,
+            selectHelper: true,
+            select: $scope.selectEvent,
+            dayClick: $scope.alertDayOnClick,
             eventClick: $scope.alertEventOnClick,
-            eventDrop: $scope.alertOnDrop,
-            eventResize: $scope.alertOnResize
+            eventDrop: $scope.eventChangeOnDrop,
+            eventResize: $scope.eventChangeOnResize
         }
     };
     /* event sources array*/
