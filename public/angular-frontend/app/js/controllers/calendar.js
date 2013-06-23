@@ -20,7 +20,8 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
         $scope.lessons = Lesson.allLessonsOfTeacher({'teacherId': userResult.id._id},function(lessonResult){
             var i
             for (i in $scope.lessons) {
-            var lessonId = lessonResult[i].id;
+            var lessonId = lessonResult[i].id._id;
+                console.log('lesson id: ' + i + ' : ' + lessonId)        ;
             var lessonStart =  lessonResult[i].start / 1000;
             var lessonEnd = lessonResult[i].end / 1000;
             $scope.lessonEvents.push(
@@ -204,10 +205,10 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
             snapMinutes: 5, /* events can be moved in 5 minute steps, default slotMinutes */
             slotMinutes: 30 ,  /* calender display in 30 minutes intervall, default slotMinutes = 30 minutes */
             editable: true,
-            selectable: true,
-            selectHelper: true,
-            select: $scope.selectEvent,
-            dayClick: $scope.alertDayOnClick,
+ //           selectable: true,
+ //           selectHelper: true,
+ //           select: $scope.selectEvent,
+ //           dayClick: $scope.alertDayOnClick,
             eventClick: $scope.alertEventOnClick,
             eventDrop: $scope.alertOnDrop,
             eventResize: $scope.alertOnResize
