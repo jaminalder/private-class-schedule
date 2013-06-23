@@ -65,11 +65,18 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
         var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
         callback(events);
     };
-
-    /* alert on eventClick */
-    $scope.alertEventOnClick = function( date, allDay, jsEvent, view ){
+    /* alert on dayClick */
+    $scope.alertDayOnClick = function( date, allDay, jsEvent, view ){
         $scope.$apply(function(){
+            console.log('Day Clicked ' + date);
             $scope.alertMessage = ('Day Clicked ' + date);
+        });
+    };
+    /* alert on eventClick */
+    $scope.alertEventOnClick = function( event, jsEvent, view ){
+        $scope.$apply(function(){
+            console.log('Event Clicked ' + event);
+            $scope.alertMessage = ('Event Clicked ' + event);
         });
     };
     /* alert on Drop */
@@ -134,11 +141,25 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
     $scope.today = function() {
         $scope.pcsCalendar.fullCalendar('today');
     };
+    $scope.selectEvent = function(start, end, allDay) {
+        var title = prompt('Titel:');
+        if (title) {
+            $scope.pcsCalendar.fullCalendar('renderEvent',
+                {
+                    title: title,
+                    start: start,
+                    end: end,
+                    allDay: allDay
+                },
+                true // make the event "stick"
+            );
+        }
+        $scope.pcsCalendar.fullCalendar('unselect');
+    };
     /* config object */
     $scope.uiConfig = {
         calendar:{
             height: 600,    /* height of calendar */
-            editable: true,
             header: {
                 left:   'today,prevYear,prev,next,nextYear',
                 center: 'title',
@@ -178,10 +199,16 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
                 day: 'dddd, d.M.'  // Montag, 7.9.
             } ,
             allDayText: 'Ganzt.',
+            axisFormat: 'H:mm',
             firstDay: 1,
             snapMinutes: 5, /* events can be moved in 5 minute steps, default slotMinutes */
             slotMinutes: 30 ,  /* calender display in 30 minutes intervall, default slotMinutes = 30 minutes */
-            dayClick: $scope.alertEventOnClick,
+            editable: true,
+            selectable: true,
+            selectHelper: true,
+            select: $scope.selectEvent,
+            dayClick: $scope.alertDayOnClick,
+            eventClick: $scope.alertEventOnClick,
             eventDrop: $scope.alertOnDrop,
             eventResize: $scope.alertOnResize
         }
