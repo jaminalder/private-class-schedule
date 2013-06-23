@@ -91,7 +91,8 @@ function($scope, $resource, $filter, UUIDService, LessonService, UserService) {
         console.log('lessonEndStringUTC ' + typeof lessonEndStringUTC + ' end ' + lessonEndStringUTC) ;
         console.log('lessonEndStringISO ' + typeof lessonEndStringISO + ' end ' + lessonEndStringISO) ;
         console.log('lessonEndJSON ' + typeof lessonEndJSON + ' end ' + lessonEndJSON) ;
-        $scope.activelesson = {id: lessonToEdit.id, start:lessonStartString, end:lessonEndString};
+//        $scope.activelesson = {id: lessonToEdit.id, start:lessonStartString, end:lessonEndString};
+        $scope.activelesson = lessonToEdit;
         $scope.activeLessonIndex = index;
         $scope.resetLessonForm();
         $scope.showLessonDetail('Lektion editieren');
