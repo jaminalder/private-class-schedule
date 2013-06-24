@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pcs')
-    .factory('AuthenticationService', function ($http, $rootScope, $cookieStore) {
+    .factory('AuthenticationService', function ($http, $rootScope, $cookieStore, $q) {
 
         var accessLevels = {
             public: 0,
@@ -22,20 +22,25 @@ angular.module('pcs')
             isLoggedIn: function () {
                 return $rootScope.user.role === accessLevels.teacher;
             },
-            loggedInUser: function () {
-                return $rootScope.user;
-            },
-            loggedInUserFromServer: function (success, error) {
+            getLoggedInUser: function(){
+                var deferred = $q.defer();
+
+                if($rootScope.user.role === accessLevels.teacher) {
+                    deferred.resolve($rootScope.user);
+                }
+
                 $http.get('/api/authentication/getLoggedInUserAsTeacher')
                     .success(function (loggedInUser) {
                         loggedInUser.role = accessLevels.teacher;
                         $rootScope.user = loggedInUser;
-                        success(loggedInUser);
+                        deferred.resolve(loggedInUser);
                     })
                     .error(function () {
                         $rootScope.user.role = accessLevels.public;
-                        error();
+                        deferred.reject();
                     });
+
+                return deferred.promise;
 
             },
             register: function (user, success, error) {

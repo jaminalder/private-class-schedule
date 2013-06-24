@@ -17,9 +17,21 @@ describe('my app', function () {
     describe('student', function () {
 
         beforeEach(function () {
+            browser().navigateTo('#/login');
+            input('loginForm.eMail').enter('test@user.com');
+            input('loginForm.password').enter('12345');
+            element('#loginButton').click();
             browser().navigateTo('#/student');
         });
 
+        it('register test user first', function () {
+            browser().navigateTo('#/register');
+            input('registerForm.user.firstName').enter('Test');
+            input('registerForm.user.lastName').enter('User');
+            input('registerForm.user.eMail').enter('test@user.com');
+            input('registerForm.password').enter('12345');
+            element('#registerButton').click();
+        });
 
         it('should render student list when user navigates to /student', function () {
             expect(element('#studentListTitle').text()).

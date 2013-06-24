@@ -1,14 +1,13 @@
 'use strict';
 
-var student = angular.module('pcs');
+angular.module('pcs').controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'AuthenticationService', 'students',
 
-student.controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'AuthenticationService',
+function($scope, $resource, UUIDService, StudentService, AuthenticationService, students) {
 
-function($scope, $resource, UUIDService, StudentService, AuthenticationService) {
+//    var loggedInUser = AuthenticationService.loggedInUser();
+//    $scope.students = StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
 
-    var loggedInUser = AuthenticationService.loggedInUser();
-
-    $scope.students = StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
+    $scope.students = students; //from routes resolve
 
     $scope.showStudentDetail = function(title){
         $scope.studentDetailTitle = title;
