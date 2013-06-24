@@ -87,10 +87,7 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
             console.log('Event Dropped dayDelta ' + dayDelta);
             console.log('Event Dropped minuteDelta ' + minuteDelta);
             console.log('Event ID: ' + event.id + ' Event Start: ' + event.start + ' Event End ' + event.end);
-            var lesson = {id: event.id, start:Date.parse(event.start), end:Date.parse(event.end)};
-            console.log('Lesson ID: ' + lesson.id + ' Lesson Start: ' + lesson.start + ' Lesson End ' + lesson.end);
-//            lesson.$save();
-//            $scope.lessons[$scope.activeLessonIndex] = lesson;
+            saveLessonFromEvent(event);
         });
     };
     /* alert on Resize */
@@ -100,10 +97,24 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
             console.log('Event Resized to make dayDelta ' + dayDelta);
             console.log('Event Resized to make minuteDelta ' + minuteDelta);
             console.log('Event ID: ' + event.id + ' Event Start: ' + event.start + ' Event End ' + event.end);
-            var lesson = {id: event.id, start:Date.parse(event.start), end:Date.parse(event.end)};
-            console.log('Lesson ID: ' + lesson.id + ' Lesson Start: ' + lesson.start + ' Lesson End ' + lesson.end);
+            saveLessonFromEvent(event);
         });
     };
+
+    var saveLessonFromEvent = function(event) {
+        var lesson = createLessonFromEvent(event);
+        console.log('lesson to save from calendar: ' + JSON.stringify(lesson));
+        lesson.$save();
+    }
+
+    var createLessonFromEvent = function(event) {
+        var lesson = new Lesson();
+        lesson.id = {_id: event.id};
+        lesson.teacherId = $scope.user.id;
+        lesson.start = Date.parse(event.start);
+        lesson.end = Date.parse(event.end);
+        return lesson;
+    }
     /* add and removes an event source of choice */
     $scope.addRemoveEventSource = function(sources,source) {
         var canAdd = 0;

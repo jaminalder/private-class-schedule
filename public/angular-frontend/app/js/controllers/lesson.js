@@ -67,6 +67,9 @@ function($scope, $resource, $filter, UUIDService, LessonService, UserService) {
         console.log('lesson ' + typeof lesson  + ' + ' + typeof lesson.start + ' start: ' + $filter('date', 'format: yyyy-MM-dd HH:mm')(lesson.start) + ' end: ' + $filter('date')(lesson.end));
         console.log('lesson ' + typeof lesson  + ' + ' + typeof lesson.start + ' start: ' + new Date(lesson.start) + ' end: ' + $filter('date')(lesson.end));
      // end of output for lesson
+
+        console.log('lesson to save on create: ' + JSON.stringify(lesson));
+
         lesson.$save();
         $scope.lessons[$scope.activeLessonIndex] = lesson;
 
