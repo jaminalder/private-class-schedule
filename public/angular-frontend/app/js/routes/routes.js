@@ -11,7 +11,7 @@ angular.module('pcs')
 
             $routeProvider.when('/', {
                 templateUrl: '/app/view/calendar/calendar.html',
-                controller: CalendarCtrl,
+                controller: 'CalendarCtrl',
                 access: access.public
             });
             $routeProvider.when('/student', {
@@ -28,17 +28,17 @@ angular.module('pcs')
             });
             $routeProvider.when('/calendar', {
                 templateUrl: '/app/view/calendar/calendar.html',
-                controller: CalendarCtrl,
+                controller: 'CalendarCtrl',
                 access: access.public
             });
             $routeProvider.when('/calendarStudentList', {
                 templateUrl: '/app/view/calendar/calendarStudentList.html',
-                controller: (CalendarCtrl, 'StudentCtrl'),
+                controller: ('CalendarCtrl', 'StudentCtrl'),
                 access: access.public
             });
             $routeProvider.when('/calendarLessonList', {
                 templateUrl: '/app/view/calendar/calendarLessonList.html',
-                controller: (CalendarCtrl, 'LessonCtrl'),
+                controller: ('CalendarCtrl', 'LessonCtrl'),
                 access: access.public
             });
             $routeProvider.when('/lesson', {

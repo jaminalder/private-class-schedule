@@ -1,8 +1,6 @@
 'use strict';
 
-var lesson = angular.module('pcs');
-
-lesson.controller('LessonCtrl', ['$scope', '$resource', '$filter', 'UUIDService','LessonService', 'UserService',
+angular.module('pcs').controller('LessonCtrl', ['$scope', '$resource', '$filter', 'UUIDService','LessonService', 'UserService',
 
 function($scope, $resource, $filter, UUIDService, LessonService, UserService) {
 

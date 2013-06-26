@@ -6,9 +6,9 @@
 
 'use strict';
 
-angular.module('pcs');
+angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserService', 'LessonService',
 
-function CalendarCtrl($scope, $filter, UserService, LessonService) {
+function ($scope, $filter, UserService, LessonService) {
     var User = UserService;
     var Lesson = LessonService;
     /* empty array lessonEvent will be used to get all lessons for the logged in teacher */
@@ -240,8 +240,7 @@ function CalendarCtrl($scope, $filter, UserService, LessonService) {
     };
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-}
-/* EOF */
+}]);
 
 
 
