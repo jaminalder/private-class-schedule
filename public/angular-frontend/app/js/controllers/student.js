@@ -7,6 +7,8 @@ function($scope, $resource, UUIDService, StudentService, AuthenticationService, 
 //    var loggedInUser = AuthenticationService.loggedInUser();
 //    $scope.students = StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
 
+    console.log('students at StudentCtrl entry: ' + JSON.stringify(students));
+
     $scope.students = students; //from routes resolve
 
     $scope.showStudentDetail = function(title){
@@ -23,7 +25,7 @@ function($scope, $resource, UUIDService, StudentService, AuthenticationService, 
     $scope.getEmptyStudent = function (callback) {
 
         var constructEmptyStudent = function (id) {
-            var emptyStudent = new StudentService();
+            var emptyStudent = {};
 
             emptyStudent.id = id;
             emptyStudent.ownerID = $scope.user.id;
@@ -52,7 +54,8 @@ function($scope, $resource, UUIDService, StudentService, AuthenticationService, 
     $scope.saveStudent = function () {
         var student = angular.copy($scope.studentForm);
 
-        student.$save();
+        StudentService.save(student);
+
         $scope.students[$scope.activeStudentIndex] = student;
 
         $scope.resetStudentForm();
@@ -76,7 +79,7 @@ function($scope, $resource, UUIDService, StudentService, AuthenticationService, 
     }
 
     $scope.deleteStudent = function(studentToDelete, index) {
-        studentToDelete.$delete();
+        StudentService.delete(studentToDelete);
         $scope.students.splice(index, 1);
     }
 

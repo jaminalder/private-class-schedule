@@ -9,27 +9,27 @@ angular.module('pcs')
                 teacher: 1
             }
 
-            $routeProvider.when('/', {
-                templateUrl: '/app/view/calendar/calendar.html',
-                controller: 'CalendarCtrl',
-                access: access.public
-            });
+            $routeProvider.when('/', {redirectTo: '/calendar'});
+
             $routeProvider.when('/student', {
-                controller: 'StudentCtrl',
                 templateUrl: '/app/view/student/studentListAndFormPage.html',
+                controller: 'StudentCtrl',
                 access: access.teacher,
                 resolve: {
-                    students: function (AuthenticationService, StudentService) {
-                        return AuthenticationService.getLoggedInUser().then(function(loggedInUser){
-                            return StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
-                        });
+                    students: function (StudentLoader) {
+                        return StudentLoader.allStudentsOfTeacher();
                     }
                 }
             });
             $routeProvider.when('/calendar', {
                 templateUrl: '/app/view/calendar/calendar.html',
                 controller: 'CalendarCtrl',
-                access: access.public
+                access: access.teacher,
+                resolve: {
+                    lessons: function (LessonLoader) {
+                        return LessonLoader.allLessonsOfTeacher();
+                    }
+                }
             });
             $routeProvider.when('/calendarStudentList', {
                 templateUrl: '/app/view/calendar/calendarStudentList.html',
@@ -42,14 +42,14 @@ angular.module('pcs')
                 access: access.public
             });
             $routeProvider.when('/lesson', {
-                controller: 'LessonCtrl',
-                resolve: {
-                    Lesson: function (LessonService) {
-                        return LessonService();
-                    }
-                },
                 templateUrl: '/app/view/lesson/lesson.html',
-                access: access.public
+                controller: 'LessonCtrl',
+                access: access.teacher,
+                resolve: {
+                    lessons: function (LessonLoader) {
+                        return LessonLoader.allLessonsOfTeacher();
+                    }
+                }
             });
             $routeProvider.when('/register', {
                 controller: 'RegisterController',
