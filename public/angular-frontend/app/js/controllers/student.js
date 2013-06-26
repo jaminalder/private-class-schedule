@@ -1,15 +1,24 @@
 'use strict';
 
-angular.module('pcs').controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'AuthenticationService', 'students',
 
-function($scope, $resource, UUIDService, StudentService, AuthenticationService, students) {
+angular.module('pcs').controller('CalendarStudentCtrl', ['$scope', '$resource', 'students', 'lessons',
+
+    function($scope, $resource, students, lessons) {
+        $scope.students = students;
+        $scope.lessons = lessons;
+    }]);
+
+
+angular.module('pcs').controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'AuthenticationService',
+
+function($scope, $resource, UUIDService, StudentService) {
 
 //    var loggedInUser = AuthenticationService.loggedInUser();
 //    $scope.students = StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
 
-    console.log('students at StudentCtrl entry: ' + JSON.stringify(students));
+    console.log('students at StudentCtrl entry: ' + JSON.stringify($scope.students));
 
-    $scope.students = students; //from routes resolve
+    //$scope.students = students; //from routes resolve
 
     $scope.showStudentDetail = function(title){
         $scope.studentDetailTitle = title;

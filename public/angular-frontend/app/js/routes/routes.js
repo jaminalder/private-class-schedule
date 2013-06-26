@@ -33,8 +33,16 @@ angular.module('pcs')
             });
             $routeProvider.when('/calendarStudentList', {
                 templateUrl: '/app/view/calendar/calendarStudentList.html',
-                controller: ('CalendarCtrl', 'StudentCtrl'),
-                access: access.public
+                controller: 'CalendarStudentCtrl',
+                access: access.teacher,
+                resolve: {
+                    lessons: function (LessonLoader) {
+                        return LessonLoader.allLessonsOfTeacher();
+                    },
+                    students: function (StudentLoader) {
+                        return StudentLoader.allStudentsOfTeacher();
+                    }
+                }
             });
             $routeProvider.when('/calendarLessonList', {
                 templateUrl: '/app/view/calendar/calendarLessonList.html',

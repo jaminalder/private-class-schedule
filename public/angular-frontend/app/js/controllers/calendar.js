@@ -6,25 +6,25 @@
 
 'use strict';
 
-angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserService', 'LessonService', 'lessons',
+angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserService', 'LessonService',
 
-    function ($scope, $filter, UserService, LessonService, lessons) {
+    function ($scope, $filter, UserService, LessonService) {
 
 
-        console.log('lessons at CalendarCtrl entry: ' + JSON.stringify(lessons));
+        console.log('lessons at CalendarCtrl entry: ' + JSON.stringify($scope.lessons));
 
         $scope.eventSources = [];
 
         $scope.lessonEvents = [];
 
-        $scope.lessons = lessons;
+        // $scope.lessons = lessons;
 
         var i
         for (i in $scope.lessons) {
-            var lessonId = lessons[i].id._id;
+            var lessonId = $scope.lessons[i].id._id;
             console.log('lesson id: ' + i + ' : ' + lessonId);
-            var lessonStart = lessons[i].start / 1000;
-            var lessonEnd = lessons[i].end / 1000;
+            var lessonStart = $scope.lessons[i].start / 1000;
+            var lessonEnd = $scope.lessons[i].end / 1000;
             $scope.lessonEvents.push(
                 {id: lessonId, title: 'Lesson ' + i, start: lessonStart, end: lessonEnd, allDay: false});
         }
