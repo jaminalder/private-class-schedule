@@ -168,6 +168,10 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                 allDayText: 'Ganzt.',
                 axisFormat: 'H:mm',
                 firstDay: 1,
+                timeFormat: {
+                    agenda: 'H:mm{ - H:mm}',
+                    '':     'H:mm'
+                },
                 snapMinutes: 5, /* events can be moved in 5 minute steps, default slotMinutes */
                 slotMinutes: 30, /* calender display in 30 minutes intervall, default slotMinutes = 30 minutes */
                 editable: true,
