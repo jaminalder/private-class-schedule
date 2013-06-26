@@ -9,6 +9,7 @@ import scala.Some
 import play.api.libs.json.Json
 import crosscutting.transferobject.lesson.Lesson
 import domain.person.PersonTestData
+import service.WiringModule.LessonDomainComponent
 
 object LessonTestData {
   val teacherId = PersonTestData.teacher.person.id

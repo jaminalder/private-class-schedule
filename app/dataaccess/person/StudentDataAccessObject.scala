@@ -13,5 +13,3 @@ trait StudentDataAccessObject extends RoleDataAccessObject[Student]{
   }
 
 }
-
-object StudentDataAccessObject extends StudentDataAccessObject

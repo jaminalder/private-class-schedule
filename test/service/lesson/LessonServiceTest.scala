@@ -6,12 +6,11 @@ import play.api.libs.ws.{Response, WS}
 import play.api.test.Helpers._
 import play.api.libs.ws.WS.WSRequestHolder
 import play.api.libs.json.{Json, JsArray}
-import crosscutting.basetype.Id
-import crosscutting.transferobject.person.{Student, Person, Address, Teacher}
-import domain.person.{PersonTestData, TeacherDomainComponent}
+import domain.person.PersonTestData
 import crosscutting.transferobject.base.ImplicitJsonFormats._
-import domain.lesson.{LessonDomainComponent, LessonTestData}
+import domain.lesson.LessonTestData
 import crosscutting.transferobject.lesson.Lesson
+import service.WiringModule.{TeacherDomainComponent, LessonDomainComponent}
 
 
 class LessonServiceTest extends Specification {

@@ -3,12 +3,10 @@ package service.lesson
 import play.api.mvc._
 import play.api.libs.json.{Json, JsValue}
 import crosscutting.basetype.Id
-import crosscutting.transferobject.lesson
-import domain.person.{TeacherDomainComponent, StudentDomainComponent}
-import domain.lesson.LessonDomainComponent
 import crosscutting.transferobject.base.ImplicitJsonFormats._
 import crosscutting.transferobject.lesson.Lesson
 import crosscutting.transferobject.person.Teacher
+import service.WiringModule.{TeacherDomainComponent, LessonDomainComponent}
 
 /**
  * JSON Service.

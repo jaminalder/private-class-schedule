@@ -1,8 +1,8 @@
 import com.mongodb.casbah.commons.conversions.scala.RegisterJodaTimeConversionHelpers
 import crosscutting.basetype.Id
 import crosscutting.transferobject.person.{Address, Person, Teacher}
-import domain.person.TeacherDomainComponent
 import play.api._
+import service.WiringModule.TeacherDomainComponent
 
 object Global extends GlobalSettings {
 

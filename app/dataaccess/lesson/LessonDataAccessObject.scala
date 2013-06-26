@@ -20,7 +20,3 @@ trait LessonDataAccessObject extends DataAccessObject[Lesson]  {
 
 }
 
-object LessonDataAccessObject extends LessonDataAccessObject {
-
-
-}

@@ -3,9 +3,9 @@ package service.authentication
 import play.api.mvc._
 import crosscutting.transferobject.person.{Person, Teacher}
 import crosscutting.transferobject.base.ImplicitJsonFormats._
-import domain.person.{TeacherDomainComponent, UserDomainComponent}
 import play.api.libs.json.Json
 import crosscutting.basetype.Id
+import service.WiringModule.{TeacherDomainComponent, UserDomainComponent}
 
 object AuthenticationService extends Controller with Secured{
 

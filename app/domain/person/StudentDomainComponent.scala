@@ -22,7 +22,3 @@ trait StudentDomainComponent {
   }
 
 }
-
-object StudentDomainComponent extends StudentDomainComponent {
-  val dao = StudentDataAccessObject
-}

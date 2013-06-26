@@ -5,11 +5,12 @@ import play.api.test.{WithApplication, WithServer}
 import play.api.libs.ws.{Response, WS}
 import play.api.test.Helpers._
 import play.api.libs.json.Json
-import domain.person.{PersonTestData, TeacherDomainComponent}
+import domain.person.PersonTestData
 import crosscutting.transferobject.base.ImplicitJsonFormats._
-import play.api.mvc.{Cookies, Cookie, Result, Session}
+import play.api.mvc.{Cookies, Cookie, Session}
 import play.api.libs.ws.WS.WSRequestHolder
 import crosscutting.transferobject.person.Person
+import service.WiringModule.TeacherDomainComponent
 
 class AuthenticationServiceTest extends Specification {
   sequential

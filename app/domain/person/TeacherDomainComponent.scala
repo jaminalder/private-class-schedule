@@ -18,6 +18,3 @@ trait TeacherDomainComponent {
 
 }
 
-object TeacherDomainComponent extends TeacherDomainComponent {
-  val dao = TeacherDataAccessObject
-}

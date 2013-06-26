@@ -4,8 +4,8 @@ import play.api.mvc._
 import play.api.libs.json.{Json, JsValue}
 import crosscutting.basetype.Id
 import crosscutting.transferobject.person.{Teacher, Student, Person}
-import domain.person.{TeacherDomainComponent, StudentDomainComponent}
 import crosscutting.transferobject.base.ImplicitJsonFormats._
+import service.WiringModule.{TeacherDomainComponent, StudentDomainComponent}
 
 /**
  * JSON Service.

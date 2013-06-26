@@ -27,6 +27,3 @@ trait LessonDomainComponent {
 
 }
 
-object LessonDomainComponent extends LessonDomainComponent{
-  val dao = LessonDataAccessObject
-}

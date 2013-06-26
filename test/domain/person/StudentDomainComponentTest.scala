@@ -2,7 +2,7 @@ package domain.person
 
 import org.specs2.mutable._
 import play.api.test.WithApplication
-import crosscutting.transferobject.person.Teacher
+import service.WiringModule.{StudentDomainComponent, TeacherDomainComponent}
 
 class StudentDomainComponentTest extends Specification {
 
