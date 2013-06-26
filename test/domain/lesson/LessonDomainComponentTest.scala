@@ -13,18 +13,17 @@ import service.WiringModule.LessonDomainComponent
 
 object LessonTestData {
   val teacherId = PersonTestData.teacher.person.id
-//  val studentIds = List(Id.generate, Id.generate)
+  val studentIds = List(Id.generate, Id.generate)
 
   val lesson1Id = Id.generate
   val lesson1Start = DateTime.parse("03.05.2013 1330", simpleDateTimeFormat)
   val lesson1End = DateTime.parse("03.05.2013 1430", simpleDateTimeFormat)
-  val lesson1 = Lesson(lesson1Id, lesson1Start, lesson1End, teacherId /* ,  studentIds */ )
+  val lesson1 = Lesson(lesson1Id, lesson1Start, lesson1End, teacherId,  studentIds)
 
   val lesson2Id = Id.generate
   val lesson2Start = DateTime.parse("20.06.2013 0900", simpleDateTimeFormat)
   val lesson2End = DateTime.parse("20.06.2013 0930", simpleDateTimeFormat)
-  //  val studentIds = List(Id.generate, Id.generate)
-  val lesson2 = Lesson(lesson2Id, lesson2Start, lesson2End,  teacherId /* ,  studentIds */ )
+  val lesson2 = Lesson(lesson2Id, lesson2Start, lesson2End,  teacherId,  studentIds)
 }
 
 class LessonDomainComponentTest extends Specification {
