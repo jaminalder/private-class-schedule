@@ -1,15 +1,13 @@
-<div ng-controller="StudentCtrl">
+<div ng-controller="StudentListCtrl">
+
+    <a id="newStudentButton" ng-click="newStudent()" class="btn btn-block btn-primary"><i
+            class="icon-plus icon-white"></i> Neuer Schüler</a>
+
+    <br/>
 
     <h4 id="studentListTitle">Schülerliste</h4>
 
-    <form class="form-horizontal">
-        <div class="control-group">
-            <input type="text" ng-model="search" class="search-query input-medium" placeholder="Suche">
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <a id="newStudentButton" ng-click="newStudent()" class="btn btn-small btn-primary"><i
-                    class="icon-plus icon-white"></i> Neuer Schüler</a>
-        </div>
-    </form>
+    <input type="text" ng-model="search" class="search-query input-medium" placeholder="Suche">
 
 
     <table id="studentTable" class="table table-striped">

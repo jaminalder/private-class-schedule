@@ -9,7 +9,7 @@ angular.module('pcs')
                 teacher: 1
             }
 
-            $routeProvider.when('/', {redirectTo: '/calendar'});
+            $routeProvider.when('/', {redirectTo: '/calendarStudentList'});
 
             $routeProvider.when('/student', {
                 templateUrl: '/app/view/student/studentListAndFormPage.html',

@@ -2,9 +2,9 @@
 
 var authModule = angular.module('pcs');
 
-authModule.controller('RegisterController', ['$scope', '$resource', 'UUIDService', 'AuthenticationService',
+authModule.controller('RegisterController', ['$scope', '$resource', '$location', 'UUIDService', 'AuthenticationService',
 
-    function ($scope, $resource, UUIDService, AuthenticationService) {
+    function ($scope, $resource, $location, UUIDService, AuthenticationService) {
 
 
         $scope.resetRegisterForm = function () {
@@ -35,6 +35,7 @@ authModule.controller('RegisterController', ['$scope', '$resource', 'UUIDService
             var userToRegister = angular.copy($scope.registerForm);
             var onSuccess = function (registeredUser) {
                 $scope.message = 'User' + registeredUser['firstName'] + ' ' + registeredUser['lastName'] + ' successfully registered'
+                $location.path('/');
             };
             var onError = function () {
                 $scope.message = 'User registration failed'
@@ -58,7 +59,7 @@ authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '
             var userToLogin = angular.copy($scope.loginForm);
             var onSuccess = function (loggedInUser) {
                 $scope.message = 'User' + loggedInUser['firstName'] + ' ' + loggedInUser['lastName'] + ' successfully logged in';
-                $location.path('/student');
+                $location.path('/');
             };
             var onError = function () {
                 $scope.message = 'User login failed';

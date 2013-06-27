@@ -3,97 +3,111 @@
 
 angular.module('pcs').controller('CalendarStudentCtrl', ['$scope', '$resource', 'students', 'lessons',
 
-    function($scope, $resource, students, lessons) {
-        $scope.students = students;
+    function ($scope, $resource, students, lessons) {
         $scope.lessons = lessons;
+        $scope.students = students;
+
+        $scope.setLeftViewDefault = function () {
+            $scope.leftView = "calendar"
+        }
+
+        $scope.setLeftViewDefault();
+
+        $scope.setLeftViewStudentForm = function (title) {
+            $scope.studentDetailTitle = title;
+            $scope.leftView = "studentForm"
+        }
+
+        $scope.resetStudentForm = function () {
+            $scope.studentForm = angular.copy($scope.activeStudent);
+        }
+
+        $scope.setActiveStudent = function(activeStudent, index){
+            $scope.activeStudent = activeStudent;
+            $scope.activeStudentIndex = index;
+        }
+
+    }]);
+
+angular.module('pcs').controller('StudentListCtrl', ['$scope', '$resource', 'UUIDService', 'StudentService', 'AuthenticationService',
+
+    function ($scope, $resource, UUIDService, StudentService) {
+
+        console.log('students at StudentListCtrl entry: ' + JSON.stringify($scope.students));
+
+        $scope.editStudent = function (studentToEdit, index) {
+            $scope.setActiveStudent(studentToEdit, index);
+            $scope.resetStudentForm();
+            $scope.setLeftViewStudentForm('Schüler editieren');
+        }
+
+        $scope.newStudent = function () {
+            $scope.setActiveStudent({}, $scope.students.length);
+            $scope.resetStudentForm();
+            $scope.setLeftViewStudentForm('Neuer Schüler');
+        }
+
+        $scope.deleteStudent = function (studentToDelete, index) {
+            StudentService.delete(studentToDelete);
+            $scope.students.splice(index, 1);
+        }
+
     }]);
 
 
-angular.module('pcs').controller('StudentCtrl', ['$scope', '$resource', 'UUIDService','StudentService', 'AuthenticationService',
+angular.module('pcs').controller('StudentFormCtrl', ['$scope', '$resource', 'UUIDService', 'StudentService', 'AuthenticationService',
 
-function($scope, $resource, UUIDService, StudentService) {
+    function ($scope, $resource, UUIDService, StudentService) {
 
-//    var loggedInUser = AuthenticationService.loggedInUser();
-//    $scope.students = StudentService.allStudentsOfTeacher({'ownerID': loggedInUser.id._id});
-
-    console.log('students at StudentCtrl entry: ' + JSON.stringify($scope.students));
-
-    //$scope.students = students; //from routes resolve
-
-    $scope.showStudentDetail = function(title){
-        $scope.studentDetailTitle = title;
-        $scope.studentDetailVisible = true;
-    }
-
-    $scope.hideStudentDetail = function(){
-        $scope.studentDetailVisible = false;
-    }
-
-    $scope.hideStudentDetail();
-
-    $scope.getEmptyStudent = function (callback) {
-
-        var constructEmptyStudent = function (id) {
-            var emptyStudent = {};
-
-            emptyStudent.id = id;
-            emptyStudent.ownerID = $scope.user.id;
-
-            //set the optional fields to "" to ensure a proper conversion to person on the server
-            //not sure, if this is really a good idea
-            emptyStudent.eMail = "";
-            emptyStudent.address = {
-                street: "",
-                streetNum: "",
-                city: "",
-                zip: ""
-            };
-
-            callback(emptyStudent);
+        $scope.hideStudentDetail = function () {
+            $scope.setLeftViewDefault();
         }
 
-        UUIDService.generate(constructEmptyStudent);
+        $scope.saveStudent = function () {
 
-    };
+            var studentFormToSave = angular.copy($scope.studentForm);
 
-    $scope.resetStudentForm = function () {
-        $scope.studentForm = angular.copy($scope.activeStudent);
-    };
+            var saveStudentWithId = function (id) {
 
-    $scope.saveStudent = function () {
-        var student = angular.copy($scope.studentForm);
+                var student = {
+                    id: id,
+                    ownerID: $scope.user.id,
 
-        StudentService.save(student);
+                    firstName: studentFormToSave.firstName,
+                    lastName: studentFormToSave.lastName,
 
-        $scope.students[$scope.activeStudentIndex] = student;
+                    eMail: studentFormToSave.eMail || "",
+                    address: studentFormToSave.address || {
+                        street: "",
+                        streetNum: "",
+                        city: "",
+                        zip: ""
+                    }
+                }
 
-        $scope.resetStudentForm();
-        $scope.hideStudentDetail();
-    };
+                StudentService.save(student);
 
-    $scope.editStudent = function(studentToEdit, index) {
-        $scope.activeStudent = studentToEdit;
-        $scope.activeStudentIndex = index;
-        $scope.resetStudentForm();
-        $scope.showStudentDetail('Schüler editieren');
-    }
+                $scope.students[$scope.activeStudentIndex] = student;
 
-    $scope.newStudent = function() {
-        $scope.getEmptyStudent(function (emptyStudent) {
-            $scope.activeStudent = emptyStudent;
-            $scope.activeStudentIndex = $scope.students.length;
+            }
+
+            if(studentFormToSave.id === undefined){
+                UUIDService.generate(saveStudentWithId);
+            } else {
+                saveStudentWithId(studentFormToSave.id);
+            }
+
             $scope.resetStudentForm();
-            $scope.showStudentDetail('Neuer Schüler');
-        });
-    }
+            $scope.hideStudentDetail();
+        }
 
-    $scope.deleteStudent = function(studentToDelete, index) {
-        StudentService.delete(studentToDelete);
-        $scope.students.splice(index, 1);
-    }
+        $scope.cancelStudentForm = function(){
+            $scope.resetStudentForm();
+            $scope.hideStudentDetail();
+        }
 
-    $scope.isUnchanged = function (studentForm) {
-        return angular.equals(studentForm, $scope.activeStudent);
-    };
+        $scope.isUnchanged = function (studentForm) {
+            return angular.equals(studentForm, $scope.activeStudent);
+        };
 
-}]);
+    }]);
