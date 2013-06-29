@@ -23,14 +23,9 @@ function($scope, $resource, $filter, UUIDService, LessonService, UserService, le
 
         var constructEmptyLesson = function (id) {
             var emptyLesson = {};
-
             emptyLesson.id = id;
             emptyLesson.teacherId = $scope.user.id;
             emptyLesson.studentIds = [] ;
-
-            //set the optional fields to "" to ensure a proper conversion to person on the server
-            //not sure, if this is really a good idea
-
             callback(emptyLesson);
         }
 

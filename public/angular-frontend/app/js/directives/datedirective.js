@@ -1,13 +1,11 @@
 'use strict';
 
-var dateDirective = angular.module('pcs');
-
-dateDirective.directive('date', function (dateFilter) {
+angular.module('pcs').directive('date', function (dateFilter) {
     return {
         require:'ngModel',
         link:function (scope, elm, attrs, ctrl) {
 
-            var dateFormat = attrs['date'] || 'yyyy-MM-dd HH:mm';
+            var dateFormat = attrs['date'] || 'yyyy/MM/dd HH:mm';
             var minDate = Date.parse(attrs['min']) || 0;
             var maxDate = Date.parse(attrs['max']) || 9007199254740992;
 
