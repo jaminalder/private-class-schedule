@@ -56,6 +56,9 @@ angular.module('pcs')
                 resolve: {
                     lessons: function (LessonLoader) {
                         return LessonLoader.allLessonsOfTeacher();
+                    } ,
+                    students: function (StudentLoader) {
+                        return StudentLoader.allStudentsOfTeacher();
                     }
                 }
             });

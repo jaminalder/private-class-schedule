@@ -20,6 +20,13 @@
         <input class="span4" type="text" ng-model="lessonForm.end" date placeholder="Ende yyyy/MM/dd HH:mm"
                required>
     </div>
+
+    <div>
+        <select ng-model="lessonForm.students" ng-options="student.lastName for student in students">
+            <option value="">--Schüler auswählen--</option>
+        </select>
+    </div>
+
     <p>
         <input id="saveLessonButton" ng-click="saveLesson()" class="btn btn-primary span2" type="submit" value="Speichern"
                ng-disabled="form.$invalid || isUnchanged(lessonForm)">

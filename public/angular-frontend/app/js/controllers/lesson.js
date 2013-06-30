@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('pcs').controller('LessonCtrl', ['$scope', '$resource', '$filter', 'UUIDService','LessonService', 'UserService', 'lessons',
+angular.module('pcs').controller('LessonCtrl', ['$scope', '$resource', '$filter', 'UUIDService','LessonService', 'UserService', 'lessons', 'StudentService', 'students',
 
-function($scope, $resource, $filter, UUIDService, LessonService, UserService, lessons) {
+function($scope, $resource, $filter, UUIDService, LessonService, UserService, lessons, StudentService, students) {
 
     console.log('lessons at LessonCtrl entry: ' + JSON.stringify(lessons));
+    console.log('students at LessonCtrl entry: ' + JSON.stringify(students));
 
     $scope.lessons = lessons;
+    $scope.students = students;
 
     $scope.showLessonDetail = function(title){
         $scope.lessonDetailTitle = title;
@@ -40,7 +42,12 @@ function($scope, $resource, $filter, UUIDService, LessonService, UserService, le
 
     $scope.saveLesson = function () {
         console.log('lessonForm: ' + JSON.stringify($scope.lessonForm));
-        var lesson = $filter('date')(angular.copy($scope.lessonForm));
+        var lesson = {};
+        lesson.id = $scope.lessonForm.id;
+        lesson.start = (angular.copy($scope.lessonForm.start));
+        lesson.end = (angular.copy($scope.lessonForm.end));
+        lesson.teacherId = $scope.lessonForm.teacherId;
+        lesson.studentIds = [(angular.copy($scope.lessonForm.students.id))];
         console.log('lesson to save: ' + JSON.stringify(lesson));
         LessonService.save(lesson);
         $scope.lessons[$scope.activeLessonIndex] = lesson;
@@ -62,6 +69,7 @@ function($scope, $resource, $filter, UUIDService, LessonService, UserService, le
         $scope.getEmptyLesson(function (emptyLesson) {
             $scope.activeLesson = emptyLesson;
             $scope.activeLessonIndex = $scope.lessons.length;
+            $scope.students.id = emptyLesson.studentIds;
             $scope.resetLessonForm();
             $scope.showLessonDetail('Neue Lektion');
         });
