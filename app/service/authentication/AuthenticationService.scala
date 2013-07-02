@@ -14,8 +14,10 @@ object AuthenticationService extends Controller with Secured{
       val user = (request.body \ "user").as[Person]
       val teacher = Teacher(user)
       val password = (request.body \ "password").as[String]
-      UserDomainComponent.registerUserAsTeacher(teacher, password)
-      Ok(Json.toJson(teacher.person)).withSession("userId" -> teacher.id._id)
+      UserDomainComponent.registerUserAsTeacher(teacher, password) match {
+        case Some(teacher: Teacher) => Ok(Json.toJson(teacher.person)).withSession("userId" -> teacher.id._id)
+        case _ => Unauthorized("Registration failed").withNewSession
+      }
   }
 
   def loginUserAsTeacher = Action(parse.json) {

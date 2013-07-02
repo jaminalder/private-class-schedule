@@ -9,7 +9,8 @@ abstract class RoleDataAccessObject[ConcreteRole <: Role] extends DataAccessObje
 
   def collectionName: String = "person"
 
-  collection.ensureIndex(MongoDBObject("eMail" -> 1, "ownerID" -> 1), "person_eMail_uniq_idx", true)
+  // cannot do a unique constraint on eMail as for students eMail is optional
+  // collection.ensureIndex(MongoDBObject("eMail" -> 1, "ownerID" -> 1), "person_eMail_uniq_idx", true)
 
   def converter: RoleDBObjectConverter[ConcreteRole]
 

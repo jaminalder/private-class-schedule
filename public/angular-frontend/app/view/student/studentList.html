@@ -1,7 +1,7 @@
 <div ng-controller="StudentListCtrl">
 
     <a id="newStudentButton" ng-click="newStudent()" class="btn btn-block btn-primary"><i
-            class="icon-plus icon-white"></i> Neuer Schüler</a>
+            class="icon-user icon-white"></i> Neuer Schüler</a>
 
     <br/>
 
@@ -24,7 +24,7 @@
             <td class="studentListName">{{student.firstName}} {{student.lastName}}</td>
             <td class="studentListActions">
                 <a class="editStudentLink" ng-click="editStudent(student, $index)"><i class="icon-pencil"></i></a>
-                <a class="deleteStudentLink" ng-click="deleteStudent(student, $index)"><i class="icon-remove"></i></a>
+                <a class="deleteStudentLink" ng-click="deleteStudent(student, $index)"><i class="icon-trash"></i></a>
             </td>
         </tr>
         </tbody>

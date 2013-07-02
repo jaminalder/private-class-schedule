@@ -20,12 +20,17 @@ class UserDomainComponentTest extends Specification {
     }
 
     "register a user as a teacher" in new WithApplication {
-      UserDomainComponent.registerUserAsTeacher(PersonTestData.teacher, password)
-      success
+      UserDomainComponent.registerUserAsTeacher(PersonTestData.teacher, password) match {
+        case Some(teacher: Teacher) => teacher mustEqual PersonTestData.teacher
+        case _ => failure
+      }
     }
 
     "fail to register the same user twice because the email must not be duplicate" in new WithApplication {
-      UserDomainComponent.registerUserAsTeacher(PersonTestData.duplicateTeacher, password) must throwA[DuplicateKey]
+      UserDomainComponent.registerUserAsTeacher(PersonTestData.duplicateTeacher, password) match {
+        case Some(_) => failure
+        case None => success
+      }
     }
 
     "successfully authenticate a user as a teacher" in new WithApplication {

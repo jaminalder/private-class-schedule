@@ -1,11 +1,20 @@
 'use strict';
 
-
 angular.module('pcs').controller('CalendarStudentCtrl', ['$scope', '$resource', 'students', 'lessons',
 
     function ($scope, $resource, students, lessons) {
         $scope.lessons = lessons;
         $scope.students = students;
+
+        $scope.setRightViewStudentList = function () {
+            $scope.rightView = "studentList"
+        }
+
+        $scope.setRightViewLessonList = function () {
+            $scope.rightView = "lessonList"
+        }
+
+        $scope.setRightViewStudentList();
 
         $scope.setLeftViewDefault = function () {
             $scope.leftView = "calendar"
@@ -22,16 +31,30 @@ angular.module('pcs').controller('CalendarStudentCtrl', ['$scope', '$resource', 
             $scope.studentForm = angular.copy($scope.activeStudent);
         }
 
-        $scope.setActiveStudent = function(activeStudent, index){
+        $scope.setActiveStudent = function (activeStudent, index) {
             $scope.activeStudent = activeStudent;
             $scope.activeStudentIndex = index;
         }
 
+        $scope.setLeftViewLessonForm = function (title) {
+            $scope.lessonDetailTitle = title;
+            $scope.leftView = "lessonForm"
+        }
+
+        $scope.resetLessonForm = function () {
+            $scope.lessonForm = angular.copy($scope.activeLesson);
+        }
+
+        $scope.setActiveLesson = function (activeStudent, index) {
+            $scope.activeLesson = activeStudent;
+            $scope.activeLessonIndex = index;
+        }
+
     }]);
 
-angular.module('pcs').controller('StudentListCtrl', ['$scope', '$resource', 'UUIDService', 'StudentService', 'AuthenticationService',
+angular.module('pcs').controller('StudentListCtrl', ['$scope', 'StudentService',
 
-    function ($scope, $resource, UUIDService, StudentService) {
+    function ($scope, StudentService) {
 
         console.log('students at StudentListCtrl entry: ' + JSON.stringify($scope.students));
 
@@ -91,7 +114,7 @@ angular.module('pcs').controller('StudentFormCtrl', ['$scope', '$resource', 'UUI
 
             }
 
-            if(studentFormToSave.id === undefined){
+            if (studentFormToSave.id === undefined) {
                 UUIDService.generate(saveStudentWithId);
             } else {
                 saveStudentWithId(studentFormToSave.id);
@@ -101,7 +124,7 @@ angular.module('pcs').controller('StudentFormCtrl', ['$scope', '$resource', 'UUI
             $scope.hideStudentDetail();
         }
 
-        $scope.cancelStudentForm = function(){
+        $scope.cancelStudentForm = function () {
             $scope.resetStudentForm();
             $scope.hideStudentDetail();
         }

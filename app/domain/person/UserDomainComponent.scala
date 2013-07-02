@@ -9,7 +9,15 @@ trait UserDomainComponent {
 
   val dao: TeacherDataAccessObject
 
-  def registerUserAsTeacher(teacher: Teacher, password: String) = dao.registerUserAsTeacher(teacher, password)
+  def registerUserAsTeacher(teacher: Teacher, password: String): Option[Teacher] = {
+    dao.getPasswordByEmail(teacher.person.eMail) match {
+      case Some(_) => None // there is already a user with this eMail
+      case None => {
+        dao.registerUserAsTeacher(teacher, password)
+        authenticateUserAsTeacher(teacher.person.eMail, password)
+      }
+    }
+  }
 
   def authenticateUserAsTeacher(eMail: String, password: String): Option[Teacher] = {
     dao.getPasswordByEmail(eMail) match {
