@@ -7,6 +7,9 @@ object PersonTestData {
   val teacher = Teacher(Person(id = Id.generate, lastName = "Meier", firstName = "Hans", eMail = "hans.meier@gmail.com",
     address = Address(street = "street", streetNum = "3", city = "Bern", zip = "8000"), ownerID = Id.rootID))
 
+  val duplicateTeacher = Teacher(Person(id = Id.generate, lastName = "Meier", firstName = "Hans", eMail = "hans.meier@gmail.com",
+    address = Address(street = "street", streetNum = "3", city = "Bern", zip = "8000"), ownerID = Id.rootID))
+
   def randomStudentOfTeacher: Student = {
     val id = Id.generate
     val namePart = id._id.substring(3, 6)

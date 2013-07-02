@@ -9,6 +9,8 @@ abstract class RoleDataAccessObject[ConcreteRole <: Role] extends DataAccessObje
 
   def collectionName: String = "person"
 
+  collection.ensureIndex(MongoDBObject("eMail" -> 1, "ownerID" -> 1), "person_eMail_uniq_idx", true)
+
   def converter: RoleDBObjectConverter[ConcreteRole]
 
   def deleteByID(id:Id) = collection.remove(MongoDBObject("_id" -> id._id))

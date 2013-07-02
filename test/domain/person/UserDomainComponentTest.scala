@@ -4,6 +4,7 @@ import org.specs2.mutable._
 import play.api.test.WithApplication
 import crosscutting.transferobject.person.Teacher
 import service.WiringModule.{UserDomainComponent, TeacherDomainComponent}
+import com.mongodb.MongoException.DuplicateKey
 
 class UserDomainComponentTest extends Specification {
 
@@ -21,6 +22,10 @@ class UserDomainComponentTest extends Specification {
     "register a user as a teacher" in new WithApplication {
       UserDomainComponent.registerUserAsTeacher(PersonTestData.teacher, password)
       success
+    }
+
+    "fail to register the same user twice because the email must not be duplicate" in new WithApplication {
+      UserDomainComponent.registerUserAsTeacher(PersonTestData.duplicateTeacher, password) must throwA[DuplicateKey]
     }
 
     "successfully authenticate a user as a teacher" in new WithApplication {
