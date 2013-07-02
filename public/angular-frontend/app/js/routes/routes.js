@@ -9,31 +9,11 @@ angular.module('pcs')
                 teacher: 1
             }
 
-            $routeProvider.when('/', {redirectTo: '/calendarStudentList'});
+            $routeProvider.when('/', {redirectTo: '/home'});
 
-            $routeProvider.when('/student', {
-                templateUrl: '/app/view/student/studentListAndFormPage.html',
-                controller: 'StudentCtrl',
-                access: access.teacher,
-                resolve: {
-                    students: function (StudentLoader) {
-                        return StudentLoader.allStudentsOfTeacher();
-                    }
-                }
-            });
-            $routeProvider.when('/calendar', {
-                templateUrl: '/app/view/calendar/calendar.html',
-                controller: 'CalendarCtrl',
-                access: access.teacher,
-                resolve: {
-                    lessons: function (LessonLoader) {
-                        return LessonLoader.allLessonsOfTeacher();
-                    }
-                }
-            });
-            $routeProvider.when('/calendarStudentList', {
-                templateUrl: '/app/view/calendar/calendarStudentList.html',
-                controller: 'CalendarStudentCtrl',
+            $routeProvider.when('/home', {
+                templateUrl: '/app/view/home/home.html',
+                controller: 'HomeCtrl',
                 access: access.teacher,
                 resolve: {
                     lessons: function (LessonLoader) {
@@ -44,39 +24,25 @@ angular.module('pcs')
                     }
                 }
             });
-            $routeProvider.when('/calendarLessonList', {
-                templateUrl: '/app/view/calendar/calendarLessonList.html',
-                controller: ('CalendarCtrl', 'LessonCtrl'),
-                access: access.public
-            });
-            $routeProvider.when('/lesson', {
-                templateUrl: '/app/view/lesson/lesson.html',
-                controller: 'LessonCtrl',
-                access: access.teacher,
-                resolve: {
-                    lessons: function (LessonLoader) {
-                        return LessonLoader.allLessonsOfTeacher();
-                    } ,
-                    students: function (StudentLoader) {
-                        return StudentLoader.allStudentsOfTeacher();
-                    }
-                }
-            });
+
             $routeProvider.when('/register', {
                 controller: 'RegisterController',
                 templateUrl: '/app/view/authentication/registerForm.html',
                 access: access.public
             });
+
             $routeProvider.when('/login', {
                 controller: 'LoginController',
                 templateUrl: '/app/view/authentication/loginForm.html',
                 access: access.public
             });
+
             $routeProvider.when('/404',
                 {
                     templateUrl: '/app/view/errors/404.html',
                     access: access.public
                 });
+
             $routeProvider.otherwise({redirectTo: '/404'});
 
 // $locationProvider.html5Mode(true);
@@ -120,7 +86,6 @@ angular.module('pcs')
                 } else {
                     AuthenticationService.getLoggedInUser().then(function (loggedInUser) {
                         console.log('found logged in user on server: ' + JSON.stringify(loggedInUser));
-                        // $location.path('/student');
                     }, function () {
                         console.log('did not find logged in user on server. redirect to login');
                         $location.path('/login');
