@@ -1,7 +1,7 @@
 package service.lesson
 
 import org.specs2.mutable._
-import play.api.test.WithServer
+import play.api.test.{WithApplication, WithServer}
 import play.api.libs.ws.{Response, WS}
 import play.api.test.Helpers._
 import play.api.libs.ws.WS.WSRequestHolder
@@ -10,7 +10,13 @@ import domain.person.PersonTestData
 import crosscutting.transferobject.base.ImplicitJsonFormats._
 import domain.lesson.LessonTestData
 import crosscutting.transferobject.lesson.Lesson
-import service.WiringModule.{TeacherDomainComponent, LessonDomainComponent}
+import service.WiringModule.{UserDomainComponent, TeacherDomainComponent, LessonDomainComponent}
+import service.authentication.AuthenticationTestHelper._
+import play.api.libs.json.JsArray
+import crosscutting.transferobject.lesson.Lesson
+import play.api.libs.ws.Response
+import play.api.libs.ws.WS.WSRequestHolder
+import scala.Some
 
 
 class LessonServiceTest extends Specification {
@@ -18,13 +24,16 @@ class LessonServiceTest extends Specification {
 
   "The LessonService" should {
 
-    "add lesson of a teacher" in new WithServer {
-      // clean up all existing teachers and add a single teacher
-      TeacherDomainComponent.dao.collection.drop
-      TeacherDomainComponent.saveTeacher(PersonTestData.teacher)
+    val password = "secret"
 
-      // add two lessons through the service
-      val requestHolder = WS.url("http://localhost:19001/api/lesson/saveLesson")
+    "cleanup persons and register a teacher as a user" in new WithApplication {
+      TeacherDomainComponent.dao.collection.drop
+      UserDomainComponent.registerUserAsTeacher(PersonTestData.teacher, password)
+      success
+    }
+
+    "add lesson of a teacher" in new WithServer {
+      val requestHolder = requestHolderWithUserId("http://localhost:19001/api/lesson/saveLesson", PersonTestData.teacher.id._id)
       val response1: Response = await(requestHolder.post(Json.toJson(LessonTestData.lesson1)))
       response1.status must equalTo(OK)
       val response2: Response = await(requestHolder.post(Json.toJson(LessonTestData.lesson2)))
@@ -39,7 +48,7 @@ class LessonServiceTest extends Specification {
     "yield all lessons of a teacher" in new WithServer {
 
       // now call the other service to get the before added lessons
-      val requestHolder: WSRequestHolder = WS.url("http://localhost:19001/api/lesson/allLessonsOfTeacher/" + PersonTestData.teacher.person.id._id)
+      val requestHolder = requestHolderWithUserId("http://localhost:19001/api/lesson/allLessonsOfTeacher/" + PersonTestData.teacher.person.id._id, PersonTestData.teacher.id._id)
       val response: Response = await(requestHolder.get)
       response.status must equalTo(OK)
       response.json.asInstanceOf[JsArray].value.size mustEqual 2

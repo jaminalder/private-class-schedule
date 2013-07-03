@@ -7,10 +7,9 @@ import play.api.test.Helpers._
 import play.api.libs.json.Json
 import domain.person.PersonTestData
 import crosscutting.transferobject.base.ImplicitJsonFormats._
-import play.api.mvc.{Cookies, Cookie, Session}
-import play.api.libs.ws.WS.WSRequestHolder
 import crosscutting.transferobject.person.Person
 import service.WiringModule.TeacherDomainComponent
+import AuthenticationTestHelper._
 
 class AuthenticationServiceTest extends Specification {
   sequential
@@ -48,14 +47,6 @@ class AuthenticationServiceTest extends Specification {
       loggedInUserResponse.json.as[Person] mustEqual PersonTestData.teacher.person
     }
 
-    def getValueFromSessonCookie(response:Response, key:String): Option[String] = {
-      val playSession: String = response.header("Set-Cookie").getOrElse(return None)
-      val decodedCookies: Seq[Cookie] = Cookies.decode(playSession)
-      val sessionCookie: Option[Cookie] = decodedCookies.find(c => c.name.equals("PLAY_SESSION"))
-      val decodedSession: Session = Session.decodeFromCookie(sessionCookie)
-      val valueInSession = decodedSession.get(key)
-      return valueInSession
-    }
 
 
     "fail to log in a user as a teacher with wrong password" in new WithServer {
@@ -80,20 +71,6 @@ class AuthenticationServiceTest extends Specification {
       getValueFromSessonCookie(failedResponse, "userId") must beNone
     }
 
-    def testLoginUserAsTeacher(eMail:String, password:String):Response = {
-      val jsonInput = Json.obj("eMail" -> eMail, "password" -> password)
-      val requestHolder = WS.url("http://localhost:19001/api/authentication/loginUserAsTeacher")
-      await(requestHolder.post(jsonInput))
-    }
-
-
-    def callServiceWithUserId(url:String, userId:String): Response = {
-      val sessionCookie: Cookie = Session.encodeAsCookie(Session(Map("userId" -> userId)))
-      val loggedInUserRequestHolder: WSRequestHolder = WS.url(url)
-        .withHeaders(play.api.http.HeaderNames.COOKIE -> Cookies.encode(Seq(sessionCookie)))
-      return await(loggedInUserRequestHolder.get)
-
-    }
-
   }
+
 }
