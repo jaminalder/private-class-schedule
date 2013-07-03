@@ -17,8 +17,15 @@ trait Secured {
   /**
    * Action for authenticated users.
    */
-  def IsAuthenticated(f: => String => Request[AnyContent] => Result) = Security.Authenticated(username, onUnauthorized) { user =>
-    Action(request => f(user)(request))
+  def IsAuthenticated(f: => String => Request[AnyContent] => Result) = Security.Authenticated(username, onUnauthorized) {
+    user =>
+      Action(request => f(user)(request))
   }
 
+  def IsAuthenticated[A](b: BodyParser[A])(f: => String => Request[A] => Result) = {
+    Security.Authenticated(username, onUnauthorized) {
+      user =>
+        Action(b)(request => f(user)(request))
+    }
+  }
 }

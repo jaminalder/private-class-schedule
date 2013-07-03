@@ -12,7 +12,6 @@ POST    /api/poc/todo/delete/:id  poc.MongoPOCController.deleteTodo(id)
 
 GET    /api/id/generate                                service.id.IDService.generate
 
-GET    /api/user/login/:eMail/:password                service.user.UserService.login(eMail, password)
 POST   /api/authentication/registerUserAsTeacher       service.authentication.AuthenticationService.registerUserAsTeacher
 POST   /api/authentication/loginUserAsTeacher          service.authentication.AuthenticationService.loginUserAsTeacher
 POST   /api/authentication/logoutUser                  service.authentication.AuthenticationService.logoutUser
