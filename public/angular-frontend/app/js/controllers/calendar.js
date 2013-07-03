@@ -14,22 +14,23 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
         console.log('lessons at CalendarCtrl entry: ' + JSON.stringify($scope.lessons));
 
         $scope.eventSources = [];
-
         $scope.lessonEvents = [];
-
-        // $scope.lessons = lessons;
-
-        var i
-        for (i in $scope.lessons) {
-            var lessonId = $scope.lessons[i].id._id;
-            console.log('lesson id: ' + i + ' : ' + lessonId);
-            var lessonStart = $scope.lessons[i].start / 1000;
-            var lessonEnd = $scope.lessons[i].end / 1000;
-            $scope.lessonEvents.push(
-                {id: lessonId, title: 'Lesson ' + i, start: lessonStart, end: lessonEnd, allDay: false});
-        }
-
         $scope.eventSources.push($scope.lessonEvents);
+
+        $scope.$on('LessonsChangedEvent', function(){
+            $scope.lessonEvents.length = 0;
+            var i
+            for (i in $scope.lessons) {
+                var lessonId = $scope.lessons[i].id._id;
+                console.log('lesson id: ' + i + ' : ' + lessonId);
+                var lessonStart = $scope.lessons[i].start / 1000;
+                var lessonEnd = $scope.lessons[i].end / 1000;
+                $scope.lessonEvents.push(
+                    {id: lessonId, title: 'Lesson ' + i, start: lessonStart, end: lessonEnd, allDay: false});
+            }
+        });
+
+        $scope.fireLessonsChangedEvent();
 
         /* alert on dayClick */
         $scope.alertDayOnClick = function (date, allDay, jsEvent, view) {
@@ -42,8 +43,8 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
         /* alert on eventClick */
         $scope.alertEventOnClick = function (event, jsEvent, view) {
             $scope.$apply(function () {
-                console.log('Event Clicked ' + event);
-                $scope.alertMessage = ('Event Clicked ' + event);
+                var lessonToEdit = createLessonFromEvent(event);
+                $scope.editLesson(lessonToEdit);
             });
         };
 
@@ -72,6 +73,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
             var lesson = createLessonFromEvent(event);
             console.log('lesson to save from calendar: ' + JSON.stringify(lesson));
             LessonService.save(lesson);
+            $scope.lessons[$scope.activeLessonIndex] = lesson;
         }
 
         var createLessonFromEvent = function (event) {

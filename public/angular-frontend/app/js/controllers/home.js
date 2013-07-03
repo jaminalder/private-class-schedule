@@ -45,9 +45,32 @@ angular.module('pcs').controller('HomeCtrl', ['$scope', '$resource', 'students',
             $scope.lessonForm = angular.copy($scope.activeLesson);
         }
 
-        $scope.setActiveLesson = function (activeStudent, index) {
-            $scope.activeLesson = activeStudent;
+        $scope.setActiveLesson = function (activeLesson, index) {
+            $scope.activeLesson = activeLesson;
             $scope.activeLessonIndex = index;
+        }
+
+        $scope.fireLessonsChangedEvent = function(){
+            $scope.$broadcast('LessonsChangedEvent');
+        }
+
+        $scope.editLesson = function (lessonToEdit, index) {
+            console.log('editLesson lessonToEdit: ' + JSON.stringify(lessonToEdit) + ', index: ' + index);
+            if(index === undefined){
+                index = $scope.findLessonIndex(lessonToEdit);
+            }
+            $scope.setActiveLesson(lessonToEdit, index);
+            $scope.resetLessonForm();
+            $scope.setLeftViewLessonForm('Lektion editieren');
+        }
+
+        $scope.findLessonIndex = function(lesson){
+            for(var i = 0; i < $scope.lessons.length;i++){
+                if(lesson.id._id === $scope.lessons[i].id._id){
+                    return i;
+                }
+            }
+            return $scope.lessons.length;
         }
 
     }]);

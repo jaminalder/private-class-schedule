@@ -6,11 +6,6 @@ angular.module('pcs').controller('LessonListCtrl', ['$scope', 'LessonService',
 
         console.log('lessons at LessonListCtrl entry: ' + JSON.stringify($scope.lessons));
 
-        $scope.editLesson = function (lessonToEdit, index) {
-            $scope.setActiveLesson(lessonToEdit, index);
-            $scope.resetLessonForm();
-            $scope.setLeftViewLessonForm('Lektion editieren');
-        }
 
         $scope.newLesson = function () {
             $scope.setActiveLesson({}, $scope.lessons.length);
@@ -21,6 +16,7 @@ angular.module('pcs').controller('LessonListCtrl', ['$scope', 'LessonService',
         $scope.deleteLesson = function (lessonToDelete, index) {
             LessonService.delete(lessonToDelete);
             $scope.lessons.splice(index, 1);
+            $scope.fireLessonsChangedEvent();
         }
 
     }]);
@@ -41,6 +37,8 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
 
             var lessonFormToSave = angular.copy($scope.lessonForm);
 
+            console.log('lessonFormToSave: ' + JSON.stringify(lessonFormToSave));
+
             var saveLessonWithId = function (id) {
 
                 var lesson = {
@@ -52,6 +50,7 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
                 }
                 LessonService.save(lesson);
                 $scope.lessons[$scope.activeLessonIndex] = lesson;
+                $scope.fireLessonsChangedEvent();
             }
 
             if(lessonFormToSave.id === undefined){
