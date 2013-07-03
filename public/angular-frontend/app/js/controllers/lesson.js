@@ -48,7 +48,13 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
                     teacherId: $scope.user.id,
                     start: lessonFormToSave.start,
                     end: lessonFormToSave.end,
-                    studentIds: [lessonFormToSave.students.id]
+                    studentIds: []
+                }
+                var i
+                for (i in lessonFormToSave.lessonStudentIds) {
+                    var studentId = lessonFormToSave.lessonStudentIds[i];
+                    lesson.studentIds.push(
+                        {_id: studentId});
                 }
                 LessonService.save(lesson);
                 $scope.lessons[$scope.activeLessonIndex] = lesson;
@@ -66,6 +72,11 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
 
         $scope.isUnchanged = function (lessonForm) {
             return angular.equals(lessonForm, $scope.activeLesson);
+        };
+
+        $scope.select2Options = {
+            placeholder: 'Schüler auswählen'
+ //           allowClear:true
         };
 
     }]);

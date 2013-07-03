@@ -43,6 +43,12 @@ angular.module('pcs').controller('HomeCtrl', ['$scope', '$resource', 'students',
 
         $scope.resetLessonForm = function () {
             $scope.lessonForm = angular.copy($scope.activeLesson);
+            $scope.lessonForm.lessonStudentIds = [];
+            var i
+            for (i in $scope.lessonForm.studentIds) {
+                $scope.lessonForm.lessonStudentIds.push($scope.lessonForm.studentIds[i]._id);
+            }
+
         }
 
         $scope.setActiveLesson = function (activeStudent, index) {
