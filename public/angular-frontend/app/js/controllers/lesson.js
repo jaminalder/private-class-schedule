@@ -6,7 +6,6 @@ angular.module('pcs').controller('LessonListCtrl', ['$scope', 'LessonService',
 
         console.log('lessons at LessonListCtrl entry: ' + JSON.stringify($scope.lessons));
 
-
         $scope.newLesson = function () {
             $scope.setActiveLesson({}, $scope.lessons.length);
             $scope.resetLessonForm();
@@ -65,6 +64,11 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
                 saveLessonWithId(lessonFormToSave.id);
             }
 
+            $scope.resetLessonForm();
+            $scope.hideLessonDetail();
+        }
+
+        $scope.cancelLessonForm = function () {
             $scope.resetLessonForm();
             $scope.hideLessonDetail();
         }

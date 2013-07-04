@@ -25,8 +25,14 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                 console.log('lesson id: ' + i + ' : ' + lessonId);
                 var lessonStart = $scope.lessons[i].start / 1000;
                 var lessonEnd = $scope.lessons[i].end / 1000;
-                $scope.lessonEvents.push(
-                    {id: lessonId, title: 'Lesson ' + i, start: lessonStart, end: lessonEnd, allDay: false});
+                var studentIds = $scope.lessons[i].studentIds;
+                $scope.lessonEvents.push({
+                    id: lessonId,
+                    title: 'Lesson ' + i,
+                    start: lessonStart,
+                    end: lessonEnd,
+                    studentIds: studentIds,
+                    allDay: false});
             }
         });
 
@@ -78,11 +84,11 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
 
         var createLessonFromEvent = function (event) {
             var lesson = {};
-            lesson.id = {_id: event.id};
+            lesson.id = event.id === undefined ? undefined : {_id: event.id};
             lesson.teacherId = $scope.user.id;
             lesson.start = Date.parse(event.start);
             lesson.end = Date.parse(event.end);
-            lesson.studentIds = [] ;
+            lesson.studentIds = event.studentIds === undefined ? [] : event.studentIds ;
             return lesson;
         }
 
@@ -114,20 +120,18 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
         };
 
         $scope.selectEvent = function (start, end, allDay) {
-            var title = prompt('Titel:');
-            if (title) {
-                $scope.pcsCalendar.fullCalendar('renderEvent',
-                    {
-                        title: title,
-                        start: start,
-                        end: end,
-                        allDay: allDay
-                    },
-                    true // make the event "stick"
-                );
-            }
+            $scope.$apply(function () {
+                var event = {
+                    start: start,
+                    end: end,
+                    allDay: allDay
+                }
+                var lessonToEdit = createLessonFromEvent(event);
+                $scope.editLesson(lessonToEdit);
+            });
             $scope.pcsCalendar.fullCalendar('unselect');
         };
+
         /* config object */
         $scope.uiConfig = {
             calendar: {
