@@ -536,6 +536,10 @@ table.fc-border-separate {
 	font-size: 10px;
 	}
 
+.fc-event-title {
+    font-size: 10px;
+}
+
 .fc-event-vert .fc-event-inner {
 	position: relative;
 	z-index: 2;

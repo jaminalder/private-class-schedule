@@ -31,7 +31,9 @@ angular.module('ui.calendar', [])
                 };
                 scope.destroy();
                 scope.init = function(){
-                    var options = { eventSources: sources };
+                    var options = {
+                        eventSources: sources
+                    };
                     angular.extend(options, uiCalendarConfig, attrs.uiCalendar ? scope.$parent.$eval(attrs.uiCalendar) : {});
                     scope.calendar.fullCalendar(options);
                 };

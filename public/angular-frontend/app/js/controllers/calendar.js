@@ -17,7 +17,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
         $scope.lessonEvents = [];
         $scope.eventSources.push($scope.lessonEvents);
 
-        $scope.$on('LessonsChangedEvent', function(){
+        $scope.$on('LessonsChangedEvent', function () {
             $scope.lessonEvents.length = 0;
             var i
             for (i in $scope.lessons) {
@@ -28,7 +28,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                 var studentIds = $scope.lessons[i].studentIds;
                 $scope.lessonEvents.push({
                     id: lessonId,
-                    title: 'Lesson ' + i,
+                    title: '',
                     start: lessonStart,
                     end: lessonEnd,
                     studentIds: studentIds,
@@ -88,7 +88,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
             lesson.teacherId = $scope.user.id;
             lesson.start = Date.parse(event.start);
             lesson.end = Date.parse(event.end);
-            lesson.studentIds = event.studentIds === undefined ? [] : event.studentIds ;
+            lesson.studentIds = event.studentIds === undefined ? [] : event.studentIds;
             return lesson;
         }
 
@@ -176,7 +176,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                 firstDay: 1,
                 timeFormat: {
                     agenda: 'H:mm{ - H:mm}',
-                    '':     'H:mm'
+                    '': 'H:mm'
                 },
                 snapMinutes: 5, /* events can be moved in 5 minute steps, default slotMinutes */
                 slotMinutes: 30, /* calender display in 30 minutes intervall, default slotMinutes = 30 minutes */
@@ -187,7 +187,22 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                 dayClick: $scope.alertDayOnClick,
                 eventClick: $scope.alertEventOnClick,
                 eventDrop: $scope.eventChangeOnDrop,
-                eventResize: $scope.eventChangeOnResize
+                eventResize: $scope.eventChangeOnResize,
+                eventRender: function (event, element) {
+                    if (event.studentIds !== undefined) {
+                        var newDisplayString = "";
+                        for (var i = 0; i < event.studentIds.length; i++) {
+                            var student = $scope.findStudentById(event.studentIds[i]._id);
+                            if (student !== undefined) {
+                                if(i>0){
+                                    newDisplayString += ", ";
+                                }
+                                newDisplayString += student.firstName + " " + student.lastName;
+                            }
+                        }
+                        element.find('div.fc-event-title').append(newDisplayString);
+                    }
+                }
             }
         };
 

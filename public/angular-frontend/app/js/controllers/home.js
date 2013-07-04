@@ -81,4 +81,15 @@ angular.module('pcs').controller('HomeCtrl', ['$scope', '$resource', 'students',
             return $scope.lessons.length;
         }
 
+        $scope.findStudentById = function (studentId) {
+            if (studentId !== undefined) {
+                for (var i = 0; i < $scope.students.length; i++) {
+                    if (studentId === $scope.students[i].id._id) {
+                        return $scope.students[i];
+                    }
+                }
+            }
+            return undefined;
+        }
+
     }]);
