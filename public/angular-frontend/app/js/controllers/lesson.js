@@ -28,6 +28,13 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
         console.log('lessons at LessonFormCtrl entry: ' + JSON.stringify($scope.lessons));
         console.log('students at LessonFormCtrl entry: ' + JSON.stringify($scope.students));
 
+        $scope.datepicker = {
+            date: new Date("2013-07-12T22:00:00.000Z")
+        }
+        $scope.timepicker = {
+            time: "14:30"
+        }
+
         $scope.hideLessonDetail = function(){
             $scope.setLeftViewDefault();
         }
@@ -37,6 +44,11 @@ angular.module('pcs').controller('LessonFormCtrl', ['$scope', '$resource', '$fil
             var lessonFormToSave = angular.copy($scope.lessonForm);
 
             console.log('lessonFormToSave: ' + JSON.stringify(lessonFormToSave));
+
+
+            console.log('resetLessonForm date: ' + $scope.lessonForm.date);
+            console.log('resetLessonForm startTime: ' + $scope.lessonForm.startTime);
+            console.log('resetLessonForm endTime: ' + $scope.lessonForm.endTime);
 
             var saveLessonWithId = function (id) {
 
