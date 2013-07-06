@@ -9,8 +9,8 @@ describe('my app', function () {
     });
 
 
-    it('should automatically redirect to / = calendar when location hash/fragment is empty', function () {
-        expect(browser().location().url()).toBe("/");
+    it('should automatically redirect to / = home when location hash/fragment is empty', function () {
+        expect(browser().location().url()).toBe("/home");
     });
 
 
@@ -21,7 +21,8 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            browser().navigateTo('#/student');
+            sleep(1);
+//            browser().navigateTo('#/student');
         });
 
         it('register test user first', function () {
@@ -40,6 +41,7 @@ describe('my app', function () {
 
         it('should show new student form when user clicks on new student button', function () {
             element('#newStudentButton').click();
+            sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Neuer Schüler");
         });
@@ -56,6 +58,7 @@ describe('my app', function () {
 
         it('should show the edit student form after clicking on the edit button of the first student', function () {
             element('#studentTable .editStudentLink :last').click();
+            sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Schüler editieren");
             expect(input('studentForm.firstName').val()).
@@ -64,45 +67,36 @@ describe('my app', function () {
 
         it('should change the first and last name of a student', function (){
             element('#studentTable .editStudentLink :last').click();
+            sleep(1);
             input('studentForm.firstName').enter('First Changed');
             input('studentForm.lastName').enter('Last Changed');
             element('#saveStudentButton').click();
+            sleep(1);
             verifyStudentNameInList('First Changed', 'Last Changed', ':last');
         });
 
         it('should remove the added students again after test is done', function () {
             element('#studentTable .deleteStudentLink :last').click();
+            sleep(1);
             element('#studentTable .deleteStudentLink :last').click();
+            sleep(1);
         });
 
         var addStudentFirstLastName = function (firstname, lastname) {
             element('#newStudentButton').click();
+            sleep(1);
             input('studentForm.firstName').enter(firstname);
             input('studentForm.lastName').enter(lastname);
             element('#saveStudentButton').click();
+            sleep(1);
         };
 
         var verifyStudentNameInList = function (firstname, lastname, positionInList) {
             expect(element('#studentTable .studentListName' + positionInList).text()).
-                toMatch(firstname + ' ' + lastname)
-        }
+                toMatch(firstname + ' ' + lastname);
+        };
 
 
     });
-
-    describe('calendar', function () {
-
-        beforeEach(function () {
-            browser().navigateTo('#/calendar');
-        });
-
-
-        it('should render calendar when user navigates to /calendar', function () {
-            expect(element('#calendarTitle').text()).
-                toMatch('Kalender');
-        });
-
-    });
-
 
 });
