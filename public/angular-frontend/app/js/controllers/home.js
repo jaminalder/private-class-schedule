@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('pcs').controller('HomeCtrl', ['$scope', '$resource', 'students', 'lessons',
+angular.module('pcs').controller('HomeCtrl',
 
-    function ($scope, $resource, students, lessons) {
+    function ($scope, $resource, students, lessons, DateTimeService) {
         $scope.lessons = lessons;
         $scope.students = students;
 
@@ -44,16 +44,9 @@ angular.module('pcs').controller('HomeCtrl', ['$scope', '$resource', 'students',
         $scope.resetLessonForm = function () {
             $scope.lessonForm = angular.copy($scope.activeLesson);
 
-            var startDate = new Date($scope.lessonForm.start);
-            var endDate = new Date($scope.lessonForm.end);
-
-            $scope.lessonForm.date = $scope.getDateMidnight(startDate);
-            $scope.lessonForm.startTime = $scope.getTimeString(startDate);
-            $scope.lessonForm.endTime = $scope.getTimeString(endDate);
-
-            console.log('resetLessonForm date: ' + $scope.lessonForm.date);
-            console.log('resetLessonForm startTime: ' + $scope.lessonForm.startTime);
-            console.log('resetLessonForm endTime: ' + $scope.lessonForm.endTime);
+            $scope.lessonForm.date = DateTimeService.getDateMidnight($scope.lessonForm.start);
+            $scope.lessonForm.startTime = DateTimeService.getTimeString($scope.lessonForm.start);
+            $scope.lessonForm.endTime = DateTimeService.getTimeString($scope.lessonForm.end);
 
             $scope.lessonForm.lessonStudentIds = [];
             var i
@@ -104,16 +97,5 @@ angular.module('pcs').controller('HomeCtrl', ['$scope', '$resource', 'students',
             return undefined;
         }
 
-        $scope.getDateMidnight = function (date) {
-            var result = new Date(date);
-            result.setUTCHours(0, 0, 0, 0);
-            return result;
-        }
 
-        $scope.getTimeString = function (date) {
-            var h = date.getHours() > 9 ? date.getHours() : "0" + date.getHours();
-            var m = date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
-            return h + ":" + m;
-        }
-
-    }]);
+    });
