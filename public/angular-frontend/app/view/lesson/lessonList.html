@@ -15,13 +15,15 @@
         <tr>
             <th>Start</th>
             <th>Ende</th>
+            <th>Aktionen</th>
         </tr>
         </thead>
 
         <tbody>
         <tr ng-repeat="lesson in lessons | filter:search">
-            <td class="lessonListName">{{lesson.start | date:'dd.MM.yyyy HH:mm'}} {{lesson.end | date:'dd.MM.yyyy
-                HH:mm'}}
+            <td class="lessonStart">{{lesson.start | date:'dd.MM.yyyy HH:mm'}}
+            </td>
+            <td class="lessonEnd">{{lesson.end | date:'dd.MM.yyyy HH:mm'}}
             </td>
             <td class="lessonListActions">
                 <a class="editLessonLink" ng-click="editLesson(lesson, $index)"><i class="icon-pencil"></i></a>

@@ -8,10 +8,10 @@
 
         <ul class="nav nav-tabs">
             <li ng-class="{active: rightView == 'studentList'}">
-                <a ng-click="setRightViewStudentList()">Schüler</a>
+                <a id="studentListTab" ng-click="setRightViewStudentList()">Schüler</a>
             </li>
             <li ng-class="{active: rightView == 'lessonList'}">
-                <a ng-click="setRightViewLessonList()">Lektionen</a>
+                <a id="lessonListTab" ng-click="setRightViewLessonList()">Lektionen</a>
             </li>
         </ul>
 
