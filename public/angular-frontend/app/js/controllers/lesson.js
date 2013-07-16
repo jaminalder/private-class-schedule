@@ -51,8 +51,8 @@ angular.module('pcs').controller('LessonFormCtrl',
                 var lesson = {
                     id: id,
                     teacherId: $scope.user.id,
-                    start: DateTimeService.getMillisFromTimeSting(lessonDate, startTime),
-                    end: DateTimeService.getMillisFromTimeSting(lessonDate, endTime),
+                    start: DateTimeService.getMillisFromTimeString(lessonDate, startTime),
+                    end: DateTimeService.getMillisFromTimeString(lessonDate, endTime),
                     studentIds: []
                 }
                 var i

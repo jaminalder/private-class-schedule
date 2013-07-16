@@ -20,7 +20,7 @@ angular.module('pcs')
                 var m = date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
                 return h + ":" + m;
             },
-            getMillisFromTimeSting: function (date, timeString) {
+            getMillisFromTimeString: function (date, timeString) {
                 var result = new Date(date);
                 var timeSplit = timeString.split(":");
                 var hours = timeSplit[0];
