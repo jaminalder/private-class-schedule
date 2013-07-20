@@ -49,9 +49,9 @@
         <div class="control-group">
             <label class="control-label" for="lessonStudents">Schüler</label>
 
-            <div class="controls">
-                <select id="lessonStudents" class="input-xlarge" multiple ui-select2="select2Options"
-                        ng-model="lessonForm.lessonStudentIds">
+            <div class="controls bootstrap-select">
+                <select id="lessonStudents" class="input-xlarge" multiple title="Schüler auswählen"
+                        ng-model="lessonForm.lessonStudentIds" bs-select>
                     <option ng-repeat="student in students" value="{{student.id._id}}">{{student.firstName}}
                         {{student.lastName}}
                     </option>
