@@ -25,6 +25,7 @@
     <script src="lib/angular-strap/src/common.js"></script>
     <script src="lib/angular-strap/src/directives/datepicker.js"></script>
     <script src="lib/angular-strap/src/directives/timepicker.js"></script>
+    <script src="lib/angular-strap/src/directives/alert.js"></script>
 
     <script src="js/app.js"></script>
 
@@ -34,6 +35,7 @@
     <script src="js/services/userservices.js"></script>
     <script src="js/services/lessonservices.js"></script>
     <script src="js/services/authenticationservice.js"></script>
+    <script src="js/services/alertservice.js"></script>
 
     <script src="js/directives/datedirective.js"></script>
 
@@ -45,6 +47,7 @@
     <script src="js/controllers/lesson.js"></script>
     <script src="js/controllers/authentication.js"></script>
     <script src="js/controllers/navbar.js"></script>
+    <script src="js/controllers/alert.js"></script>
 
     <script src="js/routes/routes.js"></script>
 
@@ -80,6 +83,10 @@
     <div ng-switch-when="false" ng-include src="'view/navbar/navbar_logged_off.html'"></div>
 </div>
 <div class="container-fluid">
+
+    <div class="alerts">
+        <div class="alert fade" ng-repeat="alert in alerts" bs-alert="alert"></div>
+    </div>
 
     <div ng-view></div>
 

@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('pcs').controller('StudentListCtrl', ['$scope', 'StudentService',
+angular.module('pcs').controller('StudentListCtrl',
 
-    function ($scope, StudentService) {
+    function ($scope, StudentService, AlertService) {
 
         console.log('students at StudentListCtrl entry: ' + JSON.stringify($scope.students));
 
@@ -21,13 +21,14 @@ angular.module('pcs').controller('StudentListCtrl', ['$scope', 'StudentService',
         $scope.deleteStudent = function (studentToDelete, index) {
             StudentService.delete(studentToDelete);
             $scope.students.splice(index, 1);
+            AlertService.addAlert("success", "Schüler " + studentToDelete.firstName + " " + studentToDelete.lastName + " gelöscht.");
         }
 
-    }]);
+    });
 
-angular.module('pcs').controller('StudentFormCtrl', ['$scope', '$resource', 'UUIDService', 'StudentService', 'AuthenticationService',
+angular.module('pcs').controller('StudentFormCtrl',
 
-    function ($scope, $resource, UUIDService, StudentService) {
+    function ($scope, $resource, UUIDService, StudentService, AlertService) {
 
         $scope.hideStudentDetail = function () {
             $scope.setLeftViewDefault();
@@ -56,8 +57,8 @@ angular.module('pcs').controller('StudentFormCtrl', ['$scope', '$resource', 'UUI
                 }
 
                 StudentService.save(student);
-
                 $scope.students[$scope.activeStudentIndex] = student;
+                AlertService.addAlert("success", "Der Schüler wurde erfolgreich gespeichert");
 
             }
 
@@ -80,4 +81,4 @@ angular.module('pcs').controller('StudentFormCtrl', ['$scope', '$resource', 'UUI
             return angular.equals(studentForm, $scope.activeStudent);
         };
 
-    }]);
+    });

@@ -44,9 +44,16 @@ angular.module('pcs').controller('HomeCtrl',
         $scope.resetLessonForm = function () {
             $scope.lessonForm = angular.copy($scope.activeLesson);
 
+            //$scope.lessonForm.date = "20.07.2013";
             $scope.lessonForm.date = DateTimeService.getDateMidnight($scope.lessonForm.start);
             $scope.lessonForm.startTime = DateTimeService.getTimeString($scope.lessonForm.start);
             $scope.lessonForm.endTime = DateTimeService.getTimeString($scope.lessonForm.end);
+
+            console.log('resetLessonForm start ' + $scope.lessonForm.start);
+            console.log('resetLessonForm date ' + $scope.lessonForm.date);
+            console.log('resetLessonForm startTime ' + $scope.lessonForm.startTime);
+
+
 
             $scope.lessonForm.lessonStudentIds = [];
             var i

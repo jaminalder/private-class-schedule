@@ -9,7 +9,10 @@ angular.module('pcs')
                     date = new Date(date);
                 }
                 var result = new Date(date);
-                result.setUTCHours(0, 0, 0, 0);
+                result.setHours(0, 0, 0, 0);
+                // the datepicker assumes utc date, this makes this offset calculation necessary
+                result = new Date(result.getTime() - (result.getTimezoneOffset()*60000));
+
                 return result;
             },
             getTimeString: function (date) {
