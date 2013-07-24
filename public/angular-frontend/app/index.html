@@ -46,6 +46,7 @@
     <script src="js/controllers/lesson.js"></script>
     <script src="js/controllers/authentication.js"></script>
     <script src="js/controllers/navbar.js"></script>
+    <script src="js/controllers/alert.js"></script>
 
     <script src="js/routes/routes.js"></script>
 
@@ -81,6 +82,12 @@
     <div ng-switch-when="false" ng-include src="'view/navbar/navbar_logged_off.html'"></div>
 </div>
 <div class="container-fluid">
+
+    <div ng-model="alerts.alertArray"></div>
+
+    <div class="alerts">
+        <div class="alert fade" ng-repeat="alert in alerts.alertArray" bs-alert="alert" close-after="6000"></div>
+    </div>
 
     <div ng-view></div>
 

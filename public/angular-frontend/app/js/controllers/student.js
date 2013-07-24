@@ -21,7 +21,7 @@ angular.module('pcs').controller('StudentListCtrl',
         $scope.deleteStudent = function (studentToDelete, index) {
             StudentService.delete(studentToDelete);
             $scope.students.splice(index, 1);
-            AlertService.addAlert("success", "Schüler " + studentToDelete.firstName + " " + studentToDelete.lastName + " gelöscht.");
+            AlertService.addAlert("success", "Der Schüler " + studentToDelete.firstName + " " + studentToDelete.lastName + " wurde gelöscht.");
         }
 
     });
@@ -58,7 +58,7 @@ angular.module('pcs').controller('StudentFormCtrl',
 
                 StudentService.save(student);
                 $scope.students[$scope.activeStudentIndex] = student;
-                AlertService.addAlert("success", "Der Schüler wurde erfolgreich gespeichert");
+                AlertService.addAlert("success", "Der Schüler " + student.firstName + " " + student.lastName + " wurde erfolgreich gespeichert");
 
             }
 

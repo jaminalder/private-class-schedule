@@ -95,5 +95,7 @@ angular.module('pcs')
             }
         });
 
+        $rootScope.alerts = {alertArray: []};
+
         $rootScope.appInitialized = true;
     }]);

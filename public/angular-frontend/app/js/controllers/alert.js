@@ -2,8 +2,6 @@
 
 angular.module('pcs').controller('AlertCtrl',
 
-    function ($scope, AlertService) {
-
-
+    function ($scope, $rootScope, AlertService) {
 
     });
