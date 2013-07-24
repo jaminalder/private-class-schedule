@@ -2,9 +2,9 @@
 
 var authModule = angular.module('pcs');
 
-authModule.controller('RegisterController', ['$scope', '$resource', '$location', 'UUIDService', 'AuthenticationService',
+authModule.controller('RegisterController', ['$scope', '$resource', '$location', 'UUIDService', 'AuthenticationService', 'AlertService',
 
-    function ($scope, $resource, $location, UUIDService, AuthenticationService) {
+    function ($scope, $resource, $location, UUIDService, AuthenticationService, AlertService) {
 
 
         $scope.resetRegisterForm = function () {
@@ -34,19 +34,19 @@ authModule.controller('RegisterController', ['$scope', '$resource', '$location',
         $scope.registerUserAsTeacher = function () {
             var userToRegister = angular.copy($scope.registerForm);
             var onSuccess = function (registeredUser) {
-                $scope.message = 'User' + registeredUser['firstName'] + ' ' + registeredUser['lastName'] + ' successfully registered'
                 $location.path('/');
+                AlertService.addSuccess(registeredUser['firstName'] + " " + registeredUser['lastName'] + "erfolgreich registriert");
             };
             var onError = function () {
-                $scope.message = 'User registration failed'
+                AlertService.addError("Registrierung fehlgeschlagen!", "Es existiert schon ein Benutzer mit dieser E-Mail Adresse.");
             };
             AuthenticationService.register(userToRegister, onSuccess, onError);
         };
     }]);
 
-authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '$resource', 'UUIDService', 'AuthenticationService',
+authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '$resource', 'UUIDService', 'AuthenticationService', 'AlertService',
 
-    function ($scope, $rootScope, $location, $resource, UUIDService, AuthenticationService) {
+    function ($scope, $rootScope, $location, $resource, UUIDService, AuthenticationService, AlertService) {
 
 
         $scope.resetLoginForm = function () {
@@ -58,11 +58,11 @@ authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '
         $scope.loginUserAsTeacher = function () {
             var userToLogin = angular.copy($scope.loginForm);
             var onSuccess = function (loggedInUser) {
-                $scope.message = 'User' + loggedInUser['firstName'] + ' ' + loggedInUser['lastName'] + ' successfully logged in';
                 $location.path('/');
+                AlertService.addSuccess(loggedInUser['firstName'] + " " + loggedInUser['lastName'] + " erfolgreich angemeldet");
             };
             var onError = function () {
-                $scope.message = 'User login failed';
+                AlertService.addError("Anmeldung fehlgeschlagen!", "E-Mail oder Passwort war nicht korrekt.");
             };
             AuthenticationService.login(userToLogin, onSuccess, onError);
         };
@@ -79,7 +79,8 @@ authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '
 
 angular.module('pcs')
     .controller('AppCtrl',
-        ['$rootScope', '$scope', '$location', 'AuthenticationService', function ($rootScope, $scope, $location, AuthenticationService) {
+        ['$rootScope', '$scope', '$location', 'AuthenticationService', 'AlertService',
+            function ($rootScope, $scope, $location, AuthenticationService, AlertService) {
 
             $scope.getUserRoleText = function (role) {
                 return _.invert(AuthenticationService.userRoles)[role];
@@ -88,8 +89,9 @@ angular.module('pcs')
             $scope.logout = function () {
                 AuthenticationService.logout(function () {
                     $location.path('/login');
+                    AlertService.addSuccess("Benutzer abgemeldet.");
                 }, function () {
-                    $rootScope.error = "Failed to logout";
+                    AlertService.addError("Abmelden fehlgeschlagen!", "");
                 });
             };
         }]);

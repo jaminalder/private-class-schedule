@@ -29,7 +29,7 @@ angular.module('pcs').controller('LessonListCtrl',
 
 angular.module('pcs').controller('LessonFormCtrl',
 
-    function($scope, $resource, $filter, UUIDService, LessonService, DateTimeService) {
+    function($scope, $resource, $filter, UUIDService, LessonService, DateTimeService, AlertService) {
 
         console.log('lessons at LessonFormCtrl entry: ' + JSON.stringify($scope.lessons));
         console.log('students at LessonFormCtrl entry: ' + JSON.stringify($scope.students));
@@ -64,6 +64,7 @@ angular.module('pcs').controller('LessonFormCtrl',
                 LessonService.save(lesson);
                 $scope.lessons[$scope.activeLessonIndex] = lesson;
                 $scope.fireLessonsChangedEvent();
+                AlertService.addSuccess("Lektion gespeichert");
             }
 
             if(lessonFormToSave.id === undefined){
