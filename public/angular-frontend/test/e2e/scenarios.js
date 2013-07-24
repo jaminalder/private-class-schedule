@@ -101,7 +101,7 @@ describe('my app', function () {
             input('loginForm.password').enter('123456');
             element('#loginButton').click();
             //sleep(1);
-            expect(element('#loginMessage').text()).toMatch('User login failed');
+            expect(element('.alert').text()).toMatch(/.*Anmeldung fehlgeschlagen!.*/);
         });
     });
 
@@ -441,6 +441,8 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
     var verifyStudentNameInList = function (firstname, lastname, positionInList) {
         expect(element('#studentTable .studentListName' + positionInList).text()).
             toMatch(firstname + ' ' + lastname);
+        expect(element('.alert').text()).toMatch(/.*Schüler.*gespeichert.*/);
+
     };
 
     var addLessonDateTime = function (lessondate, starttime, endtime) {
