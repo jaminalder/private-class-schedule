@@ -10,9 +10,6 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
 
     function ($scope, $filter, UserService, LessonService) {
 
-
-        console.log('lessons at CalendarCtrl entry: ' + JSON.stringify($scope.lessons));
-
         $scope.eventSources = [];
         $scope.lessonEvents = [];
         $scope.eventSources.push($scope.lessonEvents);
@@ -22,7 +19,6 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
             var i
             for (i in $scope.lessons) {
                 var lessonId = $scope.lessons[i].id._id;
-                console.log('lesson id: ' + i + ' : ' + lessonId);
                 var lessonStart = $scope.lessons[i].start / 1000;
                 var lessonEnd = $scope.lessons[i].end / 1000;
                 var studentIds = $scope.lessons[i].studentIds;
@@ -38,46 +34,37 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
 
         $scope.fireLessonsChangedEvent();
 
-        /* alert on dayClick */
-        $scope.alertDayOnClick = function (date, allDay, jsEvent, view) {
+        $scope.dayClick = function (date, allDay, jsEvent, view) {
             $scope.$apply(function () {
-                console.log('Day Clicked ' + date);
+                console.log('dayClick ' + date);
                 $scope.alertMessage = ('Day Clicked ' + date);
             });
         };
 
-        /* alert on eventClick */
-        $scope.alertEventOnClick = function (event, jsEvent, view) {
+        $scope.eventClick = function (event, jsEvent, view) {
             $scope.$apply(function () {
+                console.log('eventClick ' + event);
                 var lessonToEdit = createLessonFromEvent(event);
                 $scope.editLesson(lessonToEdit);
             });
         };
 
-        /* alert on Drop */
-        $scope.eventChangeOnDrop = function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+        $scope.eventDrop = function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
             $scope.$apply(function () {
-//            $scope.alertMessage = ('Event Dropped to make dayDelta ' + dayDelta);
-                console.log('Event Dropped dayDelta ' + dayDelta);
-                console.log('Event Dropped minuteDelta ' + minuteDelta);
-                console.log('Event ID: ' + event.id + ' Event Start: ' + event.start + ' Event End ' + event.end);
+                console.log('eventDrop ' + event);
                 saveLessonFromEvent(event);
             });
         };
 
-        /* alert on Resize */
-        $scope.eventChangeOnResize = function (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
+        $scope.eventResize = function (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
             $scope.$apply(function () {
-                console.log('Event Resized to make dayDelta ' + dayDelta);
-                console.log('Event Resized to make minuteDelta ' + minuteDelta);
-                console.log('Event ID: ' + event.id + ' Event Start: ' + event.start + ' Event End ' + event.end);
+                console.log('eventResize ' + event);
                 saveLessonFromEvent(event);
             });
         };
 
         var saveLessonFromEvent = function (event) {
             var lesson = createLessonFromEvent(event);
-            console.log('lesson to save from calendar: ' + JSON.stringify(lesson));
             LessonService.save(lesson);
             $scope.lessons[$scope.activeLessonIndex] = lesson;
         }
@@ -119,7 +106,8 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
             $scope.events.splice(index, 1);
         };
 
-        $scope.selectEvent = function (start, end, allDay) {
+        $scope.select = function (start, end, allDay) {
+            console.log('select ' + start);
             $scope.$apply(function () {
                 var event = {
                     start: start,
@@ -127,7 +115,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                     allDay: allDay
                 }
                 var lessonToEdit = createLessonFromEvent(event);
-                $scope.editLesson(lessonToEdit);
+                $scope.selectNewLesson(lessonToEdit);
             });
             $scope.pcsCalendar.fullCalendar('unselect');
         };
@@ -183,11 +171,11 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
                 editable: true,
                 selectable: true,
                 selectHelper: true,
-                select: $scope.selectEvent,
-                dayClick: $scope.alertDayOnClick,
-                eventClick: $scope.alertEventOnClick,
-                eventDrop: $scope.eventChangeOnDrop,
-                eventResize: $scope.eventChangeOnResize,
+                select: $scope.select,
+                dayClick: $scope.dayClick,
+                eventClick: $scope.eventClick,
+                eventDrop: $scope.eventDrop,
+                eventResize: $scope.eventResize,
                 eventRender: function (event, element) {
                     if (event.studentIds !== undefined) {
                         var newDisplayString = "";

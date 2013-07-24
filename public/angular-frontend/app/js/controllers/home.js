@@ -51,12 +51,6 @@ angular.module('pcs').controller('HomeCtrl',
             $scope.lessonForm.startTime = DateTimeService.getTimeString($scope.lessonForm.start);
             $scope.lessonForm.endTime = DateTimeService.getTimeString($scope.lessonForm.end);
 
-            console.log('resetLessonForm start ' + $scope.lessonForm.start);
-            console.log('resetLessonForm date ' + $scope.lessonForm.date);
-            console.log('resetLessonForm startTime ' + $scope.lessonForm.startTime);
-
-
-
             $scope.lessonForm.lessonStudentIds = [];
             var i
             for (i in $scope.lessonForm.studentIds) {
@@ -74,8 +68,17 @@ angular.module('pcs').controller('HomeCtrl',
             $scope.$broadcast('LessonsChangedEvent');
         }
 
+        $scope.selectNewLesson = function (lessonToEdit) {
+            var durationInMin = (lessonToEdit.end - lessonToEdit.start) / 60000;
+            if(durationInMin < 10){
+                lessonToEdit.end = lessonToEdit.start + (30 * 60000); // start + 30 min
+            }
+            $scope.setActiveLesson(lessonToEdit, $scope.lessons.length);
+            $scope.resetLessonForm();
+            $scope.setLeftViewLessonForm('Neue Lektion');
+        }
+
         $scope.editLesson = function (lessonToEdit, index) {
-            console.log('editLesson lessonToEdit: ' + JSON.stringify(lessonToEdit) + ', index: ' + index);
             if (index === undefined) {
                 index = $scope.findLessonIndex(lessonToEdit);
             }

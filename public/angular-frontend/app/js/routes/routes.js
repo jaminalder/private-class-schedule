@@ -76,8 +76,11 @@ angular.module('pcs')
 angular.module('pcs')
     .run(['$rootScope', '$location', 'AuthenticationService', function ($rootScope, $location, AuthenticationService) {
 
+        $rootScope.alerts = {alertArray: []};
+
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-            $rootScope.error = null;
+            //$rootScope.alerts.alertArray = [];
+
             if (next.access !== undefined && !AuthenticationService.authorize(next.access)) {
                 console.log('routeChange not authorized to: ' + JSON.stringify(next));
                 if (AuthenticationService.isLoggedIn()) {
@@ -94,8 +97,6 @@ angular.module('pcs')
                 }
             }
         });
-
-        $rootScope.alerts = {alertArray: []};
 
         $rootScope.appInitialized = true;
     }]);
