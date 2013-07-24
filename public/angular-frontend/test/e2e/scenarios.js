@@ -62,7 +62,7 @@ describe('my app', function () {
             input('registerForm.user.eMail').enter('test4@user');
             input('registerForm.password').enter('12345');
             element('#registerButton').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#registrationMessage').text()).toMatch('User registration failed');
         });
     });
@@ -75,7 +75,7 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test1@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should automatically redirect to / = home when location hash/fragment is empty', function () {
@@ -84,7 +84,7 @@ describe('my app', function () {
 
         it('should logout first test user', function () {
             element('#logout').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should automatically redirect to / = login when user is not logged in', function () {
@@ -100,7 +100,7 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test1@user.com');
             input('loginForm.password').enter('123456');
             element('#loginButton').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#loginMessage').text()).toMatch('User login failed');
         });
     });
@@ -113,7 +113,7 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test2@user.com');
             input('loginForm.password').enter('23456');
             element('#loginButton').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should show calendar with student list per default', function () {
@@ -123,7 +123,7 @@ describe('my app', function () {
 
         it('should show new student form when user clicks on new student button', function () {
             element('#newStudentButton').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Neuer Schüler");
         });
@@ -140,7 +140,7 @@ describe('my app', function () {
 
         it('should show the edit student form after clicking on the edit button of the last student', function () {
             element('#studentTable .editStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Schüler editieren");
             expect(input('studentForm.firstName').val()).
@@ -151,24 +151,24 @@ describe('my app', function () {
 
         it('should change the first and last name of a student', function (){
             element('#studentTable .editStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
             input('studentForm.firstName').enter('First Changed');
             input('studentForm.lastName').enter('Last Changed');
             element('#saveStudentButton').click();
-            sleep(1);
+            //sleep(1);
             verifyStudentNameInList('First Changed', 'Last Changed', ':last');
         });
 
         it('should remove the added students again after test is done', function () {
             element('#studentTable .deleteStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
             element('#studentTable .deleteStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should logout user', function () {
             element('#logout').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should automatically redirect to / = login when user is not logged in', function () {
@@ -184,21 +184,21 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test3@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should render lesson list when user clicks on tab lessonList', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonListTitle').text()).
                 toMatch('Lektionenliste');
         });
 
         it('should show new lesson form when user clicks on new lesson button', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#newLessonButton').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonFormTitle').text()).
                 toMatch("Neue Lektion");
         });
@@ -215,12 +215,12 @@ describe('my app', function () {
 
         it('should show the edit lesson form after clicking on the edit button of the last lesson', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .editLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonFormTitle').text()).
                 toMatch("Lektion editieren");
-            sleep(1);
+            //sleep(1);
             expect(input('lessonForm.date').val()).
                 toMatch('12.07.2013');
             expect(input('lessonForm.startTime').val()).
@@ -243,19 +243,19 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 */
         it('should show the edit lesson form after clicking on the edit button of the last lesson', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .editLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonFormTitle').text()).
                 toMatch("Lektion editieren");
-            sleep(1);
+            //sleep(1);
             expect(input('lessonForm.date').val()).
                 toMatch('15.07.2013');
             expect(input('lessonForm.startTime').val()).
                 toMatch('00:00');
             expect(input('lessonForm.endTime').val()).
                 toMatch('01:00');
-            sleep(1);
+            //sleep(1);
         });
 /*
 The following test currently fails till the bug has been resolved.
@@ -264,30 +264,30 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 */
         it('should change the start and end time of a lesson', function (){
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .editLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             input('lessonForm.startTime').enter('08:15');
             input('lessonForm.endTime').enter('09:05');
             element('#saveLessonButton').click();
-            sleep(1);
+            //sleep(1);
             verifyLessonDateTimeInList('15.07.2013', '08:15', '09:05', ':last');
         });
 
         it('should remove the added lessons again after test is done', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .deleteLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .deleteLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .deleteLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should logout user', function () {
             element('#logout').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should automatically redirect to / = login when user is not logged in', function () {
@@ -303,7 +303,7 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
             input('loginForm.eMail').enter('test1@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should show calendar with student list per default', function () {
@@ -313,7 +313,7 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
         it('should show new student form when user clicks on new student button', function () {
             element('#newStudentButton').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Neuer Schüler");
         });
@@ -330,7 +330,7 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
         it('should show the edit student form after clicking on the edit button of the last student', function () {
             element('#studentTable .editStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Schüler editieren");
             expect(input('studentForm.firstName').val()).
@@ -341,16 +341,16 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
         it('should render lesson list when user clicks on tab lessonList', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonListTitle').text()).
                 toMatch('Lektionenliste');
         });
 
         it('should show new lesson form when user clicks on new lesson button', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#newLessonButton').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonFormTitle').text()).
                 toMatch("Neue Lektion");
         });
@@ -367,9 +367,9 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
         it('should show the edit lesson form after clicking on the edit button of the last lesson', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .editLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             expect(element('#lessonFormTitle').text()).
                 toMatch("Lektion editieren");
             expect(input('lessonForm.date').val()).
@@ -382,45 +382,45 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
         it('should change the start and end time of a lesson', function (){
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .editLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             input('lessonForm.startTime').enter('08:15');
             input('lessonForm.endTime').enter('09:05');
             element('#saveLessonButton').click();
-            sleep(1);
+            //sleep(1);
             verifyLessonDateTimeInList('12.07.2013', '08:15', '09:05', ':last');
         });
 
         it('should change the first and last name of a student', function (){
             element('#studentTable .editStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
             input('studentForm.firstName').enter('FirstChangedWithLesson');
             input('studentForm.lastName').enter('LastChanged');
             element('#saveStudentButton').click();
-            sleep(1);
+            //sleep(1);
             verifyStudentNameInList('FirstChangedWithLesson', 'LastChanged', ':last');
         });
 
         it('should remove the added students again after test is done', function () {
             element('#studentTable .deleteStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
             element('#studentTable .deleteStudentLink :last').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should remove the added lessons again after test is done', function () {
             element('#lessonListTab').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .deleteLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
             element('#lessonTable .deleteLessonLink :last').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should logout user', function () {
             element('#logout').click();
-            sleep(1);
+            //sleep(1);
         });
 
         it('should automatically redirect to / = login when user is not logged in', function () {
@@ -431,11 +431,11 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
     var addStudentFirstLastName = function (firstname, lastname) {
         element('#newStudentButton').click();
-        sleep(1);
+        //sleep(1);
         input('studentForm.firstName').enter(firstname);
         input('studentForm.lastName').enter(lastname);
         element('#saveStudentButton').click();
-        sleep(1);
+        //sleep(1);
     };
 
     var verifyStudentNameInList = function (firstname, lastname, positionInList) {
@@ -445,14 +445,14 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
 
     var addLessonDateTime = function (lessondate, starttime, endtime) {
         element('#lessonListTab').click();
-        sleep(1);
+        //sleep(1);
         element('#newLessonButton').click();
-        sleep(1);
+        //sleep(1);
         input('lessonForm.date').enter(lessondate);
         input('lessonForm.startTime').enter(starttime);
         input('lessonForm.endTime').enter(endtime);
         element('#saveLessonButton').click();
-        sleep(1);
+        //sleep(1);
     };
 
     var verifyLessonDateTimeInList = function (lessondate, starttime, endtime, positionInList) {
