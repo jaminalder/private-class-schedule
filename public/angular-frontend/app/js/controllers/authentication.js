@@ -35,7 +35,7 @@ authModule.controller('RegisterController', ['$scope', '$resource', '$location',
             var userToRegister = angular.copy($scope.registerForm);
             var onSuccess = function (registeredUser) {
                 $location.path('/');
-                AlertService.addSuccess(registeredUser['firstName'] + " " + registeredUser['lastName'] + "erfolgreich registriert");
+                AlertService.addSuccess(registeredUser['firstName'] + " " + registeredUser['lastName'] + " erfolgreich registriert");
             };
             var onError = function () {
                 AlertService.addError("Registrierung fehlgeschlagen!", "Es existiert schon ein Benutzer mit dieser E-Mail Adresse.");
