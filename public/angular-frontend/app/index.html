@@ -5,10 +5,6 @@
     <title>Private Class Schedule</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular/angular-resource.js"></script>
-    <script src="lib/angular/angular-cookies.js"></script>
-
     <script src="lib/jquery/jquery-1.9.1.min.js"></script>
     <script src="lib/jquery/jquery-ui-1.10.2.custom.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -16,8 +12,13 @@
     <script src="lib/fullcalendar/fullcalendar.js"></script>
     <!-- <script src="lib/fullcalendar/fullcalendar.min.js"></script> -->
 
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-resource.js"></script>
+    <script src="lib/angular/angular-cookies.js"></script>
+
+
     <script src="lib/select2/select2.js"></script>
-    <script src="lib/select2/select2.min.js"></script>
+    <!-- <script src="lib/select2/select2.min.js"></script> -->
 
     <script src="lib/angular-strap/vendor/bootstrap-datepicker.js"></script>
     <script src="lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.de.js"></script>
@@ -50,8 +51,6 @@
     <script src="js/controllers/alert.js"></script>
 
     <script src="js/routes/routes.js"></script>
-
-    <script src="lib/angular/angular.js"></script>
 
 
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -87,7 +86,7 @@
     <div ng-model="alerts.alertArray"></div>
 
     <div class="alerts">
-        <div class="alert fade" ng-repeat="alert in alerts.alertArray" bs-alert="alert" close-after="6000"></div>
+        <div class="alert fade" ng-repeat="alert in alerts.alertArray" bs-alert="alert" close-after="5000"></div>
     </div>
 
     <div ng-view></div>

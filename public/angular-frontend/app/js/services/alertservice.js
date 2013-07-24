@@ -10,8 +10,6 @@ angular.module('pcs')
                     "type": type,
                     "content": content
                 });
-
-                console.log("addAlert end $rootScope.alerts.alertArray: " + JSON.stringify($rootScope.alerts.alertArray));
             }
         };
 
