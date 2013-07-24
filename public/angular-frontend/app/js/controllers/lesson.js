@@ -85,4 +85,9 @@ angular.module('pcs').controller('LessonFormCtrl',
             return angular.equals(lessonForm, $scope.activeLesson);
         };
 
+        $scope.select2Options = {
+            placeholder: 'Schüler auswählen'
+            // allowClear:true
+        };
+
     });
