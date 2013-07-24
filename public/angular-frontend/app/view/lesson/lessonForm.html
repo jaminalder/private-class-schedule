@@ -1,13 +1,3 @@
-<!-- to use the same input format for the date and time on Chrome, Firefox and Safari use yyyy/MM/dd HH:mm
-     all other formats end up being saved as american dates,
-     e.g. 06/03/2013 will be saved as 3rd of June 2013,
-     Europeans expect this to be 6th of March 2013
-     Firefox and Safari do currently not fully support HTML5 type="date", "datetime" or "datetime-local" yet
-     Chrome on the other hand recognizes it
-     Each browser behaves differently
-     To be able to use different browsers, use type="text" and a date entry with /
--->
-
 <div ng-controller="LessonFormCtrl">
 
 
@@ -49,9 +39,9 @@
         <div class="control-group">
             <label class="control-label" for="lessonStudents">Schüler</label>
 
-            <div class="controls bootstrap-select">
-                <select id="lessonStudents" class="input-xlarge" multiple title="Schüler auswählen"
-                        ng-model="lessonForm.lessonStudentIds" bs-select>
+            <div class="controls">
+                <select id="lessonStudents" class="input-xlarge" multiple ui-select2="select2Options"
+                        ng-model="lessonForm.lessonStudentIds">
                     <option ng-repeat="student in students" value="{{student.id._id}}">{{student.firstName}}
                         {{student.lastName}}
                     </option>
