@@ -4,12 +4,9 @@ angular.module('pcs').controller('LessonListCtrl',
 
     function ($scope, LessonService) {
 
-        console.log('lessons at LessonListCtrl entry: ' + JSON.stringify($scope.lessons));
-
         $scope.newLesson = function () {
             var lessonStart = new Date();
-            var lessonEnd = new Date();
-            lessonEnd.setHours(lessonStart.getHours()+1);
+            var lessonEnd = new Date(lessonStart.getTime() + (30 * 60000)); // start + 30 min
             $scope.setActiveLesson({
                 start: lessonStart.getTime(),
                 end: lessonEnd.getTime()
@@ -30,9 +27,6 @@ angular.module('pcs').controller('LessonListCtrl',
 angular.module('pcs').controller('LessonFormCtrl',
 
     function($scope, $resource, $filter, UUIDService, LessonService, DateTimeService, AlertService) {
-
-        console.log('lessons at LessonFormCtrl entry: ' + JSON.stringify($scope.lessons));
-        console.log('students at LessonFormCtrl entry: ' + JSON.stringify($scope.students));
 
         $scope.hideLessonDetail = function(){
             $scope.setLeftViewDefault();

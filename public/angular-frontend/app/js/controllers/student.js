@@ -4,8 +4,6 @@ angular.module('pcs').controller('StudentListCtrl',
 
     function ($scope, StudentService, AlertService) {
 
-        console.log('students at StudentListCtrl entry: ' + JSON.stringify($scope.students));
-
         $scope.editStudent = function (studentToEdit, index) {
             $scope.setActiveStudent(studentToEdit, index);
             $scope.resetStudentForm();
