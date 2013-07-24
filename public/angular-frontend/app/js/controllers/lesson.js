@@ -15,7 +15,7 @@ angular.module('pcs').controller('LessonListCtrl',
                 end: lessonEnd.getTime()
             }, $scope.lessons.length);
             $scope.resetLessonForm();
-            $scope.setLeftViewLessonForm('Neue Lektion');
+            $scope.setLeftViewLessonForm('Neue Lektion', 'Bitte neue Lektion erfassen');
         }
 
         $scope.deleteLesson = function (lessonToDelete, index) {

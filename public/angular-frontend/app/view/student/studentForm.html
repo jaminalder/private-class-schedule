@@ -1,39 +1,73 @@
 <div ng-controller="StudentFormCtrl">
 
-    <h4 id="studentFormTitle">{{studentDetailTitle}}</h4>
+    <form name="form" class="form-horizontal" novalidate>
 
-    <form name="form" novalidate>
-
-        <div class="controls">
-            <input class="span4" type="text" ng-model="studentForm.firstName" placeholder="Vorname"
-                   required>
-        </div>
-        <div class="controls">
-            <input class="span4" type="text" ng-model="studentForm.lastName" placeholder="Nachname"
-                   required>
+        <div class="control-group">
+            <div class="controls">
+                <h4 id="studentFormTitle">{{studentDetailTitle}}</h4>
+            </div>
         </div>
 
-        <div class="controls">
-            <input class="span4" type="email" ng-model="studentForm.eMail" placeholder="E-Mail">
+        <div class="control-group">
+            <div class="controls">
+                <p id="studentFormText">{{studentDetailText}}</p>
+            </div>
         </div>
 
-        <div class="controls controls-row">
-            <input class="span3" type="text" ng-model="studentForm.address.street" placeholder="Strasse">
-            <input class="span1" type="text" ng-model="studentForm.address.streetNum" placeholder="Nr.">
+        <div class="control-group">
+            <label class="control-label" for="studentFirstName">Vorname</label>
+
+            <div class="controls">
+
+                <input id="studentFirstName" name="studentFirstName" class="span4" type="text" ng-model="studentForm.firstName"
+                    required>
+            </div>
         </div>
 
-        <div class="controls controls-row">
-            <input class="span1" type="text" ng-model="studentForm.address.zip" placeholder="PLZ">
-            <input class="span3" type="text" ng-model="studentForm.address.city" placeholder="Ort">
+        <div class="control-group">
+            <label class="control-label" for="studentLastName">Nachname</label>
+
+            <div class="controls">
+                <input id="studentLastName" class="span4" type="text" ng-model="studentForm.lastName"
+                    required>
+            </div>
         </div>
 
-        <p>
-            <input id="saveStudentButton" ng-click="saveStudent()" class="btn btn-primary span2" type="submit"
-                   value="Speichern"
-                   ng-disabled="form.$invalid || isUnchanged(studentForm)">
+        <div class="control-group">
+            <label class="control-label" for="studentEMail">E-Mail</label>
 
-            <input id="cancelStudentFormButton" ng-click="cancelStudentForm()" class="btn span2" value="Abbrechen">
-        </p>
+            <div class="controls">
+                <input id="studentEMail" class="span4" type="email" ng-model="studentForm.eMail" placeholder="beispiel@abc.com">
+                <span class="help-inline alert-error" ng-show="form.$error.email">Ungültige E-mail (beispiel@abc.com)</span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="studentAdresseStrasse">Strasse / Nr. </label>
+
+            <div class="controls controls-row">
+                <input id="studentAdresseStrasse" class="span3" type="text" ng-model="studentForm.address.street">
+                <input class="span1" type="text" ng-model="studentForm.address.streetNum">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="studentAdresseOrt">Postleitzahl / Ort </label>
+
+            <div class="controls controls-row">
+                <input id="studentAdresseOrt" class="span1" type="text" ng-model="studentForm.address.zip">
+                <input class="span3" type="text" ng-model="studentForm.address.city">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <input id="saveStudentButton" ng-click="saveStudent()" class="btn btn-primary span3" type="submit"
+                    value="Speichern" ng-disabled="form.$invalid || isUnchanged(studentForm)">
+
+                <input id="cancelStudentFormButton" ng-click="cancelStudentForm()" class="btn span3" value="Abbrechen">
+            </div>
+        </div>
     </form>
 
 </div>

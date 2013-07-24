@@ -1,38 +1,63 @@
-<div class="row">
-    <div class="span12 offset2">
+<div class="row-fluid">
 
-        <h4 id="registerFormTitle">Als neuer Benutzer registrieren</h4>
+    <form name="form" class="form-horizontal" novalidate>
 
-        <form name="form" novalidate>
+        <div class="span12 offset1">
+
+            <div class="control-group">
+                <div class="controls">
+                    <h4 id="registerFormTitle">Als neuer Benutzer registrieren</h4>
+                </div>
+            </div>
 
             <p id="registrationMessage">{{message}}</p>
 
-            <div class="controls">
-                <input class="span4" type="text" ng-model="registerForm.user.firstName" placeholder="Vorname"
-                       required>
-            </div>
-            <div class="controls">
-                <input class="span4" type="text" ng-model="registerForm.user.lastName" placeholder="Nachname"
-                       required>
+            <div class="control-group">
+                <label class="control-label" for="userFirstName">Vorname</label>
+
+                <div class="controls">
+                    <input id="userFirstName" class="span4" type="text" ng-model="registerForm.user.firstName"
+                        required>
+               </div>
             </div>
 
-            <div class="controls">
-                <input class="span4" type="email" ng-model="registerForm.user.eMail" placeholder="E-Mail">
+            <div class="control-group">
+                <label class="control-label" for="userLastName">Nachname</label>
+
+                <div class="controls">
+                    <input id="userLastName" class="span4" type="text" ng-model="registerForm.user.lastName"
+                        required>
+                </div>
             </div>
 
-            <div class="controls">
-                <input class="span4" type="password" ng-model="registerForm.password" placeholder="Passwort">
+            <div class="control-group">
+               <label class="control-label" for="userEMail">E-Mail</label>
+
+               <div class="controls">
+                    <input id="userEMail" class="span4" type="email" ng-model="registerForm.user.eMail" placeholder="beispiel@abc.com">
+                    <span class="help-inline alert-error" ng-show="form.$error.email">Ungültige E-mail (beispiel@abc.com)</span>
+               </div>
             </div>
 
-            <p>
+            <div class="control-group">
+                <label class="control-label" for="userPassword">Passwort</label>
+
+                <div class="controls">
+                    <input id="userPassword" class="span4" type="password" ng-model="registerForm.password">
+                </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
                 <input id="registerButton" ng-click="registerUserAsTeacher()" class="btn btn-primary span2"
-                       type="submit" value="Registrieren"
-                       ng-disabled="form.$invalid || isUnchanged(registerForm)">
+                    type="submit" value="Registrieren"
+                    ng-disabled="form.$invalid || isUnchanged(registerForm)">
 
                 <input id="resetRegisterFormButton" ng-click="resetRegisterForm()" class="btn span2" value="Abbrechen"
-                       ng-disabled="isUnchanged(registerForm)">
-            </p>
-        </form>
+                    ng-disabled="isUnchanged(registerForm)">
+                </div>
+            </div>
 
-    </div>
+        </div>
+    </form>
 </div>

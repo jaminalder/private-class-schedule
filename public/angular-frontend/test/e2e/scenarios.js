@@ -236,11 +236,7 @@ The following third lesson tests lesson starting at midnight 00:00.
             addLessonDateTime('15.07.2013', '00:00' , '01:00');
             verifyLessonDateTimeInList('15.07.2013', '00:00', '01:00', ':last');
         });
-/*
-The following test currently fails till the bug has been resolved.
-Currently a lesson starting at midnight (00:00) shifts one day forward when editing the lesson.
-So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
-*/
+
         it('should show the edit lesson form after clicking on the edit button of the last lesson', function () {
             element('#lessonListTab').click();
             sleep(1);
@@ -257,11 +253,7 @@ So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
                 toMatch('01:00');
             sleep(1);
         });
-/*
-The following test currently fails till the bug has been resolved.
-Currently a lesson starting at midnight (00:00) shifts one day forward when editing the lesson.
-So the lesson saved at 15.07.2013, will show 14.07.2013 when edited.
-*/
+
         it('should change the start and end time of a lesson', function (){
             element('#lessonListTab').click();
             sleep(1);

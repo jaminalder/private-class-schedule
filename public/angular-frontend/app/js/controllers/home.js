@@ -22,8 +22,9 @@ angular.module('pcs').controller('HomeCtrl',
 
         $scope.setLeftViewDefault();
 
-        $scope.setLeftViewStudentForm = function (title) {
+        $scope.setLeftViewStudentForm = function (title, detailtext) {
             $scope.studentDetailTitle = title;
+            $scope.studentDetailText = detailtext;
             $scope.leftView = "studentForm"
         }
 
@@ -36,8 +37,9 @@ angular.module('pcs').controller('HomeCtrl',
             $scope.activeStudentIndex = index;
         }
 
-        $scope.setLeftViewLessonForm = function (title) {
+        $scope.setLeftViewLessonForm = function (title, detailtext) {
             $scope.lessonDetailTitle = title;
+            $scope.lessonDetailText = detailtext;
             $scope.leftView = "lessonForm"
         }
 
@@ -79,7 +81,7 @@ angular.module('pcs').controller('HomeCtrl',
             }
             $scope.setActiveLesson(lessonToEdit, index);
             $scope.resetLessonForm();
-            $scope.setLeftViewLessonForm('Lektion editieren');
+            $scope.setLeftViewLessonForm('Lektion editieren', 'Bitte Änderungen an der bestehenden Lektion vornehmen');
         }
 
         $scope.findLessonIndex = function (lesson) {

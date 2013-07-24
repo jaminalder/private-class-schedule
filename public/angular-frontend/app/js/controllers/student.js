@@ -9,13 +9,13 @@ angular.module('pcs').controller('StudentListCtrl',
         $scope.editStudent = function (studentToEdit, index) {
             $scope.setActiveStudent(studentToEdit, index);
             $scope.resetStudentForm();
-            $scope.setLeftViewStudentForm('Schüler editieren');
+            $scope.setLeftViewStudentForm('Schüler editieren', 'Bitte Details für den Schüler ändern');
         }
 
         $scope.newStudent = function () {
             $scope.setActiveStudent({}, $scope.students.length);
             $scope.resetStudentForm();
-            $scope.setLeftViewStudentForm('Neuer Schüler');
+            $scope.setLeftViewStudentForm('Neuer Schüler', 'Bitte neuen Schüler erfassen');
         }
 
         $scope.deleteStudent = function (studentToDelete, index) {
