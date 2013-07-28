@@ -1,13 +1,21 @@
 <div ng-controller="LessonFormCtrl">
 
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
-    <form name="form" class="form-horizontal" novalidate>
 
         <div class="control-group">
             <div class="controls">
                 <h4 id="lessonFormTitle">{{lessonDetailTitle}}</h4>
             </div>
         </div>
+
+</div>
+
+    <div class="modal-body">
+
+        <form name="lessonFormModal" class="form-horizontal" novalidate>
+
 
         <div class="control-group">
             <div class="controls">
@@ -54,23 +62,23 @@
                 </select>
             </div>
         </div>
+    </div>
 
+    </form>
+
+    <div class="modal-footer">
         <div class="control-group">
             <div class="controls">
-                <input id="saveLessonButton" ng-click="saveLesson()" class="btn btn-primary span3" type="submit"
+                <input id="saveLessonButton" ng-click="saveLesson();dismiss()" class="btn btn-primary span3" type="submit"
                        value="Speichern"
                        ng-disabled="form.$invalid || isUnchanged(lessonForm)">
 
-                <input id="cancelLessonFormButton" ng-click="cancelLessonForm()" class="btn span3" value="Abbrechen"
-                       ng-disabled="isUnchanged(lessonForm)">
+                <input id="cancelLessonFormButton" ng-click="dismiss()" class="btn span3" value="Abbrechen"
+                     >
             </div>
         </div>
+    </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <button type="button" class="btn" bs-modal="'view/lesson/hello.html'">...</button>
-            </div>
-        </div>
-    </form>
+
 
 </div>

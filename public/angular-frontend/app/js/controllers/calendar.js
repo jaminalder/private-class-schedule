@@ -6,9 +6,42 @@
 
 'use strict';
 
-angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserService', 'LessonService',
+angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal', '$q', 'UserService', 'LessonService',
 
-    function ($scope, $filter, UserService, LessonService) {
+    function ($scope, $filter, $modal, $q, UserService, LessonService) {
+
+// Testbeispiel für den Modaldialog beim ClickEvent. Am Ende wieder entfernen.
+// Kann im $scope.eventClick mittels $scope.viaService(); aufgerufen werden
+//        $scope.modal = {content: 'Hello Modal', saved: false};
+ /*       $scope.viaService = function() {
+            // do something
+            var modal = $modal({
+                template: '/app/view/lesson/lessonFormModal.html',
+                show: true,
+                backdrop: 'static',
+                scope: $scope
+            });
+        }
+        $scope.parentController = function(dismiss) {
+            console.warn(arguments);
+            // do something
+            dismiss();
+        }  */
+
+        var modalPromise = $modal({
+            template: '/app/view/lesson/lessonFormModal.html',
+            persist: true,
+            show: false,
+            backdrop: 'static',
+            scope: $scope
+        });
+        $scope.modalService = function() {
+            $q.when(modalPromise).then(function(modalEl) {
+                modalEl.modal('show');
+            });
+        };
+
+
 
         $scope.eventSources = [];
         $scope.lessonEvents = [];
@@ -45,7 +78,19 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', 'UserServ
             $scope.$apply(function () {
                 console.log('eventClick ' + event);
                 var lessonToEdit = createLessonFromEvent(event);
-                $scope.editLesson(lessonToEdit);
+//                $scope.editLesson(lessonToEdit);
+//                $scope.modal = {template: '/app/view/lesson/hello.html', show: true, backdrop: 'static'};
+/*                $scope.modal = {
+                    content: 'Hello Modal',
+                    saved: false,
+                    cal:true
+                };
+*/
+//                modalPromise = {show: true};
+//                $scope.showModalViaService ;
+//                $scope.viaService(lessonToEdit);
+                $scope.modalService(lessonToEdit);
+                console.log('eventClick after modal');
             });
         };
 
