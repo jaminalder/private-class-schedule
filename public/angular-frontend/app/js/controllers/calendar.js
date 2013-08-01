@@ -10,38 +10,41 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
 
     function ($scope, $filter, $modal, $q, UserService, LessonService) {
 
-// Testbeispiel für den Modaldialog beim ClickEvent. Am Ende wieder entfernen.
-// Kann im $scope.eventClick mittels $scope.viaService(); aufgerufen werden
-//        $scope.modal = {content: 'Hello Modal', saved: false};
- /*       $scope.viaService = function() {
-            // do something
-            var modal = $modal({
-                template: '/app/view/lesson/lessonFormModal.html',
-                show: true,
-                backdrop: 'static',
-                scope: $scope
-            });
-        }
-        $scope.parentController = function(dismiss) {
-            console.warn(arguments);
-            // do something
-            dismiss();
-        }  */
-
-        var modalPromise = $modal({
+        var modalLessonService = $modal({
             template: '/app/view/lesson/lessonFormModal.html',
             persist: true,
             show: false,
             backdrop: 'static',
             scope: $scope
         });
-        $scope.modalService = function() {
-            $q.when(modalPromise).then(function(modalEl) {
+
+        $scope.modalEditLesson = function(lessonToEdit, index) {
+            console.log('im modalEditLessonService : ' +  JSON.stringify(lessonToEdit));
+            if (index === undefined) {
+                index = $scope.findLessonIndex(lessonToEdit);
+            }
+            console.log('im modalEditLessonService index : ' + index);
+            $scope.setActiveLesson(lessonToEdit, index);
+            $scope.resetLessonForm();
+            $scope.setModalViewLessonForm('Lektion editieren', 'Bitte Änderungen an der bestehenden Lektion vornehmen');
+            $q.when(modalLessonService).then(function(modalEl) {
                 modalEl.modal('show');
             });
         };
 
-
+        $scope.modalNewLesson = function(lessonToEdit, index) {
+            console.log('im modalNewLessonService : ' +  JSON.stringify(lessonToEdit));
+            var durationInMin = (lessonToEdit.end - lessonToEdit.start) / 60000;
+            if(durationInMin < 10){
+                lessonToEdit.end = lessonToEdit.start + (30 * 60000); // start + 30 min
+            }
+            $scope.setActiveLesson(lessonToEdit, $scope.lessons.length);
+            $scope.resetLessonForm();
+            $scope.setModalViewLessonForm('Neue Lektion', 'Bitte neue Lektion erfassen');
+            $q.when(modalLessonService).then(function(modalEl) {
+                modalEl.modal('show');
+            });
+        };
 
         $scope.eventSources = [];
         $scope.lessonEvents = [];
@@ -78,18 +81,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
             $scope.$apply(function () {
                 console.log('eventClick ' + event);
                 var lessonToEdit = createLessonFromEvent(event);
-//                $scope.editLesson(lessonToEdit);
-//                $scope.modal = {template: '/app/view/lesson/hello.html', show: true, backdrop: 'static'};
-/*                $scope.modal = {
-                    content: 'Hello Modal',
-                    saved: false,
-                    cal:true
-                };
-*/
-//                modalPromise = {show: true};
-//                $scope.showModalViaService ;
-//                $scope.viaService(lessonToEdit);
-                $scope.modalService(lessonToEdit);
+                $scope.modalEditLesson(lessonToEdit);
                 console.log('eventClick after modal');
             });
         };
@@ -160,7 +152,8 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
                     allDay: allDay
                 }
                 var lessonToEdit = createLessonFromEvent(event);
-                $scope.selectNewLesson(lessonToEdit);
+//                $scope.selectNewLesson(lessonToEdit);
+                $scope.modalNewLesson(lessonToEdit);
             });
             $scope.pcsCalendar.fullCalendar('unselect');
         };

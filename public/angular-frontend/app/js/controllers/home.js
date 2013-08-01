@@ -43,6 +43,11 @@ angular.module('pcs').controller('HomeCtrl',
             $scope.leftView = "lessonForm"
         }
 
+        $scope.setModalViewLessonForm = function (title, detailtext) {
+            $scope.lessonDetailTitle = title;
+            $scope.lessonDetailText = detailtext;
+        }
+
         $scope.resetLessonForm = function () {
             $scope.lessonForm = angular.copy($scope.activeLesson);
 
