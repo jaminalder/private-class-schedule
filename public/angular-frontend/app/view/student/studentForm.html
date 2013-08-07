@@ -15,20 +15,20 @@
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="studentFirstName">Vorname</label>
+            <label class="control-label" for="studentFirstName"><strong>Vorname</strong></label>
 
             <div class="controls">
 
-                <input id="studentFirstName" name="studentFirstName" class="span4" type="text" ng-model="studentForm.firstName"
+                <input id="studentFirstName" name="studentFirstName" class="span6" type="text" ng-model="studentForm.firstName"
                     required>
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="studentLastName">Nachname</label>
+            <label class="control-label" for="studentLastName"><strong>Nachname</strong></label>
 
             <div class="controls">
-                <input id="studentLastName" class="span4" type="text" ng-model="studentForm.lastName"
+                <input id="studentLastName" class="span6" type="text" ng-model="studentForm.lastName"
                     required>
             </div>
         </div>
@@ -37,7 +37,7 @@
             <label class="control-label" for="studentEMail">E-Mail</label>
 
             <div class="controls">
-                <input id="studentEMail" class="span4" type="email" ng-model="studentForm.eMail" placeholder="beispiel@abc.com">
+                <input id="studentEMail" class="span6" type="email" ng-model="studentForm.eMail" placeholder="beispiel@abc.com">
                 <span class="help-inline alert-error" ng-show="form.$error.email">Ungültige E-mail (beispiel@abc.com)</span>
             </div>
         </div>
@@ -46,8 +46,8 @@
             <label class="control-label" for="studentAdresseStrasse">Strasse / Nr. </label>
 
             <div class="controls controls-row">
-                <input id="studentAdresseStrasse" class="span3" type="text" ng-model="studentForm.address.street">
-                <input class="span1" type="text" ng-model="studentForm.address.streetNum">
+                <input id="studentAdresseStrasse" class="span4" type="text" ng-model="studentForm.address.street">
+                <input class="span2" type="text" ng-model="studentForm.address.streetNum">
             </div>
         </div>
 
@@ -55,8 +55,8 @@
             <label class="control-label" for="studentAdresseOrt">Postleitzahl / Ort </label>
 
             <div class="controls controls-row">
-                <input id="studentAdresseOrt" class="span1" type="text" ng-model="studentForm.address.zip">
-                <input class="span3" type="text" ng-model="studentForm.address.city">
+                <input id="studentAdresseOrt" class="span2" type="text" ng-model="studentForm.address.zip">
+                <input class="span4" type="text" ng-model="studentForm.address.city">
             </div>
         </div>
 

@@ -2,7 +2,7 @@
 
     <form name="form" class="form-horizontal" novalidate>
 
-        <div class="span12 offset1">
+        <div class="span9 offset1">
 
             <div class="control-group">
                 <div class="controls">
@@ -13,7 +13,7 @@
             <p id="loginMessage">{{message}}</p>
 
             <div class="control-group">
-                <label class="control-label" for="userEMail">E-Mail</label>
+                <label class="control-label" for="userEMail"><strong>E-Mail</strong></label>
 
                 <div class="controls">
                     <input id="userEMail" class="span4" type="email" ng-model="loginForm.eMail" placeholder="beispiel@abc.com">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="userPassword">Passwort</label>
+                <label class="control-label" for="userPassword"><strong>Passwort</strong></label>
 
                 <div class="controls">
                     <input id="userPassword" class="span4" type="password" ng-model="loginForm.password">
