@@ -5,11 +5,6 @@
 # Home page
 #GET     /
 
-GET     /api/poc/todo/all         poc.MongoPOCController.todos
-POST    /api/poc/todo/save        poc.MongoPOCController.addTodo
-POST    /api/poc/todo/save/:id    poc.MongoPOCController.updateTodo(id)
-POST    /api/poc/todo/delete/:id  poc.MongoPOCController.deleteTodo(id)
-
 GET    /api/id/generate                                service.id.IDService.generate
 
 POST   /api/authentication/registerUserAsTeacher       service.authentication.AuthenticationService.registerUserAsTeacher

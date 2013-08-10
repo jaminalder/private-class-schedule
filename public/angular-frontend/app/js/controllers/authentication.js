@@ -75,6 +75,14 @@ authModule.controller('LoginController', ['$scope', '$rootScope', '$location', '
 
         $scope.logout = AuthenticationService.logout;
 
+        $scope.getActiveClass = function(path) {
+            if ($location.path().substr(0, path.length) == path) {
+                return "active"
+            } else {
+                return ""
+            }
+        }
+
     }]);
 
 angular.module('pcs')

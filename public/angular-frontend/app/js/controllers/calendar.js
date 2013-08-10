@@ -10,30 +10,29 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
 
     function ($scope, $filter, $modal, $q, UserService, LessonService) {
 
-        var modalLessonService = $modal({
-            template: '/app/view/lesson/lessonFormModal.html',
-            persist: true,
-            show: false,
-            backdrop: 'static',
-            scope: $scope
-        });
+        var getLessonModalPromise = function() {
+            return $modal({
+                template: '/app/view/lesson/lessonFormModal.html',
+                persist: true,
+                show: false,
+                backdrop: 'static',
+                scope: $scope
+            });
+        }
 
         $scope.modalEditLesson = function(lessonToEdit, index) {
-            console.log('im modalEditLessonService : ' +  JSON.stringify(lessonToEdit));
             if (index === undefined) {
                 index = $scope.findLessonIndex(lessonToEdit);
             }
-            console.log('im modalEditLessonService index : ' + index);
             $scope.setActiveLesson(lessonToEdit, index);
             $scope.resetLessonForm();
             $scope.setModalViewLessonForm('Lektion editieren', 'Bitte Änderungen an der bestehenden Lektion vornehmen');
-            $q.when(modalLessonService).then(function(modalEl) {
+            $q.when(getLessonModalPromise()).then(function(modalEl) {
                 modalEl.modal('show');
             });
         };
 
         $scope.modalNewLesson = function(lessonToEdit, index) {
-            console.log('im modalNewLessonService : ' +  JSON.stringify(lessonToEdit));
             var durationInMin = (lessonToEdit.end - lessonToEdit.start) / 60000;
             if(durationInMin < 10){
                 lessonToEdit.end = lessonToEdit.start + (30 * 60000); // start + 30 min
@@ -41,7 +40,7 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
             $scope.setActiveLesson(lessonToEdit, $scope.lessons.length);
             $scope.resetLessonForm();
             $scope.setModalViewLessonForm('Neue Lektion', 'Bitte neue Lektion erfassen');
-            $q.when(modalLessonService).then(function(modalEl) {
+            $q.when(getLessonModalPromise()).then(function(modalEl) {
                 modalEl.modal('show');
             });
         };
@@ -72,30 +71,25 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
 
         $scope.dayClick = function (date, allDay, jsEvent, view) {
             $scope.$apply(function () {
-                console.log('dayClick ' + date);
                 $scope.alertMessage = ('Day Clicked ' + date);
             });
         };
 
         $scope.eventClick = function (event, jsEvent, view) {
             $scope.$apply(function () {
-                console.log('eventClick ' + event);
                 var lessonToEdit = createLessonFromEvent(event);
                 $scope.modalEditLesson(lessonToEdit);
-                console.log('eventClick after modal');
             });
         };
 
         $scope.eventDrop = function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
             $scope.$apply(function () {
-                console.log('eventDrop ' + event);
                 saveLessonFromEvent(event);
             });
         };
 
         $scope.eventResize = function (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
             $scope.$apply(function () {
-                console.log('eventResize ' + event);
                 saveLessonFromEvent(event);
             });
         };
@@ -144,7 +138,6 @@ angular.module('pcs').controller('CalendarCtrl', ['$scope', '$filter', '$modal',
         };
 
         $scope.select = function (start, end, allDay) {
-            console.log('select ' + start);
             $scope.$apply(function () {
                 var event = {
                     start: start,

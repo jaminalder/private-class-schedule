@@ -1,7 +1,7 @@
 <div ng-controller="LessonFormCtrl">
 
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
 
         <div class="control-group">
@@ -10,75 +10,75 @@
             </div>
         </div>
 
-</div>
+    </div>
 
     <div class="modal-body">
 
         <form name="lessonFormModal" class="form-horizontal" novalidate>
 
 
-        <div class="control-group">
-            <div class="controls">
-                <p id="lessonFormText">{{lessonDetailText}}</p>
+            <div class="control-group">
+                <div class="controls">
+                    <p id="lessonFormText">{{lessonDetailText}}</p>
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <label class="control-label" for="lessonDate"><strong>Datum</strong></label>
+            <div class="control-group">
+                <label class="control-label" for="lessonDate"><strong>Datum</strong></label>
 
-            <div class="controls">
-                <div class="input-append">
-                    <input id="lessonDate" type="text" ng-model="lessonForm.date" bs-datepicker>
-                    <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+                <div class="controls">
+                    <div class="input-append">
+                        <input id="lessonDate" type="text" ng-model="lessonForm.date" bs-datepicker>
+                        <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="lessonFrom"><strong>Von</strong></label>
+
+                <div class="controls bootstrap-timepicker">
+                    <input id="lessonFrom" class="input-mini" type="text" ng-model="lessonForm.startTime" bs-timepicker>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="lessonTo"><strong>Bis</strong></label>
+
+                <div class="controls bootstrap-timepicker">
+                    <input id="lessonTo" class="input-mini" type="text" ng-model="lessonForm.endTime" bs-timepicker>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="lessonStudents">Schüler</label>
+
+                <div class="controls">
+                    <select id="lessonStudents" class="input-xlarge" multiple ui-select2="select2Options"
+                            ng-model="lessonForm.lessonStudentIds">
+                        <option ng-repeat="student in students" value="{{student.id._id}}">{{student.firstName}}
+                            {{student.lastName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="modal-footer">
+            <div class="control-group">
+                <div class="controls">
+                    <input id="saveLessonButton" ng-click="saveLesson();dismiss()" class="btn btn-primary span3"
+                           type="submit"
+                           value="Speichern"
+                           ng-disabled="form.$invalid || isUnchanged(lessonForm)">
+
+                    <input id="cancelLessonFormButton" ng-click="dismiss()" class="btn span3" value="Abbrechen">
                 </div>
             </div>
         </div>
 
-        <div class="control-group">
-            <label class="control-label" for="lessonFrom"><strong>Von</strong></label>
 
-            <div class="controls bootstrap-timepicker">
-                <input id="lessonFrom" class="input-mini" type="text" ng-model="lessonForm.startTime" bs-timepicker>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="lessonTo"><strong>Bis</strong></label>
-
-            <div class="controls bootstrap-timepicker">
-                <input id="lessonTo" class="input-mini" type="text" ng-model="lessonForm.endTime" bs-timepicker>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="lessonStudents">Schüler</label>
-
-            <div class="controls">
-                <select id="lessonStudents" class="input-xlarge" multiple ui-select2="select2Options"
-                        ng-model="lessonForm.lessonStudentIds">
-                    <option ng-repeat="student in students" value="{{student.id._id}}">{{student.firstName}}
-                        {{student.lastName}}
-                    </option>
-                </select>
-            </div>
-        </div>
     </div>
-
-    </form>
-
-    <div class="modal-footer">
-        <div class="control-group">
-            <div class="controls">
-                <input id="saveLessonButton" ng-click="saveLesson();dismiss()" class="btn btn-primary span3" type="submit"
-                       value="Speichern"
-                       ng-disabled="form.$invalid || isUnchanged(lessonForm)">
-
-                <input id="cancelLessonFormButton" ng-click="dismiss()" class="btn span3" value="Abbrechen"
-                     >
-            </div>
-        </div>
-    </div>
-
-
-
 </div>

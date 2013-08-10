@@ -6,33 +6,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#">Private Class Schedule</a>
+            <a class="brand" ng-href="#">Private Class Schedule</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li class="nav-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
+                    <li ng-class="getActiveClass('/home')"><a href="#/home">Home</a></li>
+                    <li ng-class="getActiveClass('/info')"><a href="#/info">Info</a></li>
                 </ul>
                 <form class="navbar-form pull-right">
-                    <!-- <input class="span2" type="email" ng-model="loginForm.eMail" placeholder="Email">
-                    <input class="span2" type="password" ng-model="loginForm.password" placeholder="Password">
-                    <button ng-click="loginUserAsTeacher()" type="submit" class="btn">Anmelden</button> -->
                     <a ng-href="#/login" class="btn">Anmelden</a>
                     <a ng-href="#/register" class="btn">Registrieren</a>
                 </form>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </div>
 </div>

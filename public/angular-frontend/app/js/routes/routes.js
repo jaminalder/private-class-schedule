@@ -37,6 +37,11 @@ angular.module('pcs')
                 access: access.public
             });
 
+            $routeProvider.when('/info', {
+                templateUrl: '/app/view/info/info.html',
+                access: access.public
+            });
+
             $routeProvider.when('/404',
                 {
                     templateUrl: '/app/view/errors/404.html',
@@ -82,15 +87,15 @@ angular.module('pcs')
             //$rootScope.alerts.alertArray = [];
 
             if (next.access !== undefined && !AuthenticationService.authorize(next.access)) {
-                console.log('routeChange not authorized to: ' + JSON.stringify(next));
+                //console.log('routeChange not authorized to: ' + JSON.stringify(next));
                 if (AuthenticationService.isLoggedIn()) {
-                    console.log('logged in user is not authorized. redirect to user home');
+                    //console.log('logged in user is not authorized. redirect to user home');
                     $location.path('/');
                 } else {
                     AuthenticationService.getLoggedInUser().then(function (loggedInUser) {
-                        console.log('found logged in user on server: ' + JSON.stringify(loggedInUser));
+                        //console.log('found logged in user on server: ' + JSON.stringify(loggedInUser));
                     }, function () {
-                        console.log('did not find logged in user on server. redirect to login');
+                        //console.log('did not find logged in user on server. redirect to login');
                         $location.path('/login');
                     });
 

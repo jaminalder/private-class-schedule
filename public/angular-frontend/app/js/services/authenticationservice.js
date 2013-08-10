@@ -49,7 +49,7 @@ angular.module('pcs')
             login: function (userToLogin, success, error) {
                 $http.post('/api/authentication/loginUserAsTeacher', userToLogin).success(function (loggedInUser) {
                     loggedInUser.role = accessLevels.teacher;
-                    console.log('loggedInUserWithRole: ' + JSON.stringify(loggedInUser));
+                    //console.log('loggedInUserWithRole: ' + JSON.stringify(loggedInUser));
                     $rootScope.user = loggedInUser;
                     success(loggedInUser);
                 }).error(error);

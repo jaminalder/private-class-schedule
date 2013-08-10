@@ -28,6 +28,7 @@ angular.module('pcs').controller('LessonFormCtrl',
 
     function($scope, $resource, $filter, UUIDService, LessonService, DateTimeService, AlertService) {
 
+
         $scope.hideLessonDetail = function(){
             $scope.setLeftViewDefault();
         }
