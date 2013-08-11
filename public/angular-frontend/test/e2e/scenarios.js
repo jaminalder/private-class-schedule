@@ -52,21 +52,33 @@ describe('my app', function () {
         });
     });
 
-    /* When, how could this happen?
-    describe('fail to register fourth test user', function() {
+    describe('fail to register fourth test user, email address exists already', function() {
 
         it('register fourth test user should fail', function () {
             browser().navigateTo('#/register');
             input('registerForm.user.firstName').enter('Test4');
             input('registerForm.user.lastName').enter('User4');
-            input('registerForm.user.eMail').enter('test4@user');
+            input('registerForm.user.eMail').enter('test3@user.com');
             input('registerForm.password').enter('12345');
             element('#registerButton').click();
-            //sleep(1);
-            expect(element('#registrationMessage').text()).toMatch('User registration failed');
+            expect(element('.alert').text()).toMatch(/.*Registrierung fehlgeschlagen!.*/);
         });
     });
-    */
+
+    // how can you test a button that is not active, due to wrong input?
+    /* describe('fail to register fifth test user, invalid first name', function() {
+
+        it('register fifth test user should fail', function () {
+            browser().navigateTo('#/register');
+            input('registerForm.user.firstName').enter(' ');
+            input('registerForm.user.lastName').enter('User4');
+            input('registerForm.user.eMail').enter('test3@user.com');
+            input('registerForm.password').enter('12345');
+            element('#registerButton').click();
+            expect(element('#registrationMessage').text()).toMatch('');
+        });
+    });      */
+
 
     describe('login/logout first test user', function() {
 
@@ -93,12 +105,24 @@ describe('my app', function () {
 
     });
 
-    describe('fail to login first test user due to wrong password', function() {
+    describe('fail to login third test user due to wrong password', function() {
 
-        it('login first test user should fail', function () {
+        it('login third test user should fail', function () {
             browser().navigateTo('#/login');
-            input('loginForm.eMail').enter('test1@user.com');
+            input('loginForm.eMail').enter('test3@user.com');
             input('loginForm.password').enter('123456');
+            element('#loginButton').click();
+            //sleep(1);
+            expect(element('.alert').text()).toMatch(/.*Anmeldung fehlgeschlagen!.*/);
+        });
+    });
+
+    describe('fail to login third test user due to wrong email', function() {
+
+        it('login third test user should fail', function () {
+            browser().navigateTo('#/login');
+            input('loginForm.eMail').enter('test3@user.co');
+            input('loginForm.password').enter('12345');
             element('#loginButton').click();
             //sleep(1);
             expect(element('.alert').text()).toMatch(/.*Anmeldung fehlgeschlagen!.*/);
@@ -288,7 +312,10 @@ The following third lesson tests lesson starting at midnight 00:00.
 
     });
 
-    describe('lessons with students for first test user', function () {
+    // tests only different from the ones above, if one can select a student in the lesson
+    // currently the test to select a student in the lesson form is not implemented
+    // how to access the third party select2 using e2e test
+    /* describe('lessons with students for first test user', function () {
 
         it('login first test user', function () {
             browser().navigateTo('#/login');
@@ -419,7 +446,7 @@ The following third lesson tests lesson starting at midnight 00:00.
             expect(browser().location().url()).toBe("/login");
         });
 
-    });
+    });  */
 
     var addStudentFirstLastName = function (firstname, lastname) {
         element('#newStudentButton').click();

@@ -48,5 +48,13 @@ class UserDomainComponentTest extends Specification {
         case _ => failure
       }
     }
+
+    "fail to authenticate a user if a wrong email is given" in new WithApplication {
+      UserDomainComponent.authenticateUserAsTeacher("wrong@email", password) match {
+        case None => success
+        case Some(teacher) => failure
+        case _ => failure
+      }
+    }
   }
 }
