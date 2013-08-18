@@ -34,7 +34,7 @@
                <label class="control-label" for="userEMail"><strong>E-Mail</strong></label>
 
                <div class="controls">
-                    <input id="userEMail" class="span4" type="email" ng-model="registerForm.user.eMail" placeholder="beispiel@abc.com">
+                    <input id="userEMail" class="span4" type="email" ng-model="registerForm.user.eMail" placeholder="beispiel@abc.com" required>
                     <span class="help-inline alert-error" ng-show="form.$error.email">Ungültige E-mail (beispiel@abc.com)</span>
                </div>
             </div>
@@ -43,7 +43,8 @@
                 <label class="control-label" for="userPassword"><strong>Passwort</strong></label>
 
                 <div class="controls">
-                    <input id="userPassword" class="span4" type="password" ng-model="registerForm.password">
+                    <input id="userPassword" class="span4" type="password" ng-model="registerForm.password"
+                           required>
                 </div>
             </div>
 
