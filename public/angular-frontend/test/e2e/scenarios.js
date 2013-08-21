@@ -139,11 +139,13 @@ describe('my app', function () {
     describe('students for second test user', function () {
 
         it('login second test user', function () {
+            sleep(1);
             browser().navigateTo('#/login');
+            sleep(1);
             input('loginForm.eMail').enter('test2@user.com');
             input('loginForm.password').enter('23456');
             element('#loginButton').click();
-            //sleep(1);
+            sleep(5);
         });
 
         it('should show calendar with student list per default', function () {
