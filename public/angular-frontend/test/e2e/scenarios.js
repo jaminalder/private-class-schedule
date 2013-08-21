@@ -7,6 +7,7 @@ describe('my app', function () {
 
     beforeEach(function () {
         browser().navigateTo('../../app/index.html');
+        sleep(1);
     });
 
 
@@ -146,7 +147,7 @@ describe('my app', function () {
         });
 
         it('should show calendar with student list per default', function () {
-            sleep(1);
+            sleep(5);
             expect(element('#studentListTitle').text()).
                 toMatch('Schülerliste');
         });
