@@ -145,11 +145,11 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test2@user.com');
             input('loginForm.password').enter('23456');
             element('#loginButton').click();
-            sleep(5);
+            sleep(1);
         });
 
         it('should show calendar with student list per default', function () {
-            sleep(5);
+            sleep(1);
             expect(element('#studentListTitle').text()).
                 toMatch('Schülerliste');
         });
@@ -213,16 +213,19 @@ describe('my app', function () {
     describe('lessons for third test user', function () {
 
         it('login third test user', function () {
+            sleep(1);
             browser().navigateTo('#/login');
+            sleep(1);
             input('loginForm.eMail').enter('test3@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            //sleep(1);
+            sleep(1);
         });
 
         it('should render lesson list when user clicks on tab lessonList', function () {
+            sleep(1);
             element('#lessonListTab').click();
-            //sleep(1);
+            sleep(1);
             expect(element('#lessonListTitle').text()).
                 toMatch('Lektionenliste');
         });
