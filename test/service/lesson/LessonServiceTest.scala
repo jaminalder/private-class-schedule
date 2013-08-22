@@ -17,6 +17,7 @@ import crosscutting.transferobject.lesson.Lesson
 import play.api.libs.ws.Response
 import play.api.libs.ws.WS.WSRequestHolder
 import scala.Some
+import crosscutting.basetype.Id
 
 
 class LessonServiceTest extends Specification {
@@ -42,6 +43,17 @@ class LessonServiceTest extends Specification {
       val storedLesson1 = LessonDomainComponent.getLessonById(LessonTestData.lesson1Id)
       storedLesson1 mustEqual Some(LessonTestData.lesson1)
 
+      val storedLesson2 = LessonDomainComponent.getLessonById(LessonTestData.lesson2Id)
+      storedLesson2 mustEqual Some(LessonTestData.lesson2)
+    }
+
+    "fail to add lesson for a teacher which is not the logged in user" in new WithServer {
+      val requestHolder = requestHolderWithUserId("http://localhost:19001/api/lesson/saveLesson", Id.generate._id)
+      val response = await(requestHolder.post(Json.toJson(LessonTestData.lesson3)))
+      response.status must equalTo(FORBIDDEN)
+
+      val storedLesson3 = LessonDomainComponent.getLessonById(LessonTestData.lesson3Id)
+      storedLesson3 mustEqual None
     }
 
 
@@ -58,4 +70,35 @@ class LessonServiceTest extends Specification {
       lesson2 mustEqual LessonTestData.lesson2
     }
   }
+
+  "fail to yeald lessons of a teacher which is not the logged in user" in new WithServer {
+
+    val requestHolder = requestHolderWithUserId("http://localhost:19001/api/lesson/allLessonsOfTeacher/" + PersonTestData.teacher.person.id._id, Id.generate._id)
+    val response: Response = await(requestHolder.get)
+    response.status must equalTo(FORBIDDEN)
+  }
+
+  "delete lesson of a teacher" in new WithServer {
+    val requestHolder = requestHolderWithUserId("http://localhost:19001/api/lesson/deleteLesson", PersonTestData.teacher.id._id)
+    val response1: Response = await(requestHolder.post(Json.toJson(LessonTestData.lesson1)))
+    response1.status must equalTo(OK)
+
+    val storedLesson1 = LessonDomainComponent.getLessonById(LessonTestData.lesson1Id)
+    storedLesson1 mustEqual None
+
+    val storedLesson2 = LessonDomainComponent.getLessonById(LessonTestData.lesson2Id)
+    storedLesson2 mustEqual Some(LessonTestData.lesson2)
+  }
+
+  "fail to delete a lesson for a teacher which is not the logged in user" in new WithServer {
+    val requestHolder = requestHolderWithUserId("http://localhost:19001/api/lesson/deleteLesson", Id.generate._id)
+    val response = await(requestHolder.post(Json.toJson(LessonTestData.lesson2)))
+    response.status must equalTo(FORBIDDEN)
+
+    // ensure that the lesson is still in the db
+    val storedLesson2 = LessonDomainComponent.getLessonById(LessonTestData.lesson2Id)
+    storedLesson2 mustEqual Some(LessonTestData.lesson2)
+  }
+
+
 }

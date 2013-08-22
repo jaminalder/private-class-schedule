@@ -24,6 +24,12 @@ object LessonTestData {
   val lesson2Start = DateTime.parse("20.06.2013 0900", simpleDateTimeFormat)
   val lesson2End = DateTime.parse("20.06.2013 0930", simpleDateTimeFormat)
   val lesson2 = Lesson(lesson2Id, lesson2Start, lesson2End,  teacherId,  studentIds)
+
+  val lesson3Id = Id.generate
+  val lesson3Start = DateTime.parse("25.06.2013 0900", simpleDateTimeFormat)
+  val lesson3End = DateTime.parse("25.06.2013 0930", simpleDateTimeFormat)
+  val lesson3 = Lesson(lesson3Id, lesson3Start, lesson3End,  teacherId,  studentIds)
+
 }
 
 class LessonDomainComponentTest extends Specification {

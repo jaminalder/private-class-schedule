@@ -18,7 +18,7 @@ class AuthenticationServiceTest extends Specification {
 
     val rightPassword = "secret"
 
-    "remove all persons firs" in new WithApplication {
+    "remove all persons first" in new WithApplication {
       TeacherDomainComponent.dao.collection.drop
     }
 
@@ -47,8 +47,6 @@ class AuthenticationServiceTest extends Specification {
       loggedInUserResponse.json.as[Person] mustEqual PersonTestData.teacher.person
     }
 
-
-
     "fail to log in a user as a teacher with wrong password" in new WithServer {
       val response: Response = testLoginUserAsTeacher(PersonTestData.teacher.person.eMail, "blabla")
       response.status must equalTo(UNAUTHORIZED)
@@ -69,6 +67,19 @@ class AuthenticationServiceTest extends Specification {
       val failedResponse: Response = testLoginUserAsTeacher(PersonTestData.teacher.person.eMail, "blabla")
       failedResponse.status must equalTo(UNAUTHORIZED)
       getValueFromSessonCookie(failedResponse, "userId") must beNone
+    }
+
+    "logoff a user and ensure cleaned sesson" in new WithServer {
+      // login first
+      val successfulResponse: Response = testLoginUserAsTeacher(PersonTestData.teacher.person.eMail, rightPassword)
+      successfulResponse.status must equalTo(OK)
+      getValueFromSessonCookie(successfulResponse, "userId") mustEqual Some(PersonTestData.teacher.id._id)
+
+      // logoff
+      val requestHolder = WS.url("http://localhost:19001/api/authentication/logoutUser")
+      val response: Response = await(requestHolder.post(""))
+      response.status must equalTo(OK)
+      getValueFromSessonCookie(response, "userId") must beNone
     }
 
   }
