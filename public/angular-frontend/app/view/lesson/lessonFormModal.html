@@ -28,7 +28,7 @@
 
                 <div class="controls">
                     <div class="input-append">
-                        <input id="lessonDate" type="text" ng-model="lessonForm.date" bs-datepicker>
+                        <input id="lessonDate" type="text" ng-model="lessonForm.date" bs-datepicker required>
                         <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i>
                         </button>
                     </div>
@@ -39,7 +39,7 @@
                 <label class="control-label" for="lessonFrom"><strong>Von</strong></label>
 
                 <div class="controls bootstrap-timepicker">
-                    <input id="lessonFrom" class="input-mini" type="text" ng-model="lessonForm.startTime" bs-timepicker>
+                    <input id="lessonFrom" class="input-mini" type="text" ng-model="lessonForm.startTime" bs-timepicker required>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 <label class="control-label" for="lessonTo"><strong>Bis</strong></label>
 
                 <div class="controls bootstrap-timepicker">
-                    <input id="lessonTo" class="input-mini" type="text" ng-model="lessonForm.endTime" bs-timepicker>
+                    <input id="lessonTo" class="input-mini" type="text" ng-model="lessonForm.endTime" bs-timepicker required>
                 </div>
             </div>
 

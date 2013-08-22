@@ -7,8 +7,13 @@ describe('my app', function () {
 
     beforeEach(function () {
         browser().navigateTo('../../app/index.html');
+        sleep(1);
     });
 
+
+    // tests will fail the first time after unit tests were run
+    // reason: the user does not exist after unit tests were run and the navigation will go to the calender home page
+    // The registration test assumes the test user does already exist and navigates to the login page
     describe('register three test users', function() {
 
         it('register first test user', function () {
@@ -87,10 +92,11 @@ describe('my app', function () {
             input('loginForm.eMail').enter('test1@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            //sleep(1);
+            sleep(1);
         });
 
         it('should automatically redirect to / = home when location hash/fragment is empty', function () {
+            sleep(1);
             expect(browser().location().url()).toBe("/home");
         });
 
@@ -133,21 +139,24 @@ describe('my app', function () {
     describe('students for second test user', function () {
 
         it('login second test user', function () {
+            sleep(1);
             browser().navigateTo('#/login');
+            sleep(1);
             input('loginForm.eMail').enter('test2@user.com');
             input('loginForm.password').enter('23456');
             element('#loginButton').click();
-            //sleep(1);
+            sleep(1);
         });
 
         it('should show calendar with student list per default', function () {
+            sleep(1);
             expect(element('#studentListTitle').text()).
                 toMatch('Schülerliste');
         });
 
         it('should show new student form when user clicks on new student button', function () {
             element('#newStudentButton').click();
-            //sleep(1);
+            sleep(1);
             expect(element('#studentFormTitle').text()).
                 toMatch("Neuer Schüler");
         });
@@ -204,16 +213,19 @@ describe('my app', function () {
     describe('lessons for third test user', function () {
 
         it('login third test user', function () {
+            sleep(1);
             browser().navigateTo('#/login');
+            sleep(1);
             input('loginForm.eMail').enter('test3@user.com');
             input('loginForm.password').enter('12345');
             element('#loginButton').click();
-            //sleep(1);
+            sleep(1);
         });
 
         it('should render lesson list when user clicks on tab lessonList', function () {
+            sleep(1);
             element('#lessonListTab').click();
-            //sleep(1);
+            sleep(1);
             expect(element('#lessonListTitle').text()).
                 toMatch('Lektionenliste');
         });
