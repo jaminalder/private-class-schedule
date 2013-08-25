@@ -28,7 +28,7 @@
 
                 <div class="controls">
                     <div class="input-append">
-                        <input id="lessonDate" type="text" ng-model="lessonForm.date" bs-datepicker required>
+                        <input id="lessonDate" type="text" ng-model="lessonForm.date" required bs-datepicker>
                         <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i>
                         </button>
                     </div>
@@ -39,7 +39,7 @@
                 <label class="control-label" for="lessonFrom"><strong>Von</strong></label>
 
                 <div class="controls bootstrap-timepicker">
-                    <input id="lessonFrom" class="input-mini" type="text" ng-model="lessonForm.startTime" bs-timepicker required>
+                    <input id="lessonFrom" class="input-mini" type="text" ng-model="lessonForm.startTime" required bs-timepicker>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 <label class="control-label" for="lessonTo"><strong>Bis</strong></label>
 
                 <div class="controls bootstrap-timepicker">
-                    <input id="lessonTo" class="input-mini" type="text" ng-model="lessonForm.endTime" bs-timepicker required>
+                    <input id="lessonTo" class="input-mini" type="text" ng-model="lessonForm.endTime" required bs-timepicker>
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-        </form>
+    </form>
 
         <div class="modal-footer">
             <div class="control-group">
@@ -72,7 +72,7 @@
                     <input id="saveLessonButton" ng-click="saveLesson();dismiss()" class="btn btn-primary span3"
                            type="submit"
                            value="Speichern"
-                           ng-disabled="form.$invalid || isUnchanged(lessonForm)">
+                           ng-disabled="lessonFormModal.$invalid || isUnchanged(lessonForm)">
 
                     <input id="cancelLessonFormButton" ng-click="dismiss()" class="btn span3" value="Abbrechen">
                 </div>
@@ -81,4 +81,5 @@
 
 
     </div>
+
 </div>
