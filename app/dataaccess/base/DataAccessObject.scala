@@ -10,7 +10,7 @@ import com.mongodb
 
 trait DataAccessObject[TO <: PersistableTransferObject] {
   val mongoURI: MongoClientURI = MongoClientURI(Play.configuration.getString("mongo.uri").getOrElse("mongodb://127.0.0.1:27017"))
-  val mongoDB: MongoDB = MongoClient(mongoURI)("pcs")
+  val mongoDB: MongoDB = MongoClient(mongoURI)(Play.configuration.getString("mongo.name").getOrElse("pcs"))
 
   def collection: MongoCollection = mongoDB(collectionName)
 
